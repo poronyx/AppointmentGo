@@ -6,7 +6,7 @@ You need to have PHP version **8.0** or above. Node.js version **12.0** or above
 1. Clone the project
 2. Go to the project root directory
 3. Run `composer install`
-4. Create database
+4. Create database ('php artisan serve')
 5. Copy `.env.example` into `.env` file and adjust parameters
 6. Run `php artisan serve` to start the project at http://localhost:8000
 
