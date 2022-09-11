@@ -193,10 +193,10 @@ import Notification from "./Notification.vue";
 
 const navigation = [
   { name: "Home", to: { name: "PatientDashboard" } },
-  { name: "Profile", to: { name: "Dashboard" } },
-  { name: "Find Us", to: { name: "Dashboard" } },
-  { name: "Find Doctor", to: { name: "Dashboard" } },
-  { name: "Medical History", to: { name: "Dashboard" } },
+  { name: "Profile", to: { name: "PatientProfile" } },
+  { name: "Find Us", to: { name: "PatientProfile" } },
+  { name: "Find Doctor", to: { name: "PatientProfile" } },
+  { name: "Medical History", to: { name: "PatientProfile" } },
   { name: "MyPrescription", to: { name: "Dashboard" } },
 ];
 
