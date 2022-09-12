@@ -13,6 +13,7 @@
 
       <div class="px-4 sm:px-0 animate-fade-in-down">
         <carousel :slides="slides" :interval="3000" controls indicators></carousel>
+        
       </div>
 
 
@@ -78,10 +79,11 @@
 <script setup>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import Carousel from "../../../../vue-carousel/src/components/carousel/Carousel.vue";
+
 import DashboardCard from "../../components/core/DashboardCard.vue";
 import PageComponent from "../../components/PageComponent.vue";
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/solid'
+import Carousel from "../../components/core/carousel/Carousel.vue";
 
 const store = useStore();
 
