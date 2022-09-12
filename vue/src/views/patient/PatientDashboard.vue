@@ -13,65 +13,127 @@
 
       <div class="px-4 sm:px-0 animate-fade-in-down">
         <carousel :slides="slides" :interval="3000" controls indicators></carousel>
-        
+
       </div>
 
 
       <!--//pagination-->
-
-      <div class="max-w-2xl mx-auto">
-
-        <nav aria-label="Page navigation example">
-          <ul class="inline-flex items-center -space-x-px">
-            <li>
+      <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+        <div class="flex flex-1 justify-between sm:hidden">
+          <a href="#"
+            class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
+          <a href="#"
+            class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
+        </div>
+        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+          <div>
+            <p class="text-sm text-gray-700">
+              Showing
+              {{ ' ' }}
+              <span class="font-medium">1</span>
+              {{ ' ' }}
+              to
+              {{ ' ' }}
+              <span class="font-medium">3</span>
+              {{ ' ' }}
+              of
+              {{ ' ' }}
+              <span class="font-medium">30</span>
+              {{ ' ' }}
+              results
+            </p>
+          </div>
+          <div>
+            <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
               <a href="#"
-                class="block py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
                 <span class="sr-only">Previous</span>
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
-                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                    clip-rule="evenodd"></path>
-                </svg>
+                <ChevronLeftIcon class="h-5 w-5" aria-hidden="true" />
               </a>
-            </li>
-            <li>
-              <a href="#"
-                class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-            </li>
-            <li>
-              <a href="#"
-                class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-            </li>
-            <li>
+              <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
               <a href="#" aria-current="page"
-                class="z-10 py-2 px-3 leading-tight text-blue-600 bg-blue-50 border border-blue-300 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-            </li>
-            <li>
+                class="relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20">1</a>
               <a href="#"
-                class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-            </li>
-            <li>
+                class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">2</a>
               <a href="#"
-                class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-            </li>
-            <li>
+                class="relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 md:inline-flex">3</a>
+              <span
+                class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700">...</span>
               <a href="#"
-                class="block py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                class="relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 md:inline-flex">8</a>
+              <a href="#"
+                class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">9</a>
+              <a href="#"
+                class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">10</a>
+              <a href="#"
+                class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
                 <span class="sr-only">Next</span>
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
-                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clip-rule="evenodd"></path>
-                </svg>
+                <ChevronRightIcon class="h-5 w-5" aria-hidden="true" />
               </a>
-            </li>
-          </ul>
-        </nav>
-
+            </nav>
+          </div>
+        </div>
       </div>
-
+      <div class="flex flex-col">
+        <div class="overflow-x-auto">
+          <div class="p-1.5 w-full inline-block align-middle">
+            <div class="overflow-hidden border rounded-lg">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
+                      Title
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
+                      Description
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
+                      Date
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                  <tr>
+                    <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                      <a href="#">Fight Against Covid</a>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                      Guidelines to help keep our nation safe from Covid-19
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                      2022/09/12
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                      <a href="#">Summer Flu</a>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                      <a>Its the season that most of us will get sick and everybody should be safe</a>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                      2022/09/9
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                      <a href="#">Get your covid jabs with us</a>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                      With the constant spread of covid-19, our clinic now provide different vaccines to help against the virus
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                      2022/07/23
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
 
 </template>

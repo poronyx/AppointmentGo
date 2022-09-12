@@ -87,14 +87,23 @@
                   <MenuItems
                     class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                   >
+                  <MenuItem v-slot="{}">
+                      
+                      <a
+                        @click="getProfile"
+                        :class="[
+                          'block px-4 py-2 text-sm text-gray-700 cursor-pointer',
+                        ]"
+                        >Profile</a >
+                    </MenuItem>
                     <MenuItem v-slot="{}">
+                      
                       <a
                         @click="logout"
                         :class="[
                           'block px-4 py-2 text-sm text-gray-700 cursor-pointer',
                         ]"
-                        >Sign out</a
-                      >
+                        >Sign out</a >
                     </MenuItem>
                   </MenuItems>
                 </transition>
@@ -157,7 +166,14 @@
               </div>
             </div>
           </div>
+          
           <div class="mt-3 px-2 space-y-1">
+            <DisclosureButton
+              as="a"
+              @click="getProfile"
+              class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 cursor-pointer"
+              >Profile
+            </DisclosureButton>
             <DisclosureButton
               as="a"
               @click="logout"
@@ -193,12 +209,12 @@ import Notification from "./Notification.vue";
 
 const navigation = [
   { name: "Home", to: { name: "PatientDashboard" } },
-  { name: "Profile", to: { name: "PatientProfile" } },
-  { name: "Find Us", to: { name: "PatientProfile" } },
   { name: "Find Doctor", to: { name: "PatientProfile" } },
   { name: "Medical History", to: { name: "PatientProfile" } },
   { name: "MyPrescription", to: { name: "Dashboard" } },
+  { name: "Find Us", to: { name: "FindUs" } },
 ];
+
 
 export default {
   components: {
@@ -225,6 +241,11 @@ export default {
         });
       });
     }
+    function getProfile() {
+        router.push({
+          name: "PatientProfile",
+      });
+    }
 
     store.dispatch("getUser");
 
@@ -232,6 +253,7 @@ export default {
       user: computed(() => store.state.user.data),
       navigation,
       logout,
+      getProfile,
     };
   },
 };
