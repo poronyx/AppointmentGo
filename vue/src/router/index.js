@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import PatientDashboard from "../views/patient/PatientDashboard.vue"
 import DoctorDashboard from "../views/doctor/DoctorDashboard.vue"
+import MedicalAdminDashboard from "../views/medicaladmin/MedicalAdminDashboard.vue"
 import NurseDashboard from "../views/nurse/NurseDashboard.vue"
 import Surveys from "../views/Surveys.vue";
 import SurveyView from "../views/SurveyView.vue";
@@ -27,6 +28,7 @@ let routes = [{
     { path: "/find-us", name: "FindUs", component: FindUs },
     { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
     { path: "/nurse-dashboard", name: "NurseDashboard", component: NurseDashboard },
+    { path: "/medicaladmin-dashboard", name: "MedicalAdminDashboard", component: MedicalAdminDashboard },
     { path: "/surveys", name: "Surveys", component: Surveys },
     { path: "/surveys/create", name: "SurveyCreate", component: SurveyView },
     { path: "/surveys/:id", name: "SurveyView", component: SurveyView },
