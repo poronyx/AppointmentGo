@@ -16,6 +16,9 @@ import FindUs from "../views/patient/FindUs.vue"
 import FindDoctor from "../views/patient/FindDoctor.vue"
 import MedicalHistory from "../views/patient/MedicalHistory.vue"
 import MyPrescription from "../views/patient/MyPrescription.vue"
+import GroupAdminDashboard from "../views/group_admin/GroupAdminDashboard.vue"
+import GroupAdminDefaultLayout from "../components/GroupAdminDefaultLayout.vue"
+import GroupAdminCreateAccount from "../views/group_admin/GroupAdminCreateAccount.vue"
 
 let routes = [{
   path: "/",
@@ -34,6 +37,16 @@ let routes = [{
     { path: "/surveys", name: "Surveys", component: Surveys },
     { path: "/surveys/create", name: "SurveyCreate", component: SurveyView },
     { path: "/surveys/:id", name: "SurveyView", component: SurveyView },
+  ],
+},
+{
+  path: "/g",
+  redirect: "/group-admin-dashboard",
+  component: GroupAdminDefaultLayout,
+  meta: { requiresAuth: true },
+  children: [
+    { path: "/group-admin-dashboard", name: "GroupAdminDashboard", component: GroupAdminDashboard },
+    { path: "/group-admin-create-account", name: "GroupAdminCreateAccount", component: GroupAdminCreateAccount },
   ],
 },
 {
@@ -81,6 +94,7 @@ router.beforeEach((to, from, next) => {
     next({ name: "Dashboard" });
   } else {
     next();
+    
   }
 });
 

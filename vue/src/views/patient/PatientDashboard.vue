@@ -155,11 +155,9 @@ const user = computed(() => store.state.user.data);
 
 store.dispatch("getDashboardData");
 const slides = [
-  "https://picsum.photos/id/1032/900/400",
-  "https://picsum.photos/id/1033/900/400",
-  "https://picsum.photos/id/1037/900/400",
-  "https://picsum.photos/id/1035/900/400",
-  "https://picsum.photos/id/1036/900/400",
+  "/src/assets/example1.jpg",
+  "/src/assets/example2.jpg",
+  "/src/assets/example3.png",
 ]
 
 </script>
