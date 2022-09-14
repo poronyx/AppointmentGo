@@ -137,14 +137,6 @@ function login(ev) {
         router.push({
         name: "DoctorDashboard",
       });
-      }else if(res.user.user_type == "nurse"){
-        router.push({
-        name: "NurseDashboard",
-      });
-      }else if(res.user.user_type == "medicaladmin"){
-        router.push({
-        name: "MedicalAdminDashboard",
-      });
       }else{
         router.push({
         name: "Dashboard",
