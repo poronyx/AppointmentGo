@@ -11,7 +11,7 @@
     <div v-if="loading" class="flex justify-center">Loading...</div>
     <div v-else class="grid grid-cols-1 gap-5 text-gray-700">
 
-      <div class="px-4 sm:px-0 animate-fade-in-down">
+      <div class="px-4 sm:px-0 animate-fade-in-down  ">
         <carousel :slides="slides" :interval="3000" controls indicators></carousel>
 
       </div>

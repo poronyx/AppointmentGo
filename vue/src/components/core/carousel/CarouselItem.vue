@@ -1,6 +1,6 @@
 <template>
   <transition :name="transitionEffect">
-    <div
+    <div 
       class="carousel-item"
       v-show="currentSlide === index"
       @mouseenter="$emit('mouseenter')"
