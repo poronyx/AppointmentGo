@@ -13,6 +13,9 @@ import AuthLayout from "../components/AuthLayout.vue";
 import store from "../store";
 import PatientProfile from "../views/patient/PatientProfile.vue"
 import FindUs from "../views/patient/FindUs.vue"
+import FindDoctor from "../views/patient/FindDoctor.vue"
+import MedicalHistory from "../views/patient/MedicalHistory.vue"
+import MyPrescription from "../views/patient/MyPrescription.vue"
 
 let routes = [{
   path: "/",
@@ -24,6 +27,9 @@ let routes = [{
     { path: "/patient-dashboard", name: "PatientDashboard", component: PatientDashboard },
     { path: "/patient-profile", name: "PatientProfile", component: PatientProfile },
     { path: "/find-us", name: "FindUs", component: FindUs },
+    { path: "/find-doctor", name: "FindDoctor", component: FindDoctor },
+    { path: "/medical-history", name: "MedicalHistory", component: MedicalHistory },
+    { path: "/my-prescription", name: "MyPrescription", component: MyPrescription },
     { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
     { path: "/surveys", name: "Surveys", component: Surveys },
     { path: "/surveys/create", name: "SurveyCreate", component: SurveyView },
