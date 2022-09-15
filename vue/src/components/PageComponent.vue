@@ -7,7 +7,7 @@
       </h1>
 
       <TButton v-if="appointment" :to="{ name: 'PatientMakeAppointment'}" link>
-        <PencilIcon class="w-6 h-6 mr-2" />
+        <PencilIcon class="w-5 h-5 mr-2" />
         Make an Appointment with us
       </TButton>
 
