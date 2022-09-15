@@ -13,7 +13,13 @@ import AuthLayout from "../components/AuthLayout.vue";
 import store from "../store";
 import PatientProfile from "../views/patient/PatientProfile.vue"
 import FindUs from "../views/patient/FindUs.vue"
-
+import FindDoctor from "../views/patient/FindDoctor.vue"
+import MedicalHistory from "../views/patient/MedicalHistory.vue"
+import MyPrescription from "../views/patient/MyPrescription.vue"
+import GroupAdminDashboard from "../views/group_admin/GroupAdminDashboard.vue"
+import GroupAdminDefaultLayout from "../components/GroupAdminDefaultLayout.vue"
+import GroupAdminCreateAccount from "../views/group_admin/GroupAdminCreateAccount.vue"
+import PatientMakeAppointment from "../views/patient/PatientMakeAppointment.vue"
 let routes = [{
   path: "/",
   redirect: "/patient-dashboard",
@@ -24,10 +30,24 @@ let routes = [{
     { path: "/patient-dashboard", name: "PatientDashboard", component: PatientDashboard },
     { path: "/patient-profile", name: "PatientProfile", component: PatientProfile },
     { path: "/find-us", name: "FindUs", component: FindUs },
+    { path: "/find-doctor", name: "FindDoctor", component: FindDoctor },
+    { path: "/medical-history", name: "MedicalHistory", component: MedicalHistory },
+    { path: "/my-prescription", name: "MyPrescription", component: MyPrescription },
+    { path: "/patient-make-appointment", name: "PatientMakeAppointment", component: PatientMakeAppointment },
     { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
     { path: "/surveys", name: "Surveys", component: Surveys },
     { path: "/surveys/create", name: "SurveyCreate", component: SurveyView },
     { path: "/surveys/:id", name: "SurveyView", component: SurveyView },
+  ],
+},
+{
+  path: "/g",
+  redirect: "/group-admin-dashboard",
+  component: GroupAdminDefaultLayout,
+  meta: { requiresAuth: true },
+  children: [
+    { path: "/group-admin-dashboard", name: "GroupAdminDashboard", component: GroupAdminDashboard },
+    { path: "/group-admin-create-account", name: "GroupAdminCreateAccount", component: GroupAdminCreateAccount },
   ],
 },
 {
@@ -72,9 +92,10 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !store.state.user.token) {
     next({ name: "Login" });
   } else if (store.state.user.token && to.meta.isGuest) {
-    next({ name: "Dashboard" });
+    next({ name: "PatientDashboard" });
   } else {
     next();
+    
   }
 });
 

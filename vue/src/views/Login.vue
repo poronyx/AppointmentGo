@@ -137,12 +137,15 @@ function login(ev) {
         router.push({
         name: "DoctorDashboard",
       });
+      }else if(res.user.user_type == "group-admin"){
+        router.push({
+        name: "GroupAdminDashboard",
+      });
       }else{
         router.push({
         name: "Dashboard",
       });
       }
-      
     })
     .catch((err) => {
       loading.value = false;

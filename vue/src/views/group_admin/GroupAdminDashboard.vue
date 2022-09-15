@@ -1,7 +1,7 @@
 <template>
-    <PageComponent title="Patient Profile" appointment="Make Appointment">
+    <PageComponent title="Group Admin Dashboard">
         <div v-if="loading" class="flex justify-center">Loading...</div>
-        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 text-gray-700">
+        <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-5 text-gray-700">
             <DashboardCard class="order-1 lg:order-1" style="animation-delay: 0.1s">
                 <template v-slot:title>Hello {{user.name}},</template>
                 <div class="flex justify-between text-sm mb-1">
@@ -28,16 +28,7 @@
                     <div>DOB:</div>
                     <div>{{user.date_of_birth}}</div>
                 </div>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Edit Profile
-                </button>
 
-            </DashboardCard>
-            <DashboardCard class="order-2 lg:order-2" style="animation-delay: 0.2s">
-                <template v-slot:title>Add Medical Details</template>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Add
-                </button>
             </DashboardCard>
 
         </div>
@@ -58,7 +49,6 @@ const loading = computed(() => store.state.dashboard.loading);
 const data = computed(() => store.state.dashboard.data);
 const user = computed(() => store.state.user.data);
 
-store.dispatch("getDashboardData");
 </script>
     
 <style scoped>

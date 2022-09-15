@@ -6,6 +6,7 @@ const store = createStore({
     user: {
       data: {},
       token: sessionStorage.getItem("TOKEN"),
+      user_type: 'patient',
     },
     dashboard: {
       loading: false,
