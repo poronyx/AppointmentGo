@@ -146,7 +146,6 @@ function login(ev) {
         name: "Dashboard",
       });
       }
-      
     })
     .catch((err) => {
       loading.value = false;
