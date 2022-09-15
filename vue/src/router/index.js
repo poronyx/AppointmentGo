@@ -18,7 +18,10 @@ import FindUs from "../views/patient/FindUs.vue"
 import FindDoctor from "../views/patient/FindDoctor.vue"
 import MedicalHistory from "../views/patient/MedicalHistory.vue"
 import MyPrescription from "../views/patient/MyPrescription.vue"
-
+import GroupAdminDashboard from "../views/group_admin/GroupAdminDashboard.vue"
+import GroupAdminDefaultLayout from "../components/GroupAdminDefaultLayout.vue"
+import GroupAdminCreateAccount from "../views/group_admin/GroupAdminCreateAccount.vue"
+import PatientMakeAppointment from "../views/patient/PatientMakeAppointment.vue"
 let routes = [{
   path: "/",
   redirect: "/patient-dashboard",
@@ -32,12 +35,23 @@ let routes = [{
     { path: "/find-doctor", name: "FindDoctor", component: FindDoctor },
     { path: "/medical-history", name: "MedicalHistory", component: MedicalHistory },
     { path: "/my-prescription", name: "MyPrescription", component: MyPrescription },
+    { path: "/patient-make-appointment", name: "PatientMakeAppointment", component: PatientMakeAppointment },
     { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
     { path: "/nurse-dashboard", name: "NurseDashboard", component: NurseDashboard },
     { path: "/medicaladmin-dashboard", name: "MedicalAdminDashboard", component: MedicalAdminDashboard },
     { path: "/surveys", name: "Surveys", component: Surveys },
     { path: "/surveys/create", name: "SurveyCreate", component: SurveyView },
     { path: "/surveys/:id", name: "SurveyView", component: SurveyView },
+  ],
+},
+{
+  path: "/g",
+  redirect: "/group-admin-dashboard",
+  component: GroupAdminDefaultLayout,
+  meta: { requiresAuth: true },
+  children: [
+    { path: "/group-admin-dashboard", name: "GroupAdminDashboard", component: GroupAdminDashboard },
+    { path: "/group-admin-create-account", name: "GroupAdminCreateAccount", component: GroupAdminCreateAccount },
   ],
 },
 {
@@ -82,9 +96,10 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !store.state.user.token) {
     next({ name: "Login" });
   } else if (store.state.user.token && to.meta.isGuest) {
-    next({ name: "Dashboard" });
+    next({ name: "PatientDashboard" });
   } else {
     next();
+    
   }
 });
 

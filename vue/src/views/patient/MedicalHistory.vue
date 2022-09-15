@@ -1,5 +1,5 @@
 <template>
-    <PageComponent title="Medical History">
+    <PageComponent title="Medical History" appointment="Make Appointment">
         <div v-if="loading" class="flex justify-center">Loading...</div>
         <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-5 text-gray-700">
             <DashboardCard class="order-1 lg:order-1" style="animation-delay: 0.2s">

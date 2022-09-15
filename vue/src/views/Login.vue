@@ -137,20 +137,15 @@ function login(ev) {
         router.push({
         name: "DoctorDashboard",
       });
-      }else if(res.user.user_type == "nurse"){
+      }else if(res.user.user_type == "group-admin"){
         router.push({
-        name: "NurseDashboard",
-      });
-      }else if(res.user.user_type == "medicaladmin"){
-        router.push({
-        name: "MedicalAdminDashboard",
+        name: "GroupAdminDashboard",
       });
       }else{
         router.push({
         name: "Dashboard",
       });
       }
-      
     })
     .catch((err) => {
       loading.value = false;
