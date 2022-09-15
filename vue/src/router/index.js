@@ -19,7 +19,7 @@ import MyPrescription from "../views/patient/MyPrescription.vue"
 import GroupAdminDashboard from "../views/group_admin/GroupAdminDashboard.vue"
 import GroupAdminDefaultLayout from "../components/GroupAdminDefaultLayout.vue"
 import GroupAdminCreateAccount from "../views/group_admin/GroupAdminCreateAccount.vue"
-
+import PatientMakeAppointment from "../views/patient/PatientMakeAppointment.vue"
 let routes = [{
   path: "/",
   redirect: "/patient-dashboard",
@@ -33,6 +33,7 @@ let routes = [{
     { path: "/find-doctor", name: "FindDoctor", component: FindDoctor },
     { path: "/medical-history", name: "MedicalHistory", component: MedicalHistory },
     { path: "/my-prescription", name: "MyPrescription", component: MyPrescription },
+    { path: "/patient-make-appointment", name: "PatientMakeAppointment", component: PatientMakeAppointment },
     { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
     { path: "/surveys", name: "Surveys", component: Surveys },
     { path: "/surveys/create", name: "SurveyCreate", component: SurveyView },
@@ -91,7 +92,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !store.state.user.token) {
     next({ name: "Login" });
   } else if (store.state.user.token && to.meta.isGuest) {
-    next({ name: "Dashboard" });
+    next({ name: "PatientDashboard" });
   } else {
     next();
     

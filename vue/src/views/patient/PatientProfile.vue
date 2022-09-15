@@ -1,5 +1,5 @@
 <template>
-    <PageComponent title="Patient Profile">
+    <PageComponent title="Patient Profile" appointment="Make Appointment">
         <div v-if="loading" class="flex justify-center">Loading...</div>
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 text-gray-700">
             <DashboardCard class="order-1 lg:order-1" style="animation-delay: 0.1s">
@@ -28,6 +28,9 @@
                     <div>DOB:</div>
                     <div>{{user.date_of_birth}}</div>
                 </div>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Edit Profile
+                </button>
 
             </DashboardCard>
             <DashboardCard class="order-2 lg:order-2" style="animation-delay: 0.2s">
