@@ -20,6 +20,7 @@ import GroupAdminDashboard from "../views/group_admin/GroupAdminDashboard.vue"
 import GroupAdminDefaultLayout from "../components/GroupAdminDefaultLayout.vue"
 import GroupAdminCreateAccount from "../views/group_admin/GroupAdminCreateAccount.vue"
 import PatientMakeAppointment from "../views/patient/PatientMakeAppointment.vue"
+
 let routes = [{
   path: "/",
   redirect: "/patient-dashboard",

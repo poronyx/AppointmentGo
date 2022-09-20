@@ -43,7 +43,7 @@ const loading = computed(() => store.state.dashboard.loading);
 const data = computed(() => store.state.dashboard.data);
 const user = computed(() => store.state.user.data);
 
-store.dispatch("getDashboardData");
+
 </script>
     
 <style scoped>
