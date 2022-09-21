@@ -24,7 +24,7 @@
                 On-Site Appointment
               </DialogTitle>
               <div class="mt-2">
-                <form class="mt-8 space-y-6" @submit="makeOnSiteAppointment">
+                
 
                   <div class="rounded-md shadow-sm -space-y-px">
                     <div>
@@ -43,25 +43,18 @@
                     </div>
                   </div>
 
-                  <div>
-                    <TButtonLoading :loading="loading" class="w-full relative justify-center">
-                      <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                        <LockClosedIcon class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                          aria-hidden="true" />
-                      </span>
-                      Make Appointment
-                    </TButtonLoading>
-                  </div>
-                </form>
+  
+                
               </div>
-
               <div class="mt-4">
                 <button type="button"
                   class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                  @click="closeModal">
-                  on-site
+                  @click="makeOnSiteAppointment" >
+                  Make on-site appointment
                 </button>
               </div>
+
+              
             </DialogPanel>
           </TransitionChild>
         </div>
@@ -117,7 +110,9 @@ import {
 import TButtonLoading from '../core/TButtonLoading.vue';
 import TInput from '../core/TInput.vue';
 
+const onsiteData = {
 
+}
 const props = defineProps({
   type: String
 });
@@ -131,5 +126,8 @@ function openModal() {
 }
 function makeOnSiteAppointment() {
   console.log("successfully submitted")
+  closeModal()
 }
+
+
 </script>
