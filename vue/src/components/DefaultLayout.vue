@@ -13,10 +13,10 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
           <div class="flex items-center">
-            <div class="flex-shrink-0">
+            <div >
               <img
-                class="h-8 w-8"
-                src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                class="h-14 w-55"
+                src="/src/assets/Logo2.png"
                 alt="Workflow"
               />
             </div>
@@ -212,6 +212,7 @@ const navigation = [
   { name: "Find Doctor", to: { name: "FindDoctor" } },
   { name: "Medical History", to: { name: "MedicalHistory" } },
   { name: "MyPrescription", to: { name: "MyPrescription" } },
+  { name: "Appointments", to: { name: "MyAppointment" } },
   { name: "Find Us", to: { name: "FindUs" } },
 ];
 

@@ -34,7 +34,7 @@
                   {{ ' ' }}
                   of
                   {{ ' ' }}
-                  <span class="font-medium">30</span>
+                  <span class="font-medium">3</span>
                   {{ ' ' }}
                   results
                 </p>
@@ -49,18 +49,9 @@
                   <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
                   <a href="#" aria-current="page"
                     class="relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20">1</a>
-                  <a href="#"
-                    class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">2</a>
-                  <a href="#"
-                    class="relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 md:inline-flex">3</a>
-                  <span
-                    class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700">...</span>
-                  <a href="#"
-                    class="relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 md:inline-flex">8</a>
-                  <a href="#"
-                    class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">9</a>
-                  <a href="#"
-                    class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">10</a>
+                  
+                  
+                  
                   <a href="#"
                     class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
                     <span class="sr-only">Next</span>
@@ -108,7 +99,7 @@
                           <a>Its the season that most of us will get sick and everybody should be safe</a>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          2022/09/9
+                          2022/09/09
                         </td>
                       </tr>
                       <tr>
@@ -152,9 +143,9 @@ const user = computed(() => store.state.user.data);
 
 store.dispatch("getDashboardData");
 const slides = [
-  "/src/assets/example1.jpg",
-  "/src/assets/example2.jpg",
-  "/src/assets/example3.png",
+  "/src/assets/covidBanner.jpg",
+  "/src/assets/fluBanner.jpg",
+  "/src/assets/vaccineBanner.jpg",
 ]
 
 </script>
