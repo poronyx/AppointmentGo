@@ -20,6 +20,9 @@ import GroupAdminDashboard from "../views/group_admin/GroupAdminDashboard.vue"
 import GroupAdminDefaultLayout from "../components/GroupAdminDefaultLayout.vue"
 import GroupAdminCreateAccount from "../views/group_admin/GroupAdminCreateAccount.vue"
 import PatientMakeAppointment from "../views/patient/PatientMakeAppointment.vue"
+import MyAppointment from "../views/patient/MyAppointment.vue"
+import GroupAdminCreateNewsArticle from "../views/group_admin/GroupAdminCreateNewsArticle.vue"
+
 let routes = [{
   path: "/",
   redirect: "/patient-dashboard",
@@ -33,6 +36,7 @@ let routes = [{
     { path: "/find-doctor", name: "FindDoctor", component: FindDoctor },
     { path: "/medical-history", name: "MedicalHistory", component: MedicalHistory },
     { path: "/my-prescription", name: "MyPrescription", component: MyPrescription },
+    { path: "/my-appointment", name: "MyAppointment", component: MyAppointment },
     { path: "/patient-make-appointment", name: "PatientMakeAppointment", component: PatientMakeAppointment },
     { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
     { path: "/surveys", name: "Surveys", component: Surveys },
@@ -48,6 +52,7 @@ let routes = [{
   children: [
     { path: "/group-admin-dashboard", name: "GroupAdminDashboard", component: GroupAdminDashboard },
     { path: "/group-admin-create-account", name: "GroupAdminCreateAccount", component: GroupAdminCreateAccount },
+    { path: "/group-admin-create-news-article", name: "GroupAdminCreateNewsArticle", component: GroupAdminCreateNewsArticle },
   ],
 },
 {

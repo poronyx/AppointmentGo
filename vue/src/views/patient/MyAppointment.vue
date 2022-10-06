@@ -1,5 +1,5 @@
 <template>
-    <PageComponent title="Medical History" appointment="Make Appointment">
+    <PageComponent title="My Appointments" appointment="Make Appointment">
         <div v-if="loading" class="flex justify-center">Loading...</div>
         <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-5 text-gray-700">
             <DashboardCard class="order-1 lg:order-1" style="animation-delay: 0.2s">
@@ -15,7 +15,7 @@
                     </div>
                     <input type="text"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for medical histories..." required>
+                        placeholder="Search for appointment..." required>
 
 
 
@@ -53,6 +53,9 @@
                             <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
                                 Date
                             </th>
+                            <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
+                                Status
+                            </th>
                         </tr>
                     </thead>
 
@@ -73,6 +76,9 @@
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
                                 {{appointment.date}}
+                            </td>
+                            <td class="px-6 py-3 text-xs text-gray-800 ">
+                                {{appointment.status}}
                             </td>
                         </tr>
                     </tbody>
@@ -102,11 +108,12 @@ const data = computed(() => store.state.dashboard.data);
 const user = computed(() => store.state.user.data);
 
 const appointments = [{
-    id: "OS2022125124124",
+    id: "PD2051245124124",
     institute: "Bukit Panjang Clinic",
-    summary: "Common flu",
+    summary: "Monthly check-up",
     appointment_type: "On-site",
-    date: "2022-03-23",
+    date: "2022-11-23",
+    status: "Pending",
 },
 {
     id: "HV2022235235235",
@@ -114,6 +121,8 @@ const appointments = [{
     summary: "Covid delta-variant positive",
     appointment_type: "Home-visit",
     date: "2021-10-14",
+    status: "Completed",
+    
 },
 {
     id: "OS20227562342342",
@@ -121,6 +130,8 @@ const appointments = [{
     summary: "High fever and irritated throat",
     appointment_type: "On-site",
     date: "2021-06-07",
+    status: "Completed",
+    
 }]
 
 

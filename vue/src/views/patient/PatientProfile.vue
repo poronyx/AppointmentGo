@@ -4,40 +4,45 @@
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 text-gray-700">
             <DashboardCard class="order-1 lg:order-1" style="animation-delay: 0.1s">
                 <template v-slot:title>Hello {{user.name}},</template>
-                <div class="flex justify-between text-sm mb-1">
+                <div class="mb-5"></div>
+                <div class="flex justify-between text-sm mb-2">
                     <div>Email:</div>
                     <div>{{user.email}}</div>
                 </div>
-                <div class="flex justify-between text-sm mb-1">
+                <div class="flex justify-between text-sm mb-2">
                     <div>Race:</div>
                     <div>{{user.race}}</div>
                 </div>
-                <div class="flex justify-between text-sm mb-1">
+                <div class="flex justify-between text-sm mb-2">
                     <div>Contact No.:</div>
                     <div>{{user.phone_number}}</div>
                 </div>
-                <div class="flex justify-between text-sm mb-1">
+                <div class="flex justify-between text-sm mb-2">
                     <div>NRIC:</div>
                     <div>{{user.nric}}</div>
                 </div>
-                <div class="flex justify-between text-sm mb-1">
+                <div class="flex justify-between text-sm mb-2">
                     <div>Gender:</div>
                     <div>{{user.gender}}</div>
                 </div>
-                <div class="flex justify-between text-sm mb-1">
+                <div class="flex justify-between text-sm mb-2">
                     <div>DOB:</div>
                     <div>{{user.date_of_birth}}</div>
                 </div>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Edit Profile
-                </button>
-
+                <div class="justify-between text-sm ">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Edit Profile
+                    </button>
+                </div>
             </DashboardCard>
             <DashboardCard class="order-2 lg:order-2" style="animation-delay: 0.2s">
-                <template v-slot:title>Add Medical Details</template>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Add
-                </button>
+                <template v-slot:title>Submit Preliminary Documents</template>
+                <div class="mb-8"></div>
+                <div class="justify-between text-sm ">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ">
+                        Add Document
+                    </button>
+                </div>
             </DashboardCard>
 
         </div>

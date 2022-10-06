@@ -39,40 +39,39 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
-                                Name
+                                ID
                             </th>
                             <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
-                                Specialty
+                                Instituition
                             </th>
                             <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
                                 Summary
                             </th>
                             <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
-                                Qualification(s)
+                                Prescribed by
                             </th>
                             <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
-                                Working experience
+                                Date
                             </th>
                         </tr>
                     </thead>
 
-                    <tbody v-for="doctor in doctors" class="divide-y divide-gray-200">
+                    <tbody v-for="appointment in appointments" class="divide-y divide-gray-200">
 
                         <tr>
                             <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
-                                <a href="#">{{doctor.name}}</a>
+                                <a href="#">{{appointment.id}}</a>
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                <p v-for="field in doctor.specialty"> {{field}}</p>
+                                {{appointment.institute}}
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                {{doctor.summary}}
+                                {{appointment.summary}}
+                            </td><td class="px-6 py-3 text-xs text-gray-800 ">
+                                {{appointment.precribed_by}}
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                <p v-for="qualification in doctor.qualifications"> {{qualification}}</p>
-                            </td>
-                            <td class="px-6 py-3 text-xs text-gray-800 ">
-                                {{doctor.working_experience}}
+                                {{appointment.date}}
                             </td>
                         </tr>
                     </tbody>
@@ -101,27 +100,31 @@ const loading = computed(() => store.state.dashboard.loading);
 const data = computed(() => store.state.dashboard.data);
 const user = computed(() => store.state.user.data);
 
-const doctors = [{
-    name: "Doct. Tan Seng Heng",
-    specialty: ["Cardiology", "Allergy and immunology"],
-    summary: "Doctor Tan graduated top of his batch from the best university of Taipei",
-    qualifications: ["University of Taipei"],
-    working_experience: "12 Years",
+const appointments = [{
+    id: "H135212134HJKDS",
+    institute: "Bukit Panjang Clinic",
+    summary: "Common flu",
+    appointment_type: "On-site",
+    precribed_by: "Doct. Wu",
+    date: "2022-03-23",
 },
 {
-    name: "Doct. Lim Wong Kee",
-    specialty: ["Cardiology", "Physiology"],
-    summary: "Doctor Lim was a top researcher in stem-cell technology before joining this clinic",
-    qualifications: ["National University of Singapore", "National University of China"],
-    working_experience: "15 Years",
+    id: "AGGH223134HJKDS",
+    institute: "Not Applicable",
+    summary: "Covid delta-variant positive",
+    appointment_type: "Home-visit",
+    precribed_by: "Doct. Lim",
+    date: "2021-10-14",
 },
 {
-    name: "Doct. Kim Song Min",
-    specialty: ["Anesthesiology", "Allergy and immunology", "Dermatology"],
-    summary: "Doctor Lim was a top researcher in stem-cell technology before joining this clinic",
-    qualifications: ["National University of Singapore", "University of Wollongong"],
-    working_experience: "29 Years",
+    id: "FESF995673456563",
+    institute: "Newton Clinic",
+    summary: "High fever and irritated throat",
+    appointment_type: "On-site",
+    precribed_by: "Doct. Chang",
+    date: "2021-06-07",
 }]
+
 
 
 
