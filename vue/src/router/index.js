@@ -22,6 +22,7 @@ import GroupAdminCreateAccount from "../views/group_admin/GroupAdminCreateAccoun
 import PatientMakeAppointment from "../views/patient/PatientMakeAppointment.vue"
 import MyAppointment from "../views/patient/MyAppointment.vue"
 import GroupAdminCreateNewsArticle from "../views/group_admin/GroupAdminCreateNewsArticle.vue"
+import PatientEditProfile from"../views/patient/PatientEditProfile.vue"
 
 let routes = [{
   path: "/",
@@ -38,6 +39,7 @@ let routes = [{
     { path: "/my-prescription", name: "MyPrescription", component: MyPrescription },
     { path: "/my-appointment", name: "MyAppointment", component: MyAppointment },
     { path: "/patient-make-appointment", name: "PatientMakeAppointment", component: PatientMakeAppointment },
+    { path: "/patient-edit-profile", name: "PatientEditProfile", component: PatientEditProfile },
     { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
     { path: "/surveys", name: "Surveys", component: Surveys },
     { path: "/surveys/create", name: "SurveyCreate", component: SurveyView },

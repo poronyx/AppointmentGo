@@ -210,9 +210,6 @@ import Notification from "./Notification.vue";
 const navigation = [
   { name: "Home", to: { name: "PatientDashboard" } },
   { name: "Find Doctor", to: { name: "FindDoctor" } },
-  { name: "Medical History", to: { name: "MedicalHistory" } },
-  { name: "MyPrescription", to: { name: "MyPrescription" } },
-  { name: "Appointments", to: { name: "MyAppointment" } },
   { name: "Find Us", to: { name: "FindUs" } },
 ];
 
