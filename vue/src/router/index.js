@@ -23,7 +23,7 @@ import PatientMakeAppointment from "../views/patient/PatientMakeAppointment.vue"
 import MyAppointment from "../views/patient/MyAppointment.vue"
 import GroupAdminCreateNewsArticle from "../views/group_admin/GroupAdminCreateNewsArticle.vue"
 import PatientEditProfile from"../views/patient/PatientEditProfile.vue"
-
+import ViewArticle from "../views/patient/ViewArticle.vue"
 let routes = [{
   path: "/",
   redirect: "/patient-dashboard",
@@ -40,6 +40,7 @@ let routes = [{
     { path: "/my-appointment", name: "MyAppointment", component: MyAppointment },
     { path: "/patient-make-appointment", name: "PatientMakeAppointment", component: PatientMakeAppointment },
     { path: "/patient-edit-profile", name: "PatientEditProfile", component: PatientEditProfile },
+    { path: "/patient-view-article", name: "ViewArticle", component: ViewArticle },
     { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
     { path: "/surveys", name: "Surveys", component: Surveys },
     { path: "/surveys/create", name: "SurveyCreate", component: SurveyView },

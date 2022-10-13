@@ -82,7 +82,7 @@
                     <tbody class="divide-y divide-gray-200">
                       <tr>
                         <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          <a href="#">Fight Against Covid</a>
+                          <a href="/patient-view-article">Fight Against Covid</a>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                           Guidelines to help keep our nation safe from Covid-19
@@ -93,7 +93,7 @@
                       </tr>
                       <tr>
                         <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          <a href="#">Summer Flu</a>
+                          <a href="/patient-view-article">Summer Flu</a>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                           <a>Its the season that most of us will get sick and everybody should be safe</a>
@@ -104,7 +104,7 @@
                       </tr>
                       <tr>
                         <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          <a href="#">Get your covid jabs with us</a>
+                          <a href="/patient-view-article">Get your covid jabs with us</a>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                           With the constant spread of covid-19, our clinic now provide different vaccines to help
