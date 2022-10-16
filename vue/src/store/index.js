@@ -8,6 +8,10 @@ const store = createStore({
       token: sessionStorage.getItem("TOKEN"),
       user_type: 'patient',
     },
+    material: {
+      loading:false,
+      data:{}
+    },
     dashboard: {
       loading: false,
       data: {}
@@ -36,6 +40,7 @@ const store = createStore({
         .then(({data}) => {
           commit('setUser', data.user);
           commit('setToken', data.token)
+          console.log(data)
           return data;
         })
     },
@@ -53,6 +58,20 @@ const store = createStore({
           commit('logout')
           return response;
         })
+    },
+    getMaterial({commit}){
+      commit('dashboardLoading', true)
+      return axiosClient.get('/get-material')
+      .then(({data}) => {
+        commit('dashboardLoading', false)
+        commit('addMaterial', data.material)
+      })
+    },
+    createMaterial({commit}, material){
+      return axiosClient.post('/create-material', material)
+      .then(({data}) => {
+        commit('addMaterial', data.material)
+      })
     },
     getUser({commit}) {
       return axiosClient.get('/user')
@@ -156,6 +175,9 @@ const store = createStore({
     setToken: (state, token) => {
       state.user.token = token;
       sessionStorage.setItem('TOKEN', token);
+    },
+    addMaterial: (state, material) => {
+      state.user.data = user;
     },
     dashboardLoading: (state, loading) => {
       state.dashboard.loading = loading;

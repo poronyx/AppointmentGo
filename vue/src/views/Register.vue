@@ -84,6 +84,21 @@
           placeholder="dd/mm/yyyy"
         />
         <TInput
+          name="address"
+          v-model="addr.address"
+          :errors="errors"
+          placeholder="Please Enter your address"
+        />
+        <input
+          type="text"
+          name="postcode"
+          v-model="addr.postcode"
+          minlength="6"
+          maxlength="6"
+          class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+          placeholder="Postal Code"
+        />
+        <TInput
           type="password"
           name="password"
           v-model="user.password"
@@ -121,6 +136,12 @@ import TInput from "../components/core/TInput.vue";
 import Alert from "../components/Alert.vue";
 
 const router = useRouter();
+
+const addr = {
+  "postcode" : "",
+  "address" : ""
+}
+
 const user = {
   name: "",
   email: "",
@@ -131,7 +152,9 @@ const user = {
   user_type: "patient", //register is only for patient 
   date_of_birth: "",
   password: "",
+  address: addr,
 };
+
 const loading = ref(false);
 const errors = ref({});
 

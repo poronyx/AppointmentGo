@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User: Zura
  * Date: 12/19/2021
@@ -30,31 +31,49 @@ class AuthController extends Controller
             'email' => 'required|email|string|unique:users,email',
             'race' => 'required|string',
             'phone_number' => 'required|integer|unique:users,phone_number',
-            'nric' => 'required|string',
+            'nric' => 'required|string|unique:users,nric',
             'gender' => 'required|string',
             'user_type' => 'required|string',
             'date_of_birth' => 'required|date',
+            'address.postcode' => 'required|integer',
+            'address.address' => 'required',
             'password' => [
                 'required',
                 'confirmed',
                 Password::min(8)->mixedCase()->numbers()->symbols()
             ]
         ]);
+        if ($data['user_type'] == 'patient') {
+            /** @var \App\Models\User $user */
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'race' => $data['race'],
+                'phone_number' => $data['phone_number'],
+                'nric' => $data['nric'],
+                'gender' => $data['gender'],
+                'user_type' => $data['user_type'],
+                'date_of_birth' => $data['date_of_birth'],
+                'password' => bcrypt($data['password']),
+                'address' =>  $request->input('address')
+            ]);
+        } else if ($data['user_type'] == 'nurse') {
+            /** @var \App\Models\User $user */
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'race' => $data['race'],
+                'phone_number' => $data['phone_number'],
+                'nric' => $data['nric'],
+                'gender' => $data['gender'],
+                'user_type' => $data['user_type'],
+                'date_of_birth' => $data['date_of_birth'],
+                'password' => bcrypt($data['password']),
+                'department' => $request->input('department')
+            ]);
+        }
 
-        /** @var \App\Models\User $user */
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'race' => $data['race'],
-            'phone_number' => $data['phone_number'],
-            'nric' => $data['nric'],
-            'gender' => $data['gender'],
-            'user_type' => $data['user_type'],
-            'date_of_birth' => $data['date_of_birth'],
-            'password' => bcrypt($data['password'])
-        ]);
         $token = $user->createToken('main')->plainTextToken;
-
         return response([
             'user' => $user,
             'token' => $token
@@ -99,5 +118,4 @@ class AuthController extends Controller
             'success' => true
         ]);
     }
-
 }
