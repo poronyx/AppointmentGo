@@ -79,39 +79,16 @@
                         </th>
                       </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200">
+                    <tbody v-for="data in material" class="divide-y divide-gray-200">
                       <tr>
                         <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          <a href="/patient-view-article">Fight Against Covid</a>
+                          <a href="/patient-view-article">{{data.title}}</a>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          Guidelines to help keep our nation safe from Covid-19
+                          {{data.description}}
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          2022/09/12
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          <a href="/patient-view-article">Summer Flu</a>
-                        </td>
-                        <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          <a>Its the season that most of us will get sick and everybody should be safe</a>
-                        </td>
-                        <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          2022/09/09
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          <a href="/patient-view-article">Get your covid jabs with us</a>
-                        </td>
-                        <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          With the constant spread of covid-19, our clinic now provide different vaccines to help
-                          against the virus
-                        </td>
-                        <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          2022/07/23
+                          {{data.image_url}}
                         </td>
                       </tr>
                     </tbody>
@@ -137,16 +114,24 @@ import Carousel from "../../components/core/carousel/Carousel.vue";
 
 const store = useStore();
 
-const loading = computed(() => store.state.dashboard.loading);
-const data = computed(() => store.state.dashboard.data);
-const user = computed(() => store.state.user.data);
+const loading = computed(() => store.state.material.loading);
+const material = computed(() => store.state.material.data);
+const slidesImage = computed(() => store.state.material.slides);
+console.log("Dispatch Materials: ",store.dispatch("getMaterialData"));
+store.dispatch("getMaterialData");
+
+console.log("Loading Materials: ",material);
 
 const slides = [
   "/src/assets/covidBanner.jpg",
   "/src/assets/fluBanner.jpg",
   "/src/assets/vaccineBanner.jpg",
 ]
-
+for (let images in material){
+  console.log("Inside STORE: ",images)
+  slides.push(images.image_url)
+}
+console.log("slides from store: ",slidesImage)
 </script>
   
 <style scoped>

@@ -10,7 +10,8 @@ const store = createStore({
     },
     material: {
       loading:false,
-      data:{}
+      data:{},
+      slides: []
     },
     dashboard: {
       loading: false,
@@ -32,7 +33,9 @@ const store = createStore({
       message: ''
     }
   },
-  getters: {},
+  getters: {
+
+  },
   actions: {
 
     register({commit}, user) {
@@ -59,13 +62,19 @@ const store = createStore({
           return response;
         })
     },
-    getMaterial({commit}){
-      commit('dashboardLoading', true)
-      return axiosClient.get('/get-material')
-      .then(({data}) => {
-        commit('dashboardLoading', false)
-        commit('addMaterial', data.material)
+    getMaterialData({commit}){
+      commit('materialLoading', true)
+      return axiosClient.get(`/get-material`)
+      .then((res) => {
+        commit('materialLoading', false)
+        commit('setMaterialData', res.data.material)
+        return res;
       })
+      .catch(error => {
+        commit('materialLoading', false)
+        return error;
+      })
+
     },
     createMaterial({commit}, material){
       return axiosClient.post('/create-material', material)
@@ -179,6 +188,12 @@ const store = createStore({
     addMaterial: (state, material) => {
       state.user.data = user;
     },
+    setMaterialData: (state, data) => {
+      state.material.data = data;
+    },
+    materialLoading: (state, loading) => {
+      state.material.loading = loading;
+    },
     dashboardLoading: (state, loading) => {
       state.dashboard.loading = loading;
     },
@@ -207,7 +222,9 @@ const store = createStore({
       }, 3000)
     },
   },
-  modules: {},
+  modules: {
+    
+  },
 });
 
 export default store;
