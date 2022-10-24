@@ -33,7 +33,6 @@ class User extends Authenticatable
         'qualifications',
         'summary',
         'specialty',
-        'sub_specialty',
         'experience',
         'department'
 
@@ -60,7 +59,6 @@ class User extends Authenticatable
         'address' => 'array',
         'qualifications' => 'array',
         'specialty' => 'array',
-        'sub_specialty' => 'array'
 
     ];
 }

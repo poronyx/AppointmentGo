@@ -13,6 +13,15 @@ const store = createStore({
       data:{},
       slides:[]
     },
+    institute: {
+      loading:false,
+      data:{},
+      instituition_list:[]
+    },
+    specialty: {
+      data:{},
+      specialty_list:[]
+    },
     dashboard: {
       loading: false,
       data: {}
@@ -64,7 +73,7 @@ const store = createStore({
     },
     getMaterialData({commit}){
       commit('materialLoading', true)
-      return axiosClient.get(`/get-material`)
+      return axiosClient.get(`/material/get`)
       .then((res) => {
         commit('materialLoading', false)
         commit('setMaterialData', res.data.material)
@@ -78,9 +87,50 @@ const store = createStore({
 
     },
     createMaterial({commit}, material){
-      return axiosClient.post('/create-material', material)
+      return axiosClient.post('/material/create', material)
       .then(({data}) => {
         commit('addMaterial', data.material)
+      })
+    },
+    getInstituteData({commit}){
+      commit('instituteLoading', true)
+      return axiosClient.get(`/institute/get`)
+      .then((res) => {
+        commit('instituteLoading', false)
+        commit('setInstituteData', res.data.institutes)
+
+        return res;
+      })
+      .catch(error => {
+        commit('materialLoading', false)
+        return error;
+      })
+
+    },
+    createInstitute({commit},input){
+      console.log("PayLoad: ",input)
+      return axiosClient.post('/institute/create', input)
+      .then(({data}) => {
+        commit('addInstitute', data.institute)
+      })
+    },
+    getSpecialtyData({commit}){
+      return axiosClient.get(`/specialty/get`)
+      .then((res) => {
+        commit('setSpecialtyData', res.data.specialties)
+
+        return res;
+      })
+      .catch(error => {
+        return error;
+      })
+
+    },
+    createSpecialty({commit},input){
+      console.log("PayLoad: ",input)
+      return axiosClient.post('/specialty/create', input)
+      .then(({data}) => {
+        commit('addSpecialty', data.specialty)
       })
     },
     getUser({commit}) {
@@ -197,8 +247,25 @@ const store = createStore({
       }
       state.material.slides = imageList
     },
+    addInstitute: (state, institute) => {
+      state.institute.data = institute;
+    },
+    setInstituteData: (state, data) => {
+      console.log("Inside Mutations: ",data)
+      state.institute.instituition_list = data
+    },
+    addSpecialty: (state, specialty) => {
+      state.specialty.data = specialty;
+    },
+    setSpecialtyData: (state, data) => {
+      console.log("Inside Mutations: ",data)
+      state.specialty.specialty_list = data
+    },
     materialLoading: (state, loading) => {
       state.material.loading = loading;
+    },
+    instituteLoading: (state, loading) => {
+      state.institute.loading = loading;
     },
     dashboardLoading: (state, loading) => {
       state.dashboard.loading = loading;

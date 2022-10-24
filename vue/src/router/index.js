@@ -26,6 +26,9 @@ import ViewArticle from "../views/patient/ViewArticle.vue"
 import MedicalAdminDefaultLayout from "../components/MedicalAdminDefaultLayout.vue"
 import MedicalAdminCreateNewsArticle from "../views/medical_admin/MedicalAdminCreateNewsArticle.vue"
 import MedicalAdminDashboard from "../views/medical_admin/MedicalAdminDashboard.vue"
+import GroupAdminCreateInstitute from "../views/group_admin/GroupAdminCreateInstitute.vue"
+import GroupAdminCreateSpecialty from "../views/group_admin/GroupAdminCreateSpecialty.vue"
+
 
 let routes = [{
   path: "/",
@@ -68,6 +71,8 @@ let routes = [{
   children: [
     { path: "/group-admin-dashboard", name: "GroupAdminDashboard", component: GroupAdminDashboard },
     { path: "/group-admin-create-account", name: "GroupAdminCreateAccount", component: GroupAdminCreateAccount },
+    { path: "/group-admin-create-institute", name: "GroupAdminCreateInstitute", component: GroupAdminCreateInstitute },
+    { path: "/group-admin-create-specialty", name: "GroupAdminCreateSpecialty", component: GroupAdminCreateSpecialty },
   ],
 },
 {

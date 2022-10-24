@@ -2,46 +2,29 @@
     <PageComponent title="Find Us" appointment="Make Appointment">
         <div v-if="loading" class="flex justify-center">Loading...</div>
         <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-5 text-gray-700">
-            <DashboardCard class="order-1 lg:order-1" style="animation-delay: 0.1s">
-                <template v-slot:title><b>Bukit Panjang Clinic</b></template>
+            <DashboardCard v-for="institute in institutes" class="order-1 lg:order-1" style="animation-delay: 0.1s">
+                <template v-slot:title><b>{{institute.instituition_name}}</b></template>
                 <div class="flex justify-between text-sm mb-3">
                     <div>Address</div>
-                    <div>Singapore 650223</div>
+                    <div>{{institute.instituition_addr}}</div>
                 </div>
                 <div class="flex justify-between text-sm mb-3">
                     <div>Description</div>
-                    <div>Located at the heart of Bukit Panjang</div>
+                    <div>{{institute.instituition_desc}}</div>
                 </div>
                 <div class="flex justify-between text-sm mb-3">
                     <div>Contact No.</div>
-                    <div>+65 6882 8393</div>
+                    <div>{{institute.instituition_phone}}</div>
                 </div>
-                <GoogleMap api-key="AIzaSyA3EaEfTI_FRPgg0b6jqUWdp2jW6vxBH3M" style="width: 100%; height: 500px" :center="center1"
+                <GoogleMap api-key="AIzaSyA3EaEfTI_FRPgg0b6jqUWdp2jW6vxBH3M" style="width: 100%; height: 500px"
+                    :center="{ lat: parseFloat(institute.location.lat), lng: parseFloat(institute.location.lng) }"
                     :zoom="15">
-                    <Marker :options="{ position: center1 }" />
+                    <Marker
+                        :options="{ position: { lat: parseFloat(institute.location.lat), lng: parseFloat(institute.location.lng) } }" />
                 </GoogleMap>
 
             </DashboardCard>
-            <DashboardCard class="order-1 lg:order-1" style="animation-delay: 0.1s">
-                <template v-slot:title><b>Newton Clinic</b></template>
-                <div class="flex justify-between text-sm mb-3">
-                    <div>Address</div>
-                    <div>Singapore 734352</div>
-                </div>
-                <div class="flex justify-between text-sm mb-3">
-                    <div>Description</div>
-                    <div>Located near the famous Newton Food Centre</div>
-                </div>
-                <div class="flex justify-between text-sm mb-3">
-                    <div>Contact No.</div>
-                    <div>+65 6762 5234</div>
-                </div>
-                <GoogleMap api-key="AIzaSyA3EaEfTI_FRPgg0b6jqUWdp2jW6vxBH3M" style="width: 100%; height: 500px" :center="center2"
-                    :zoom="15">
-                    <Marker :options="{ position: center2 }" />
-                </GoogleMap>
 
-            </DashboardCard>
 
         </div>
     </PageComponent>
@@ -60,13 +43,27 @@ import { GoogleMap, Marker } from "vue3-google-map";
 const store = useStore();
 
 const loading = computed(() => store.state.dashboard.loading);
-const data = computed(() => store.state.dashboard.data);
+const institutes = computed(() => store.state.institute.instituition_list);
 const user = computed(() => store.state.user.data);
 
 const center1 = { lat: 1.378701, lng: 103.763741 };
 const center2 = { lat: 1.3115095, lng: 103.8389787 };
+const datatostore = [
+    {
+        name: "Bukit Panjang Clinic",
+        addr: "Singapore 650223",
+        desc: "Located at the heart of Bukit Panjang",
+        contact: "+65 6882 8393",
 
-store.dispatch("getDashboardData");
+    },
+    {
+        name: "Newton Clinic",
+        addr: "Singapore 734352",
+        desc: "Located near the famous Newton Food Centre",
+        contact: "+65 6762 5234",
+    }
+]
+store.dispatch("getInstituteData");
 </script>
     
 <style scoped>

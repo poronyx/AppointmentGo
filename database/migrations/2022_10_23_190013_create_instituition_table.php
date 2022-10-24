@@ -13,15 +13,14 @@ class CreateInstituitionTable extends Migration
      */
     public function up()
     {
-        Schema::create('instituition', function (Blueprint $table) {
+        Schema::create('instituitions', function (Blueprint $table) {
             $table->id();
             $table->string("instituition_type");
             $table->string("instituition_name");
             $table->string("instituition_addr");
             $table->string("instituition_phone");
             $table->string("instituition_desc");
-            $table->string("lat");
-            $table->string("lon");
+            $table->json("location");
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ class CreateInstituitionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('instituition');
+        Schema::dropIfExists('instituitions');
     }
 }

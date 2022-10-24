@@ -33,9 +33,7 @@ class CreateUsersTable extends Migration
             $table->json('qualifications')->nullable();
             $table->text('summary')->nullable();
             $table->json('specialty')->nullable();
-            $table->json('sub_specialty')->nullable();
             $table->string('experience')->nullable();
-            //$table->string('availability')->nullable();
             //For Nurse 
             $table->string('department')->nullable();
             // For Doctor, Nurse and Medical Admin

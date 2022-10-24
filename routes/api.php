@@ -28,8 +28,15 @@ Route::middleware('auth:sanctum')->group(function () {
     
     
 });
-Route::post('/create-material',[\App\Http\Controllers\MaterialController::class,'createMaterial']);
-Route::get('/get-material',[\App\Http\Controllers\MaterialController::class,'getMaterial']);
+//Materials
+Route::post('/material/create',[\App\Http\Controllers\MaterialController::class,'createMaterial']);
+Route::get('/material/get',[\App\Http\Controllers\MaterialController::class,'getMaterial']);
+//Institutes
+Route::post('/institute/create',[\App\Http\Controllers\InstituitionController::class,'createInstituition']);
+Route::get('/institute/get',[\App\Http\Controllers\InstituitionController::class,'getInstituition']);
+//Specialty
+Route::post('/specialty/create',[\App\Http\Controllers\SpecialtyController::class,'createSpecialty']);
+Route::get('/specialty/get',[\App\Http\Controllers\SpecialtyController::class,'getSpecialty']);
 Route::get('/survey-by-slug/{survey:slug}', [\App\Http\Controllers\SurveyController::class, 'showForGuest']);
 Route::post('/survey/{survey}/answer', [\App\Http\Controllers\SurveyController::class, 'storeAnswer']);
 
