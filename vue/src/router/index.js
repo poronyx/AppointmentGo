@@ -21,9 +21,12 @@ import GroupAdminDefaultLayout from "../components/GroupAdminDefaultLayout.vue"
 import GroupAdminCreateAccount from "../views/group_admin/GroupAdminCreateAccount.vue"
 import PatientMakeAppointment from "../views/patient/PatientMakeAppointment.vue"
 import MyAppointment from "../views/patient/MyAppointment.vue"
-import GroupAdminCreateNewsArticle from "../views/group_admin/GroupAdminCreateNewsArticle.vue"
 import PatientEditProfile from"../views/patient/PatientEditProfile.vue"
 import ViewArticle from "../views/patient/ViewArticle.vue"
+import MedicalAdminDefaultLayout from "../components/MedicalAdminDefaultLayout.vue"
+import MedicalAdminCreateNewsArticle from "../views/medical_admin/MedicalAdminCreateNewsArticle.vue"
+import MedicalAdminDashboard from "../views/medical_admin/MedicalAdminDashboard.vue"
+
 let routes = [{
   path: "/",
   redirect: "/patient-dashboard",
@@ -48,6 +51,16 @@ let routes = [{
   ],
 },
 {
+  path: "/m",
+  redirect: "/medical-admin-dashboard",
+  component: MedicalAdminDefaultLayout,
+  meta: { requiresAuth: true },
+  children: [
+    { path: "/medical-admin-dashboard", name: "MedicalAdminDashboard", component: MedicalAdminDashboard },
+    { path: "/medical-admin-create-news-article", name: "MedicalAdminCreateNewsArticle", component: MedicalAdminCreateNewsArticle },
+  ],
+},
+{
   path: "/g",
   redirect: "/group-admin-dashboard",
   component: GroupAdminDefaultLayout,
@@ -55,7 +68,6 @@ let routes = [{
   children: [
     { path: "/group-admin-dashboard", name: "GroupAdminDashboard", component: GroupAdminDashboard },
     { path: "/group-admin-create-account", name: "GroupAdminCreateAccount", component: GroupAdminCreateAccount },
-    { path: "/group-admin-create-news-article", name: "GroupAdminCreateNewsArticle", component: GroupAdminCreateNewsArticle },
   ],
 },
 {

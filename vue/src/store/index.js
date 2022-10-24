@@ -11,7 +11,7 @@ const store = createStore({
     material: {
       loading:false,
       data:{},
-      slides: []
+      slides:[]
     },
     dashboard: {
       loading: false,
@@ -68,6 +68,7 @@ const store = createStore({
       .then((res) => {
         commit('materialLoading', false)
         commit('setMaterialData', res.data.material)
+
         return res;
       })
       .catch(error => {
@@ -189,7 +190,12 @@ const store = createStore({
       state.user.data = user;
     },
     setMaterialData: (state, data) => {
-      state.material.data = data;
+      state.material.data = data
+      const imageList = []
+      for(let x in data){
+        imageList.push(data[x].image_url)
+      }
+      state.material.slides = imageList
     },
     materialLoading: (state, loading) => {
       state.material.loading = loading;

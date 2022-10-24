@@ -9,5 +9,5 @@ class Material extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['image_url', 'description'];
+    protected $fillable = ['title','content','image_url', 'description'];
 }

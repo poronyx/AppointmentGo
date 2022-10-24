@@ -107,6 +107,10 @@ function register(ev) {
             }
         });
 }
+
+function pickedUserType(ev){
+    console.log(ev)
+}
 </script>
     
 <style scoped>

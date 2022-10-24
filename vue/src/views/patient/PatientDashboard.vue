@@ -8,7 +8,7 @@
         <div v-else class="grid grid-cols-1 gap-5 text-gray-700">
 
           <div class="px-4 sm:px-0 animate-fade-in-down  ">
-            <carousel :slides="slides" :interval="3000" controls indicators></carousel>
+            <carousel :slides="slidesImage" :interval="3000" controls indicators></carousel>
 
           </div>
 
@@ -88,7 +88,7 @@
                           {{data.description}}
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          {{data.image_url}}
+                          {{data.created_at}}
                         </td>
                       </tr>
                     </tbody>
@@ -117,21 +117,19 @@ const store = useStore();
 const loading = computed(() => store.state.material.loading);
 const material = computed(() => store.state.material.data);
 const slidesImage = computed(() => store.state.material.slides);
-console.log("Dispatch Materials: ",store.dispatch("getMaterialData"));
 store.dispatch("getMaterialData");
 
-console.log("Loading Materials: ",material);
+console.log("Loading Materials: ",material.value.length);
 
-const slides = [
-  "/src/assets/covidBanner.jpg",
-  "/src/assets/fluBanner.jpg",
-  "/src/assets/vaccineBanner.jpg",
-]
-for (let images in material){
-  console.log("Inside STORE: ",images)
-  slides.push(images.image_url)
+const slides = ["https://srv622.hstgr.io:7443/files/images/fluBanner.jpg",
+"https://srv622.hstgr.io:7443/files/images/fluBanner.jpg",
+"https://srv622.hstgr.io:7443/files/images/fluBanner.jpg"]
+//storing material images into slide
+for (let x = 0 ;  x < material.value.length; x++){
+  console.log("Inside STORE: ",material.value[x].image_url)
+  slides.push(material.value[x].image_url)
 }
-console.log("slides from store: ",slidesImage)
+console.log("slides from store: ",slidesImage.value[0])
 </script>
   
 <style scoped>

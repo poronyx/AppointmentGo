@@ -25,9 +25,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index']);
     Route::get('/patient-dashboard', [\App\Http\Controllers\PatientDashboardController::class, 'index']);
 
-    Route::post('/create-material',[\App\Http\Controllers\MaterialController::class,'createMaterial']);
+    
     
 });
+Route::post('/create-material',[\App\Http\Controllers\MaterialController::class,'createMaterial']);
 Route::get('/get-material',[\App\Http\Controllers\MaterialController::class,'getMaterial']);
 Route::get('/survey-by-slug/{survey:slug}', [\App\Http\Controllers\SurveyController::class, 'showForGuest']);
 Route::post('/survey/{survey}/answer', [\App\Http\Controllers\SurveyController::class, 'storeAnswer']);

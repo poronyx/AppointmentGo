@@ -38,6 +38,8 @@ class CreateUsersTable extends Migration
             //$table->string('availability')->nullable();
             //For Nurse 
             $table->string('department')->nullable();
+            // For Doctor, Nurse and Medical Admin
+            $table->string('instituition_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

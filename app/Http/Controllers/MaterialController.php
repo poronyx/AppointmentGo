@@ -11,13 +11,17 @@ class MaterialController extends Controller
     public function createMaterial(Request $request)
     {
         $data = $request->validate([
-            'image_url' => 'required|string',
+            'title' => 'required|string',
             'description' => 'required|string',
+            'image_url' => 'required|string',
+            'content' => 'required|string',
         ]);
 
         $material = Material::create([
-            'name' => $data['image_url'],
+            'title' => $data['title'],
             'description' => $data['description'],
+            'image_url' => $data['image_url'],
+            'content' => $data['content'],
         ]);
 
         return response([
