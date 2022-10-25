@@ -6,7 +6,7 @@ const store = createStore({
     user: {
       data: {},
       token: sessionStorage.getItem("TOKEN"),
-      user_type: 'patient',
+      createData: {}
     },
     material: {
       loading:false,
@@ -21,6 +21,13 @@ const store = createStore({
     specialty: {
       data:{},
       specialty_list:[]
+    },
+    groupAdminManageAccount: {
+      loading: false,
+      user_list: [],
+      deleteData: {},
+      suspendData: {}
+
     },
     dashboard: {
       loading: false,
@@ -52,6 +59,14 @@ const store = createStore({
         .then(({data}) => {
           commit('setUser', data.user);
           commit('setToken', data.token)
+          console.log(data)
+          return data;
+        })
+    },
+    registerForAll({commit}, user) {
+      return axiosClient.post('/register', user)
+        .then(({data}) => {
+          commit('setUserCreate', data.user);
           console.log(data)
           return data;
         })
@@ -140,6 +155,49 @@ const store = createStore({
         commit('setUser', res.data)
       })
     },
+    getAllUsersData({commit}){
+      commit('manageAccountLoading', true)
+      return axiosClient.get(`/users/getAll`)
+      .then((res) => {
+        commit('manageAccountLoading', false)
+        commit('setAllUsersData', res.data.users)
+
+        return res;
+      })
+      .catch(error => {
+        commit('materialLoading', false)
+        return error;
+      })
+
+    },
+    deleteUser({commit},input){
+      return axiosClient.post(`/users/deleteUser`, input)
+      .then((res) => {
+        commit('setUserDeleteData', res.data)
+        console.log("After Delete in Store res: ",res.data)
+        return res;
+      })
+
+    },
+    suspendUser({commit},input){
+      return axiosClient.post(`/users/suspendUser`, input)
+      .then((res) => {
+        commit('setUserSuspendData', res.data)
+        console.log("After Suspend in Store res: ",res.data)
+        return res;
+      })
+
+    },
+    unSuspendUser({commit},input){
+      return axiosClient.post(`/users/unSuspendUser`, input)
+      .then((res) => {
+        commit('setUserSuspendData', res.data)
+        console.log("After Suspend in Store res: ",res.data)
+        return res;
+      })
+
+    },
+    
     getDashboardData({commit}) {
       commit('dashboardLoading', true)
       return axiosClient.get(`/dashboard`)
@@ -232,6 +290,9 @@ const store = createStore({
     setUser: (state, user) => {
       state.user.data = user;
     },
+    setUserCreate: (state, user) => {
+      state.user.createData = user;
+    },
     setToken: (state, token) => {
       state.user.token = token;
       sessionStorage.setItem('TOKEN', token);
@@ -254,6 +315,14 @@ const store = createStore({
       console.log("Inside Mutations: ",data)
       state.institute.instituition_list = data
     },
+    setUserDeleteData: (state, data) => {
+      console.log("Inside Mutations: ",data)
+      state.groupAdminManageAccount.deleteData = data;
+    },
+    setUserSuspendData: (state, data) => {
+      console.log("Inside Mutations: ",data)
+      state.groupAdminManageAccount.suspendData = data;
+    },
     addSpecialty: (state, specialty) => {
       state.specialty.data = specialty;
     },
@@ -261,12 +330,20 @@ const store = createStore({
       console.log("Inside Mutations: ",data)
       state.specialty.specialty_list = data
     },
+    setAllUsersData: (state, data) => {
+      console.log("Inside Mutations: ",data)
+      state.groupAdminManageAccount.user_list = data
+    },
     materialLoading: (state, loading) => {
       state.material.loading = loading;
     },
     instituteLoading: (state, loading) => {
       state.institute.loading = loading;
     },
+    manageAccountLoading: (state, loading) => {
+      state.groupAdminManageAccount.loading = loading;
+    },
+    
     dashboardLoading: (state, loading) => {
       state.dashboard.loading = loading;
     },

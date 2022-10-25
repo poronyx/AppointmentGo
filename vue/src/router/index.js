@@ -28,7 +28,7 @@ import MedicalAdminCreateNewsArticle from "../views/medical_admin/MedicalAdminCr
 import MedicalAdminDashboard from "../views/medical_admin/MedicalAdminDashboard.vue"
 import GroupAdminCreateInstitute from "../views/group_admin/GroupAdminCreateInstitute.vue"
 import GroupAdminCreateSpecialty from "../views/group_admin/GroupAdminCreateSpecialty.vue"
-
+import GroupAdminManageAccount from "../views/group_admin/GroupAdminManageAccount.vue"
 
 let routes = [{
   path: "/",
@@ -65,14 +65,15 @@ let routes = [{
 },
 {
   path: "/g",
-  redirect: "/group-admin-dashboard",
+  redirect: "/group-admin/dashboard",
   component: GroupAdminDefaultLayout,
   meta: { requiresAuth: true },
   children: [
-    { path: "/group-admin-dashboard", name: "GroupAdminDashboard", component: GroupAdminDashboard },
-    { path: "/group-admin-create-account", name: "GroupAdminCreateAccount", component: GroupAdminCreateAccount },
-    { path: "/group-admin-create-institute", name: "GroupAdminCreateInstitute", component: GroupAdminCreateInstitute },
-    { path: "/group-admin-create-specialty", name: "GroupAdminCreateSpecialty", component: GroupAdminCreateSpecialty },
+    { path: "/group-admin/dashboard", name: "GroupAdminDashboard", component: GroupAdminDashboard },
+    { path: "/group-admin/create-account", name: "GroupAdminCreateAccount", component: GroupAdminCreateAccount },
+    { path: "/group-admin/create-institute", name: "GroupAdminCreateInstitute", component: GroupAdminCreateInstitute },
+    { path: "/group-admin/create-specialty", name: "GroupAdminCreateSpecialty", component: GroupAdminCreateSpecialty },
+    { path: "/group-admin/manage-account", name: "GroupAdminManageAccount", component: GroupAdminManageAccount },
   ],
 },
 {

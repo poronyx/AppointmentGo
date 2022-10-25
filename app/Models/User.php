@@ -34,7 +34,9 @@ class User extends Authenticatable
         'summary',
         'specialty',
         'experience',
-        'department'
+        'department',
+        'instituition_id',
+        'suspended'
 
 
     ];

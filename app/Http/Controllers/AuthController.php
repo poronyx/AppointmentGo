@@ -26,25 +26,26 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|string|unique:users,email',
-            'race' => 'required|string',
-            'phone_number' => 'required|integer|unique:users,phone_number',
-            'nric' => 'required|string|unique:users,nric',
-            'gender' => 'required|string',
-            'user_type' => 'required|string',
-            'date_of_birth' => 'required|date',
-            'address.postcode' => 'required|integer',
-            'address.address' => 'required',
-            'password' => [
-                'required',
-                'confirmed',
-                Password::min(8)->mixedCase()->numbers()->symbols()
-            ]
-        ]);
-        if ($data['user_type'] == 'patient') {
-            /** @var \App\Models\User $user */
+
+        if ($request->input('user_type') == 'Patient') {
+            $data = $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|email|string|unique:users,email',
+                'race' => 'required|string',
+                'phone_number' => 'required|integer|unique:users,phone_number',
+                'nric' => 'required|string|unique:users,nric',
+                'gender' => 'required|string',
+                'user_type' => 'required|string',
+                'date_of_birth' => 'required|date',
+                'address.postcode' => 'required|integer',
+                'address.address' => 'required',
+                'password' => [
+                    'required',
+                    'confirmed',
+                    Password::min(8)->mixedCase()->numbers()->symbols()
+                ]
+            ]);
+
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
@@ -57,8 +58,40 @@ class AuthController extends Controller
                 'password' => bcrypt($data['password']),
                 'address' =>  $request->input('address')
             ]);
-        } else if ($data['user_type'] == 'nurse') {
-            /** @var \App\Models\User $user */
+
+            $token = $user->createToken('main')->plainTextToken;
+
+            return response([
+                'user' => $user,
+                'token' => $token
+            ]);
+        } elseif ($request->input('user_type') == 'Doctor') {
+            $data = $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|email|string|unique:users,email',
+                'race' => 'required|string',
+                'phone_number' => 'required|integer|unique:users,phone_number',
+                'nric' => 'required|string|unique:users,nric',
+                'gender' => 'required|string',
+                'user_type' => 'required|string',
+                'date_of_birth' => 'required|date',
+                'address.postcode' => 'required|integer',
+                'address.address' => 'required',
+                'password' => [
+                    'required',
+                    'confirmed',
+                    Password::min(8)->mixedCase()->numbers()->symbols()
+                ],
+                'academic_title' => 'required|string',
+                'qualifications.main_qualification' => 'required|string',
+                'qualifications.other_qualification' => 'required|string',
+                'summary' => 'required|string',
+                'specialty.main_specialty' => 'required',
+                'specialty.sub_specialty' => 'required',
+                'experience' => 'required|string',
+                'instituition_id' => 'required|string',
+            ]);
+
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
@@ -69,14 +102,118 @@ class AuthController extends Controller
                 'user_type' => $data['user_type'],
                 'date_of_birth' => $data['date_of_birth'],
                 'password' => bcrypt($data['password']),
-                'department' => $request->input('department')
+                'address' =>  $request->input('address'),
+                'academic_title' => $data['academic_title'],
+                'qualifications' =>  $request->input('qualifications'),
+                'summary' => $data['summary'],
+                'specialty' =>  $request->input('specialty'),
+                'experience' => $data['experience'],
+                'instituition_id' => $data['instituition_id'],
+            ]);
+        } elseif ($request->input('user_type') == 'Nurse') {
+            $data = $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|email|string|unique:users,email',
+                'race' => 'required|string',
+                'phone_number' => 'required|integer|unique:users,phone_number',
+                'nric' => 'required|string|unique:users,nric',
+                'gender' => 'required|string',
+                'user_type' => 'required|string',
+                'date_of_birth' => 'required|date',
+                'address.postcode' => 'required|integer',
+                'address.address' => 'required',
+                'password' => [
+                    'required',
+                    'confirmed',
+                    Password::min(8)->mixedCase()->numbers()->symbols()
+                ],
+                'department' => 'required|string',
+                'instituition_id' => 'required|string',
+            ]);
+
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'race' => $data['race'],
+                'phone_number' => $data['phone_number'],
+                'nric' => $data['nric'],
+                'gender' => $data['gender'],
+                'user_type' => $data['user_type'],
+                'date_of_birth' => $data['date_of_birth'],
+                'password' => bcrypt($data['password']),
+                'address' =>  $request->input('address'),
+                'department' => $data['department'],
+                'instituition_id' => $data['instituition_id'],
+            ]);
+        } elseif ($request->input('user_type') == 'Medical Admin') {
+            $data = $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|email|string|unique:users,email',
+                'race' => 'required|string',
+                'phone_number' => 'required|integer|unique:users,phone_number',
+                'nric' => 'required|string|unique:users,nric',
+                'gender' => 'required|string',
+                'user_type' => 'required|string',
+                'date_of_birth' => 'required|date',
+                'address.postcode' => 'required|integer',
+                'address.address' => 'required',
+                'password' => [
+                    'required',
+                    'confirmed',
+                    Password::min(8)->mixedCase()->numbers()->symbols()
+                ],
+                'instituition_id' => 'required|string',
+            ]);
+
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'race' => $data['race'],
+                'phone_number' => $data['phone_number'],
+                'nric' => $data['nric'],
+                'gender' => $data['gender'],
+                'user_type' => $data['user_type'],
+                'date_of_birth' => $data['date_of_birth'],
+                'password' => bcrypt($data['password']),
+                'address' =>  $request->input('address'),
+                'instituition_id' => $data['instituition_id'],
+            ]);
+        } elseif ($request->input('user_type') == 'Platform Admin' || 'Group Admin') {
+            $data = $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|email|string|unique:users,email',
+                'race' => 'required|string',
+                'phone_number' => 'required|integer|unique:users,phone_number',
+                'nric' => 'required|string|unique:users,nric',
+                'gender' => 'required|string',
+                'user_type' => 'required|string',
+                'date_of_birth' => 'required|date',
+                'address.postcode' => 'required|integer',
+                'address.address' => 'required',
+                'password' => [
+                    'required',
+                    'confirmed',
+                    Password::min(8)->mixedCase()->numbers()->symbols()
+                ]
+            ]);
+
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'race' => $data['race'],
+                'phone_number' => $data['phone_number'],
+                'nric' => $data['nric'],
+                'gender' => $data['gender'],
+                'user_type' => $data['user_type'],
+                'date_of_birth' => $data['date_of_birth'],
+                'password' => bcrypt($data['password']),
+                'address' =>  $request->input('address')
             ]);
         }
 
-        $token = $user->createToken('main')->plainTextToken;
+
         return response([
-            'user' => $user,
-            'token' => $token
+            'user' => $user
         ]);
     }
 
@@ -116,6 +253,55 @@ class AuthController extends Controller
 
         return response([
             'success' => true
+        ]);
+    }
+
+    public function getUsers()
+    {
+        $users = User::all();
+
+        return response([
+            'users' => $users
+        ]);
+    }
+
+    public function deleteUser(Request $request)
+    {
+
+        $user_id = $request->input('id');
+
+        $user = User::destroy($user_id);
+
+        return response([
+            'success' => true,
+            'res' => $user
+        ]);
+    }
+
+    public function suspendUser(Request $request)
+    {
+
+        $user_id = $request->input('id');
+
+        $user = User::where('id', $user_id)
+        ->update(['suspended' => 1]);
+
+        return response([
+            'success' => true,
+            'res' => $user
+        ]);
+    }
+    public function unSuspendUser(Request $request)
+    {
+
+        $user_id = $request->input('id');
+
+        $user = User::where('id', $user_id)
+        ->update(['suspended' => 0]);
+
+        return response([
+            'success' => true,
+            'res' => $user
         ]);
     }
 }

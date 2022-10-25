@@ -37,6 +37,13 @@ Route::get('/institute/get',[\App\Http\Controllers\InstituitionController::class
 //Specialty
 Route::post('/specialty/create',[\App\Http\Controllers\SpecialtyController::class,'createSpecialty']);
 Route::get('/specialty/get',[\App\Http\Controllers\SpecialtyController::class,'getSpecialty']);
+
+//For Group Admin Manage Account
+Route::get('/users/getAll',[\App\Http\Controllers\AuthController::class,'getUsers']);
+Route::post('/users/deleteUser',[\App\Http\Controllers\AuthController::class,'deleteUser']);
+Route::post('/users/suspendUser',[\App\Http\Controllers\AuthController::class,'suspendUser']);
+Route::post('/users/unSuspendUser',[\App\Http\Controllers\AuthController::class,'unSuspendUser']);
+
 Route::get('/survey-by-slug/{survey:slug}', [\App\Http\Controllers\SurveyController::class, 'showForGuest']);
 Route::post('/survey/{survey}/answer', [\App\Http\Controllers\SurveyController::class, 'storeAnswer']);
 

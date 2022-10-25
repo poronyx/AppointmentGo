@@ -25,8 +25,8 @@ class CreateUsersTable extends Migration
             $table->date('date_of_birth');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            //For Patient
             $table->json('address')->nullable();
+            //For Patient
             $table->boolean('subscribe_article')->default(0);
             //For Doctor
             $table->string('academic_title')->nullable();
@@ -38,6 +38,8 @@ class CreateUsersTable extends Migration
             $table->string('department')->nullable();
             // For Doctor, Nurse and Medical Admin
             $table->string('instituition_id')->nullable();
+
+            $table->boolean('suspended')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

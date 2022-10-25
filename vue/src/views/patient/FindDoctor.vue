@@ -38,8 +38,8 @@
           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
           sm:text-sm
         ">
-                        <option v-for="type in specialty" :key="type" :value="type">
-                            {{ upperCaseFirst(type) }}
+                        <option v-for="sType in specialty" :key="sType" :value="sType">
+                            {{ upperCaseFirst(sType) }}
                         </option>
                     </select>
                 </div>
@@ -59,8 +59,8 @@
           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
           sm:text-sm
         ">
-                        <option v-for="type in instituition" :key="type" :value="type">
-                            {{ upperCaseFirst(type) }}
+                        <option v-for="iType in instituition" :key="iType" :value="iType">
+                            {{ upperCaseFirst(iType) }}
                         </option>
                     </select>
                 </div>
