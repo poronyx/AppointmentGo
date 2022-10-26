@@ -35,7 +35,7 @@ import TButton from "../../components/core/TButton.vue";
 import PageComponent from "../../components/PageComponent.vue";
 import { computed } from "vue";
 import { useStore } from "vuex";
-import AppointmentModal from "../../components/viewer/AppointmentModal.vue";
+import AppointmentModal from "../../components/viewer/modals/AppointmentModal.vue";
 
 const store = useStore();
 

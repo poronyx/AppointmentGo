@@ -26,7 +26,8 @@ const store = createStore({
       loading: false,
       user_list: [],
       deleteData: {},
-      suspendData: {}
+      suspendData: {},
+      editData: {}
 
     },
     dashboard: {
@@ -334,6 +335,11 @@ const store = createStore({
       console.log("Inside Mutations: ",data)
       state.groupAdminManageAccount.user_list = data
     },
+    setUserForEdit: (state, data) => {
+      console.log("Inside Mutations: ",data)
+      state.groupAdminManageAccount.editData = data
+    },
+    
     materialLoading: (state, loading) => {
       state.material.loading = loading;
     },

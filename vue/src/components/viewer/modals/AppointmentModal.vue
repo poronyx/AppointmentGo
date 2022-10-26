@@ -361,7 +361,7 @@ import {
   DialogTitle,
 } from '@headlessui/vue'
 import { useRouter } from "vue-router";
-import TInput from "../core/TInput.vue";
+import TInput from "../../core/TInput.vue";
 
 const onSite = [{
   instituition: "Bukit Panjang Clinic",

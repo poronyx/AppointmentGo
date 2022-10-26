@@ -29,6 +29,7 @@ import MedicalAdminDashboard from "../views/medical_admin/MedicalAdminDashboard.
 import GroupAdminCreateInstitute from "../views/group_admin/GroupAdminCreateInstitute.vue"
 import GroupAdminCreateSpecialty from "../views/group_admin/GroupAdminCreateSpecialty.vue"
 import GroupAdminManageAccount from "../views/group_admin/GroupAdminManageAccount.vue"
+import GroupAdminEditAccount from "../views/group_admin/GroupAdminEditAccount.vue"
 
 let routes = [{
   path: "/",
@@ -74,6 +75,8 @@ let routes = [{
     { path: "/group-admin/create-institute", name: "GroupAdminCreateInstitute", component: GroupAdminCreateInstitute },
     { path: "/group-admin/create-specialty", name: "GroupAdminCreateSpecialty", component: GroupAdminCreateSpecialty },
     { path: "/group-admin/manage-account", name: "GroupAdminManageAccount", component: GroupAdminManageAccount },
+    { path: "/group-admin/edit-account", name: "GroupAdminEditAccount", component: GroupAdminEditAccount },
+    
   ],
 },
 {

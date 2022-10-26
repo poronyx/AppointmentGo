@@ -108,14 +108,16 @@
                             <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
                                 <a href="#">{{ user.user_type }}</a>
                             </td>
-                            <div v-for="instituteName in institutes">
-                                <td v-if="instituteName.id == user.instituition_id" class="px-6 py-3 text-xs font-medium text-gray-800 ">
-                                    <a href="#">{{ instituteName.instituition_name }}</a>
-                                </td>
-                                <td v-else class="px-6 py-3 text-xs font-medium text-gray-800 ">
-                                <a href="#">Not Applicable</a>
+
+                            <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
+                                <div>
+                                    <a v-for="instituteName in institutes" href="#">
+                                        <p v-if="instituteName.id == user.instituition_id">
+                                            {{ instituteName.instituition_name }}</p>
+                                    </a>
+                                </div>
                             </td>
-                            </div>
+
                             <td v-if="user.suspended == 0" class="px-6 py-3 text-xs font-medium text-gray-800 ">
                                 <a href="#"> No </a>
                             </td>
@@ -140,7 +142,7 @@
                                 </button>
                                 <button
                                     class="bg-slate-900 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full"
-                                    @click="editUser">
+                                    @click="editUser(user)">
                                     Edit
                                 </button>
                             </td>
@@ -224,8 +226,26 @@ function unSuspendUser(user_id) {
     });
 }
 
-function editUser() {
-    console.log("edit user")
+function editUser(user) {
+    console.log("edit user", user)
+    store.commit("setUserForEdit", user)
+    router.push({
+        name: "GroupAdminEditAccount",
+    });
+
+
+
+    // const param = {
+    //     id: user_id
+    // }
+    // store.dispatch("getUserForEdit", param).then((res) => {
+    //     console.log(res)
+    //     if (res.data.success == true) {
+    //         router.push({
+    //             name: "GroupAdminEditAccount",
+    //         });
+    //     }
+    // });
 
 }
 </script>
