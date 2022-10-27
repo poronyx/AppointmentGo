@@ -15,11 +15,11 @@ class CreateSlotsTable extends Migration
     {
         Schema::create('slots', function (Blueprint $table) {
             $table->id();
-            $table->string("patient_id");
+            $table->string("patient_id")->nullable();
             $table->string("owner_id");
             $table->date("slot_date");
             $table->string("time_slot");
-            $table->boolean("status");
+            $table->boolean("status")->default(0);
             $table->string('appointment_type')->nullable();
             $table->timestamps();
         });

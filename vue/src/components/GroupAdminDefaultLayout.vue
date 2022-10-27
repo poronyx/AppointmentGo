@@ -157,7 +157,7 @@ const navigation = [
   { name: "Home", to: { name: "GroupAdminDashboard" } },
   { name: "Manage Account", to: { name: "GroupAdminManageAccount" } },
   { name: "Create Institute", to: { name: "GroupAdminCreateInstitute" } },
-  { name: "Create Specialty", to: { name: "GroupAdminCreateSpecialty" } },
+  { name: "Manage Specialty", to: { name: "GroupAdminManageSpecialty" } },
 ];
 
 

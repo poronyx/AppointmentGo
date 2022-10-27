@@ -18,6 +18,8 @@ class InstituitionController extends Controller
             'instituition_desc' => 'required|string',
             'location.lat' => 'required|string',
             'location.lng' => 'required|string',
+            'opening_time.first' => 'required',
+            'opening_time.second' => 'required',
         ]);
 
         $institute = Instituition::create([
@@ -26,8 +28,12 @@ class InstituitionController extends Controller
             'instituition_addr' => $data['instituition_addr'],
             'instituition_phone' => $data['instituition_phone'],
             'instituition_desc' => $data['instituition_desc'],
-            'location' => $request->input('location')
+            'location' => $request->input('location'),
+            'opening_time' => $request->input('opening_time'),
         ]);
+
+        //Create Slots data for institute according to opening time
+        //Generate three months ahead from today
 
         return response([
             'institute' => $institute

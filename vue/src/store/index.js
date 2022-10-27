@@ -9,18 +9,20 @@ const store = createStore({
       createData: {}
     },
     material: {
-      loading:false,
-      data:{},
-      slides:[]
+      loading: false,
+      data: {},
+      slides: []
     },
     institute: {
-      loading:false,
-      data:{},
-      instituition_list:[]
+      loading: false,
+      data: {},
+      instituition_list: []
     },
     specialty: {
-      data:{},
-      specialty_list:[]
+      data: {},
+      specialty_list: [],
+      editData: {},
+      deleteData: {}
     },
     groupAdminManageAccount: {
       loading: false,
@@ -28,7 +30,13 @@ const store = createStore({
       deleteData: {},
       suspendData: {},
       editData: {}
-
+    },
+    groupAdminManageInstitute: {
+      loading: false,
+      time_slot1: [],
+      time_slot2: [],
+      time_slot3: [],
+      time_slot4: [],
     },
     dashboard: {
       loading: false,
@@ -55,165 +63,197 @@ const store = createStore({
   },
   actions: {
 
-    register({commit}, user) {
+    register({ commit }, user) {
       return axiosClient.post('/register', user)
-        .then(({data}) => {
+        .then(({ data }) => {
           commit('setUser', data.user);
           commit('setToken', data.token)
           console.log(data)
           return data;
         })
     },
-    registerForAll({commit}, user) {
+    registerForAll({ commit }, user) {
       return axiosClient.post('/register', user)
-        .then(({data}) => {
+        .then(({ data }) => {
           commit('setUserCreate', data.user);
           console.log(data)
           return data;
         })
     },
-    login({commit}, user) {
+    login({ commit }, user) {
       return axiosClient.post('/login', user)
-        .then(({data}) => {
+        .then(({ data }) => {
           commit('setUser', data.user);
           commit('setToken', data.token)
           return data;
         })
     },
-    logout({commit}) {
+    logout({ commit }) {
       return axiosClient.post('/logout')
         .then(response => {
           commit('logout')
           return response;
         })
     },
-    getMaterialData({commit}){
+    getMaterialData({ commit }) {
       commit('materialLoading', true)
       return axiosClient.get(`/material/get`)
-      .then((res) => {
-        commit('materialLoading', false)
-        commit('setMaterialData', res.data.material)
+        .then((res) => {
+          commit('materialLoading', false)
+          commit('setMaterialData', res.data.material)
 
-        return res;
-      })
-      .catch(error => {
-        commit('materialLoading', false)
-        return error;
-      })
+          return res;
+        })
+        .catch(error => {
+          commit('materialLoading', false)
+          return error;
+        })
 
     },
-    createMaterial({commit}, material){
+    createMaterial({ commit }, material) {
       return axiosClient.post('/material/create', material)
-      .then(({data}) => {
-        commit('addMaterial', data.material)
-      })
+        .then(({ data }) => {
+          commit('addMaterial', data.material)
+        })
     },
-    getInstituteData({commit}){
+    getInstituteData({ commit }) {
       commit('instituteLoading', true)
       return axiosClient.get(`/institute/get`)
-      .then((res) => {
-        commit('instituteLoading', false)
-        commit('setInstituteData', res.data.institutes)
+        .then((res) => {
+          commit('instituteLoading', false)
+          commit('setInstituteData', res.data.institutes)
 
-        return res;
-      })
-      .catch(error => {
-        commit('materialLoading', false)
-        return error;
-      })
+          return res;
+        })
+        .catch(error => {
+          commit('materialLoading', false)
+          return error;
+        })
 
     },
-    createInstitute({commit},input){
-      console.log("PayLoad: ",input)
+    createInstitute({ commit }, input) {
+      console.log("PayLoad: ", input)
       return axiosClient.post('/institute/create', input)
-      .then(({data}) => {
-        commit('addInstitute', data.institute)
-      })
+        .then(({ data }) => {
+          commit('addInstitute', data.institute)
+        })
     },
-    getSpecialtyData({commit}){
-      return axiosClient.get(`/specialty/get`)
-      .then((res) => {
-        commit('setSpecialtyData', res.data.specialties)
-
-        return res;
-      })
-      .catch(error => {
-        return error;
-      })
-
-    },
-    createSpecialty({commit},input){
-      console.log("PayLoad: ",input)
-      return axiosClient.post('/specialty/create', input)
-      .then(({data}) => {
-        commit('addSpecialty', data.specialty)
-      })
-    },
-    getUser({commit}) {
+    getUser({ commit }) {
       return axiosClient.get('/user')
-      .then(res => {
-        console.log(res);
-        commit('setUser', res.data)
-      })
+        .then(res => {
+          console.log(res);
+          commit('setUser', res.data)
+        })
     },
-    getAllUsersData({commit}){
+    //Group Admin Manage Account 
+    getAllUsersData({ commit }) {
       commit('manageAccountLoading', true)
       return axiosClient.get(`/users/getAll`)
-      .then((res) => {
-        commit('manageAccountLoading', false)
-        commit('setAllUsersData', res.data.users)
+        .then((res) => {
+          commit('manageAccountLoading', false)
+          commit('setAllUsersData', res.data.users)
 
-        return res;
-      })
-      .catch(error => {
-        commit('materialLoading', false)
-        return error;
-      })
+          return res;
+        })
+        .catch(error => {
+          commit('materialLoading', false)
+          return error;
+        })
 
     },
-    deleteUser({commit},input){
+    deleteUser({ commit }, input) {
       return axiosClient.post(`/users/deleteUser`, input)
-      .then((res) => {
-        commit('setUserDeleteData', res.data)
-        console.log("After Delete in Store res: ",res.data)
-        return res;
-      })
+        .then((res) => {
+          commit('setUserDeleteData', res.data)
+          console.log("After Delete in Store res: ", res.data)
+          return res;
+        })
 
     },
-    suspendUser({commit},input){
+    suspendUser({ commit }, input) {
       return axiosClient.post(`/users/suspendUser`, input)
-      .then((res) => {
-        commit('setUserSuspendData', res.data)
-        console.log("After Suspend in Store res: ",res.data)
-        return res;
-      })
+        .then((res) => {
+          commit('setUserSuspendData', res.data)
+          console.log("After Suspend in Store res: ", res.data)
+          return res;
+        })
 
     },
-    unSuspendUser({commit},input){
+    unSuspendUser({ commit }, input) {
       return axiosClient.post(`/users/unSuspendUser`, input)
-      .then((res) => {
-        commit('setUserSuspendData', res.data)
-        console.log("After Suspend in Store res: ",res.data)
-        return res;
-      })
+        .then((res) => {
+          commit('setUserSuspendData', res.data)
+          console.log("After Suspend in Store res: ", res.data)
+          return res;
+        })
 
     },
-    
-    getDashboardData({commit}) {
+    updateUser({ commit }, input) {
+      return axiosClient.post(`/users/updateUser`, input)
+        .then((res) => {
+          commit('setUserForEdit', res.data)
+          console.log("After Update User in Store res: ", res.data)
+          return res;
+        })
+
+    },
+
+    //Group Admin Manage Specialty
+    getSpecialtyData({ commit }) {
+      return axiosClient.get(`/specialty/get`)
+        .then((res) => {
+          commit('setSpecialtyData', res.data.specialties)
+
+          return res;
+        })
+        .catch(error => {
+          return error;
+        })
+
+    },
+    updateSpecialty({ commit }, input) {
+      return axiosClient.post(`/specialty/update`, input)
+        .then((res) => {
+          commit('setSpecialtyForEdit', res.data)
+          console.log("After Update Specialty in Store res: ", res.data)
+          return res;
+        })
+
+    },
+    createSpecialty({ commit }, input) {
+      console.log("PayLoad: ", input)
+      return axiosClient.post('/specialty/create', input)
+        .then(({ data }) => {
+          commit('addSpecialty', data.specialty)
+        })
+    },
+    deleteSpecialty({ commit }, input) {
+      console.log("PayLoad: ", input)
+      return axiosClient.post(`/specialty/delete`, input)
+        .then((res) => {
+          console.log("Response from API: ", res)
+          commit('setSpecialtyForDelete', res.data)
+          console.log("After Delete in Store res: ", res.data)
+          return res;
+        })
+
+    },
+
+    getDashboardData({ commit }) {
       commit('dashboardLoading', true)
       return axiosClient.get(`/dashboard`)
-      .then((res) => {
-        commit('dashboardLoading', false)
-        commit('setDashboardData', res.data)
-        return res;
-      })
-      .catch(error => {
-        commit('dashboardLoading', false)
-        return error;
-      })
+        .then((res) => {
+          commit('dashboardLoading', false)
+          commit('setDashboardData', res.data)
+          return res;
+        })
+        .catch(error => {
+          commit('dashboardLoading', false)
+          return error;
+        })
 
     },
-    getSurveys({ commit }, {url = null} = {}) {
+    getSurveys({ commit }, { url = null } = {}) {
       commit('setSurveysLoading', true)
       url = url || "/survey";
       return axiosClient.get(url).then((res) => {
@@ -277,8 +317,8 @@ const store = createStore({
         return res;
       });
     },
-    saveSurveyAnswer({commit}, {surveyId, answers}) {
-      return axiosClient.post(`/survey/${surveyId}/answer`, {answers});
+    saveSurveyAnswer({ commit }, { surveyId, answers }) {
+      return axiosClient.post(`/survey/${surveyId}/answer`, { answers });
     },
   },
   mutations: {
@@ -304,7 +344,7 @@ const store = createStore({
     setMaterialData: (state, data) => {
       state.material.data = data
       const imageList = []
-      for(let x in data){
+      for (let x in data) {
         imageList.push(data[x].image_url)
       }
       state.material.slides = imageList
@@ -313,33 +353,93 @@ const store = createStore({
       state.institute.data = institute;
     },
     setInstituteData: (state, data) => {
-      console.log("Inside Mutations: ",data)
+      console.log("Inside Mutations: ", data)
       state.institute.instituition_list = data
     },
     setUserDeleteData: (state, data) => {
-      console.log("Inside Mutations: ",data)
+      console.log("Inside Mutations: ", data)
       state.groupAdminManageAccount.deleteData = data;
     },
     setUserSuspendData: (state, data) => {
-      console.log("Inside Mutations: ",data)
+      console.log("Inside Mutations: ", data)
       state.groupAdminManageAccount.suspendData = data;
     },
     addSpecialty: (state, specialty) => {
       state.specialty.data = specialty;
     },
     setSpecialtyData: (state, data) => {
-      console.log("Inside Mutations: ",data)
+      console.log("Inside Mutations: ", data)
       state.specialty.specialty_list = data
     },
+    setSpecialtyForDelete: (state, data) => {
+      console.log("Inside Mutations: ", data)
+      state.specialty.deleteData = data
+    },
+    setSpecialtyForEdit: (state, data) => {
+      console.log("Inside Mutations: ", data)
+      state.specialty.editData = data
+    },
     setAllUsersData: (state, data) => {
-      console.log("Inside Mutations: ",data)
+      console.log("Inside Mutations: ", data)
       state.groupAdminManageAccount.user_list = data
     },
     setUserForEdit: (state, data) => {
-      console.log("Inside Mutations: ",data)
+      console.log("Inside Mutations: ", data)
       state.groupAdminManageAccount.editData = data
     },
-    
+    setTimeSlotForCreateInstitute1: (state) => {
+      const timeSlots = []
+      for (let x = 1; x <= 96; x++) {
+        let minutes = x * 15
+        timeSlots.push({
+          key: x,
+          time: toHoursAndMinutes(minutes),
+        });
+      }
+      console.log(timeSlots)
+     
+      state.groupAdminManageInstitute.time_slot1 = timeSlots
+
+    },
+    setTimeSlotForCreateInstitute2: (state, input) => {
+
+      const timeSlots = []
+      for (let x = input + 1; x <= 96; x++) {
+        let minutes = x * 15
+        timeSlots.push({
+          key: x,
+          time: toHoursAndMinutes(minutes),
+        });
+      }
+      state.groupAdminManageInstitute.time_slot2 = timeSlots
+
+    },
+    setTimeSlotForCreateInstitute3: (state, input) => {
+
+      const timeSlots = []
+      for (let x = input + 1; x <= 96; x++) {
+        let minutes = x * 15
+        timeSlots.push({
+          key: x,
+          time: toHoursAndMinutes(minutes),
+        });
+      }
+      state.groupAdminManageInstitute.time_slot3 = timeSlots
+
+    },
+    setTimeSlotForCreateInstitute4: (state, input) => {
+
+      const timeSlots = []
+      for (let x = input + 1; x <= 96; x++) {
+        let minutes = x * 15
+        timeSlots.push({
+          key: x,
+          time: toHoursAndMinutes(minutes),
+        });
+      }
+      state.groupAdminManageInstitute.time_slot4 = timeSlots
+
+    },
     materialLoading: (state, loading) => {
       state.material.loading = loading;
     },
@@ -349,7 +449,7 @@ const store = createStore({
     manageAccountLoading: (state, loading) => {
       state.groupAdminManageAccount.loading = loading;
     },
-    
+
     dashboardLoading: (state, loading) => {
       state.dashboard.loading = loading;
     },
@@ -369,7 +469,7 @@ const store = createStore({
     setCurrentSurvey: (state, survey) => {
       state.currentSurvey.data = survey.data;
     },
-    notify: (state, {message, type}) => {
+    notify: (state, { message, type }) => {
       state.notification.show = true;
       state.notification.type = type;
       state.notification.message = message;
@@ -379,8 +479,19 @@ const store = createStore({
     },
   },
   modules: {
-    
+
   },
 });
+
+function toHoursAndMinutes(totalMinutes) {
+  const minutes = totalMinutes % 60;
+  const hours = Math.floor(totalMinutes / 60);
+
+  return `${padTo2Digits(hours)}:${padTo2Digits(minutes)}`;
+}
+
+function padTo2Digits(num) {
+  return num.toString().padStart(2, '0');
+}
 
 export default store;

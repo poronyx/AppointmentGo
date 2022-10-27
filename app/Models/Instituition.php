@@ -10,7 +10,7 @@ class Instituition extends Model
     use HasFactory;
 
     protected $fillable = ['instituition_type','instituition_name','instituition_addr', 'instituition_phone',
-    'instituition_desc','location'];
+    'instituition_desc','location','opening_time'];
 
 
     /**
@@ -20,5 +20,6 @@ class Instituition extends Model
      */
     protected $casts = [
         'location' => 'array',
+        'opening_time' => 'array',
     ];
 }

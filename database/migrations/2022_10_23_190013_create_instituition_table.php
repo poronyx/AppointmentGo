@@ -21,6 +21,7 @@ class CreateInstituitionTable extends Migration
             $table->string("instituition_phone");
             $table->string("instituition_desc");
             $table->json("location");
+            $table->json("opening_time");
             $table->timestamps();
         });
     }

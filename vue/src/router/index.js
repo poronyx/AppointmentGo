@@ -30,6 +30,8 @@ import GroupAdminCreateInstitute from "../views/group_admin/GroupAdminCreateInst
 import GroupAdminCreateSpecialty from "../views/group_admin/GroupAdminCreateSpecialty.vue"
 import GroupAdminManageAccount from "../views/group_admin/GroupAdminManageAccount.vue"
 import GroupAdminEditAccount from "../views/group_admin/GroupAdminEditAccount.vue"
+import GroupAdminManageSpecialty from "../views/group_admin/GroupAdminManageSpecialty.vue"
+import GroupAdminEditSpecialty from "../views/group_admin/GroupAdminEditSpecialty.vue"
 
 let routes = [{
   path: "/",
@@ -76,6 +78,8 @@ let routes = [{
     { path: "/group-admin/create-specialty", name: "GroupAdminCreateSpecialty", component: GroupAdminCreateSpecialty },
     { path: "/group-admin/manage-account", name: "GroupAdminManageAccount", component: GroupAdminManageAccount },
     { path: "/group-admin/edit-account", name: "GroupAdminEditAccount", component: GroupAdminEditAccount },
+    { path: "/group-admin/manage-specialty", name: "GroupAdminManageSpecialty", component: GroupAdminManageSpecialty },
+    { path: "/group-admin/edit-specialty", name: "GroupAdminEditSpecialty", component: GroupAdminEditSpecialty },
     
   ],
 },

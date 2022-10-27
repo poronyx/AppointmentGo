@@ -34,15 +34,22 @@ Route::get('/material/get',[\App\Http\Controllers\MaterialController::class,'get
 //Institutes
 Route::post('/institute/create',[\App\Http\Controllers\InstituitionController::class,'createInstituition']);
 Route::get('/institute/get',[\App\Http\Controllers\InstituitionController::class,'getInstituition']);
+//For Slots
+Route::post('/institute/generateSlots',[\App\Http\Controllers\SlotController::class,'createSlotsInstitute']);
 //Specialty
 Route::post('/specialty/create',[\App\Http\Controllers\SpecialtyController::class,'createSpecialty']);
 Route::get('/specialty/get',[\App\Http\Controllers\SpecialtyController::class,'getSpecialty']);
+Route::post('/specialty/delete',[\App\Http\Controllers\SpecialtyController::class,'deleteSpecialty']);
+Route::post('/specialty/update',[\App\Http\Controllers\SpecialtyController::class,'updateSpecialty']);
 
 //For Group Admin Manage Account
 Route::get('/users/getAll',[\App\Http\Controllers\AuthController::class,'getUsers']);
 Route::post('/users/deleteUser',[\App\Http\Controllers\AuthController::class,'deleteUser']);
 Route::post('/users/suspendUser',[\App\Http\Controllers\AuthController::class,'suspendUser']);
 Route::post('/users/unSuspendUser',[\App\Http\Controllers\AuthController::class,'unSuspendUser']);
+Route::post('/users/updateUser',[\App\Http\Controllers\AuthController::class,'updateUser']);
+
+
 
 Route::get('/survey-by-slug/{survey:slug}', [\App\Http\Controllers\SurveyController::class, 'showForGuest']);
 Route::post('/survey/{survey}/answer', [\App\Http\Controllers\SurveyController::class, 'storeAnswer']);

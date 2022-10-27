@@ -254,7 +254,6 @@ store.dispatch("getInstituteData");
 store.dispatch("getSpecialtyData");
 
 const genderTypes = ["Male", "Female", "Others"]
-const userTypes = ["Patient", "Doctor", "Nurse", "Medical Admin", "Platform Admin", "Group Admin"]
 
 
 const user = {
@@ -302,78 +301,24 @@ const groupAdminPicked = ref(false)
 
 
 function update(newUser) {
-    //loading.value = true;
     console.log(newUser)
     // parse id to string for backend
     // user.instituition_id = user.instituition_id.toString();
 
-    // store
-    //     .dispatch("registerForAll", user)
-    //     .then(() => {
-    //         loading.value = false;
-    //         router.push({
-    //             name: "GroupAdminManageAccount",
-    //         });
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //         loading.value = false;
-    //         if (error.response.status === 422) {
-    //             errors.value = error.response.data.errors;
-    //         }
-    //     });
-}
-
-function pickedUserType(ev) {
-    console.log("Picked User: ", ev)
-    if (ev == "Patient") {
-        patientPicked.value = true;
-        doctorPicked.value = false;
-        nursePicked.value = false;
-        medicalAdminPicked.value = false;
-        platformAdminPicked.value = false;
-        groupAdminPicked.value = false;
-    }
-    else if (ev == "Doctor") {
-        patientPicked.value = false;
-        doctorPicked.value = true;
-        nursePicked.value = false;
-        medicalAdminPicked.value = false;
-        platformAdminPicked.value = false;
-        groupAdminPicked.value = false;
-    }
-    else if (ev == "Nurse") {
-        patientPicked.value = false;
-        doctorPicked.value = false;
-        nursePicked.value = true;
-        medicalAdminPicked.value = false;
-        platformAdminPicked.value = false;
-        groupAdminPicked.value = false;
-    }
-    else if (ev == "Medical Admin") {
-        patientPicked.value = false;
-        doctorPicked.value = false;
-        nursePicked.value = false;
-        medicalAdminPicked.value = true;
-        platformAdminPicked.value = false;
-        groupAdminPicked.value = false;
-    }
-    else if (ev == "Platform Admin") {
-        patientPicked.value = false;
-        doctorPicked.value = false;
-        nursePicked.value = false;
-        medicalAdminPicked.value = false;
-        platformAdminPicked.value = true;
-        groupAdminPicked.value = false;
-    }
-    else if (ev == "Group Admin") {
-        patientPicked.value = false;
-        doctorPicked.value = false;
-        nursePicked.value = false;
-        medicalAdminPicked.value = false;
-        platformAdminPicked.value = false;
-        groupAdminPicked.value = true;
-    }
+    store
+        .dispatch("updateUser", newUser)
+        .then(() => {
+            router.push({
+                name: "GroupAdminManageAccount",
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+            loading.value = false;
+            if (error.response.status === 422) {
+                errors.value = error.response.data.errors;
+            }
+        });
 }
 
 

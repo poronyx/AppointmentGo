@@ -32,4 +32,32 @@ class SpecialtyController extends Controller
             'specialties' => $specialty
         ]);
     }
+
+    public function deleteSpecialty(Request $request)
+    {
+
+        $specialty_id = $request->input('id');
+
+        $specialty = Specialty::destroy($specialty_id);
+
+        return response([
+            'success' => true,
+            'res' => $specialty
+        ]);
+    }
+
+    public function updateSpecialty(Request $request)
+    {
+        $specialty_id = $request->input('id');
+
+        $specialty = Specialty::where('id', $specialty_id)
+            ->update([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+            ]);
+
+            return response([
+                'specialty' => $specialty
+            ]);
+    }
 }

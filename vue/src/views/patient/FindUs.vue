@@ -3,18 +3,26 @@
         <div v-if="loading" class="flex justify-center">Loading...</div>
         <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-5 text-gray-700">
             <DashboardCard v-for="institute in institutes" class="order-1 lg:order-1" style="animation-delay: 0.1s">
-                <template v-slot:title><b>{{institute.instituition_name}}</b></template>
+                <template v-slot:title><b>{{ institute.instituition_name }}</b></template>
                 <div class="flex justify-between text-sm mb-3">
                     <div>Address</div>
-                    <div>{{institute.instituition_addr}}</div>
+                    <div>{{ institute.instituition_addr }}</div>
                 </div>
                 <div class="flex justify-between text-sm mb-3">
                     <div>Description</div>
-                    <div>{{institute.instituition_desc}}</div>
+                    <div>{{ institute.instituition_desc }}</div>
                 </div>
                 <div class="flex justify-between text-sm mb-3">
                     <div>Contact No.</div>
-                    <div>{{institute.instituition_phone}}</div>
+                    <div>{{ institute.instituition_phone }}</div>
+                </div>
+                <div class="flex justify-between text-sm mb-8">
+                    <div>Opening Hours</div>
+                    <div>{{ toHoursAndMinutes(institute.opening_time.first[0]) }} to
+                        {{ toHoursAndMinutes(institute.opening_time.first[1]) }} and
+                        {{ toHoursAndMinutes(institute.opening_time.second[0]) }} to
+                        {{ toHoursAndMinutes(institute.opening_time.second[1]) }}
+                    </div>
                 </div>
                 <GoogleMap api-key="AIzaSyA3EaEfTI_FRPgg0b6jqUWdp2jW6vxBH3M" style="width: 100%; height: 500px"
                     :center="{ lat: parseFloat(institute.location.lat), lng: parseFloat(institute.location.lng) }"
@@ -64,6 +72,18 @@ const datatostore = [
     }
 ]
 store.dispatch("getInstituteData");
+
+function toHoursAndMinutes(input) {
+    const totalMinutes = input * 15;
+    const minutes = totalMinutes % 60;
+    const hours = Math.floor(totalMinutes / 60);
+
+    return padTo2Digits(hours) + ":" + padTo2Digits(minutes);
+}
+
+function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+}
 </script>
     
 <style scoped>

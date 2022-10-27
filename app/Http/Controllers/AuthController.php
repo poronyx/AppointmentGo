@@ -321,10 +321,18 @@ class AuthController extends Controller
 
         $user_id = $request->input('id');
 
-        $user = User::where('id', $user_id)
-            ->update(['suspended' => 1]);
+        
 
         if ($request->input('user_type') == 'Patient') {
+
+            // Clear user's unique field 
+            $clear = User::where('id', $user_id)
+            ->update([
+                'email' => '',
+                'phone_number' => '',
+                'nric' => ''
+            ]);
+
             $data = $request->validate([
                 'name' => 'required|string',
                 'email' => 'required|email|string|unique:users,email',
@@ -335,15 +343,11 @@ class AuthController extends Controller
                 'user_type' => 'required|string',
                 'date_of_birth' => 'required|date',
                 'address.postcode' => 'required|integer',
-                'address.address' => 'required',
-                'password' => [
-                    'required',
-                    'confirmed',
-                    Password::min(8)->mixedCase()->numbers()->symbols()
-                ]
+                'address.address' => 'required'
             ]);
 
-            $user = User::create([
+            $user = User::where('id', $user_id)
+            ->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'race' => $data['race'],
@@ -352,17 +356,24 @@ class AuthController extends Controller
                 'gender' => $data['gender'],
                 'user_type' => $data['user_type'],
                 'date_of_birth' => $data['date_of_birth'],
-                'password' => bcrypt($data['password']),
                 'address' =>  $request->input('address')
+            
             ]);
-
-            $token = $user->createToken('main')->plainTextToken;
 
             return response([
-                'user' => $user,
-                'token' => $token
+                'user' => $user
             ]);
+
         } elseif ($request->input('user_type') == 'Doctor') {
+
+            // Clear user's unique field 
+            $clear = User::where('id', $user_id)
+            ->update([
+                'email' => '',
+                'phone_number' => '',
+                'nric' => ''
+            ]);
+
             $data = $request->validate([
                 'name' => 'required|string',
                 'email' => 'required|email|string|unique:users,email',
@@ -374,11 +385,6 @@ class AuthController extends Controller
                 'date_of_birth' => 'required|date',
                 'address.postcode' => 'required|integer',
                 'address.address' => 'required',
-                'password' => [
-                    'required',
-                    'confirmed',
-                    Password::min(8)->mixedCase()->numbers()->symbols()
-                ],
                 'academic_title' => 'required|string',
                 'qualifications.main_qualification' => 'required|string',
                 'qualifications.other_qualification' => 'required|string',
@@ -386,10 +392,11 @@ class AuthController extends Controller
                 'specialty.main_specialty' => 'required',
                 'specialty.sub_specialty' => 'required',
                 'experience' => 'required|string',
-                'instituition_id' => 'required|string',
+                'instituition_id' => 'required',
             ]);
 
-            $user = User::create([
+            $user = User::where('id', $user_id)
+            ->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'race' => $data['race'],
@@ -398,7 +405,6 @@ class AuthController extends Controller
                 'gender' => $data['gender'],
                 'user_type' => $data['user_type'],
                 'date_of_birth' => $data['date_of_birth'],
-                'password' => bcrypt($data['password']),
                 'address' =>  $request->input('address'),
                 'academic_title' => $data['academic_title'],
                 'qualifications' =>  $request->input('qualifications'),
@@ -407,7 +413,18 @@ class AuthController extends Controller
                 'experience' => $data['experience'],
                 'instituition_id' => $data['instituition_id'],
             ]);
+
+
         } elseif ($request->input('user_type') == 'Nurse') {
+
+            // Clear user's unique field 
+            $clear = User::where('id', $user_id)
+            ->update([
+                'email' => '',
+                'phone_number' => '',
+                'nric' => ''
+            ]);
+
             $data = $request->validate([
                 'name' => 'required|string',
                 'email' => 'required|email|string|unique:users,email',
@@ -419,16 +436,12 @@ class AuthController extends Controller
                 'date_of_birth' => 'required|date',
                 'address.postcode' => 'required|integer',
                 'address.address' => 'required',
-                'password' => [
-                    'required',
-                    'confirmed',
-                    Password::min(8)->mixedCase()->numbers()->symbols()
-                ],
                 'department' => 'required|string',
-                'instituition_id' => 'required|string',
+                'instituition_id' => 'required',
             ]);
 
-            $user = User::create([
+            $user = User::where('id', $user_id)
+            ->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'race' => $data['race'],
@@ -437,12 +450,20 @@ class AuthController extends Controller
                 'gender' => $data['gender'],
                 'user_type' => $data['user_type'],
                 'date_of_birth' => $data['date_of_birth'],
-                'password' => bcrypt($data['password']),
                 'address' =>  $request->input('address'),
                 'department' => $data['department'],
                 'instituition_id' => $data['instituition_id'],
             ]);
         } elseif ($request->input('user_type') == 'Medical Admin') {
+
+            // Clear user's unique field 
+            $clear = User::where('id', $user_id)
+            ->update([
+                'email' => '',
+                'phone_number' => '',
+                'nric' => ''
+            ]);
+
             $data = $request->validate([
                 'name' => 'required|string',
                 'email' => 'required|email|string|unique:users,email',
@@ -454,15 +475,11 @@ class AuthController extends Controller
                 'date_of_birth' => 'required|date',
                 'address.postcode' => 'required|integer',
                 'address.address' => 'required',
-                'password' => [
-                    'required',
-                    'confirmed',
-                    Password::min(8)->mixedCase()->numbers()->symbols()
-                ],
-                'instituition_id' => 'required|string',
+                'instituition_id' => 'required',
             ]);
 
-            $user = User::create([
+            $user = User::where('id', $user_id)
+            ->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'race' => $data['race'],
@@ -471,11 +488,19 @@ class AuthController extends Controller
                 'gender' => $data['gender'],
                 'user_type' => $data['user_type'],
                 'date_of_birth' => $data['date_of_birth'],
-                'password' => bcrypt($data['password']),
                 'address' =>  $request->input('address'),
                 'instituition_id' => $data['instituition_id'],
             ]);
         } elseif ($request->input('user_type') == 'Platform Admin' || 'Group Admin') {
+
+            // Clear user's unique field 
+            $clear = User::where('id', $user_id)
+            ->update([
+                'email' => '',
+                'phone_number' => '',
+                'nric' => ''
+            ]);
+
             $data = $request->validate([
                 'name' => 'required|string',
                 'email' => 'required|email|string|unique:users,email',
@@ -487,14 +512,10 @@ class AuthController extends Controller
                 'date_of_birth' => 'required|date',
                 'address.postcode' => 'required|integer',
                 'address.address' => 'required',
-                'password' => [
-                    'required',
-                    'confirmed',
-                    Password::min(8)->mixedCase()->numbers()->symbols()
-                ]
             ]);
 
-            $user = User::create([
+            $user = User::where('id', $user_id)
+            ->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'race' => $data['race'],
@@ -503,7 +524,6 @@ class AuthController extends Controller
                 'gender' => $data['gender'],
                 'user_type' => $data['user_type'],
                 'date_of_birth' => $data['date_of_birth'],
-                'password' => bcrypt($data['password']),
                 'address' =>  $request->input('address')
             ]);
         }

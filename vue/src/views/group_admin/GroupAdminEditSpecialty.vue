@@ -1,5 +1,5 @@
 <template>
-    <PageComponent title="Group Admin Create Specialty">
+    <PageComponent title="Group Admin Edit Specialty">
         <div v-if="loading" class="flex justify-center">Loading...</div>
         <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-5 text-gray-700">
             <DashboardCard class="order-1 lg:order-1" style="animation-delay: 0.1s">
@@ -13,14 +13,14 @@
                 </Alert>
 
                 <div class="rounded-md shadow-sm ">
-                    <TInput name="name" v-model="specialty.name" :errors="errors"
+                    <TInput name="name" v-model="editSpecialty.name" :errors="errors"
                         placeholder="Name of Specialty" inputClass="rounded-t-md" />
-                    <TInput name="addr" v-model="specialty.description" :errors="errors"
+                    <TInput name="addr" v-model="editSpecialty.description" :errors="errors"
                         placeholder="Specialty Description" />
                     
                     <div class="inset-0 flex items-center justify-center mt-8">
-                        <TButtonLoading :loading="loading" class=" relative justify-center" @click="createSpecialty">
-                            Create a Specialty
+                        <TButtonLoading :loading="loading" class=" relative justify-center" @click="updateSpecialty(editSpecialty)">
+                            Update Specialty
                         </TButtonLoading>
                     </div>
                 </div>
@@ -43,23 +43,21 @@ import Alert from "../../components/Alert.vue";
 import { ref } from "vue";
 import store from "../../store";
 import { useRouter } from "vue-router";
+import { computed } from "vue";
+
 const router = useRouter();
+const editSpecialty = computed(() => store.state.specialty.editData);
 
-const specialty = {
-    name: "",
-    description: ""
 
-};
 const loading = ref(false);
 const errors = ref({});
 
-function createSpecialty(ev) {
-    ev.preventDefault();
+function updateSpecialty(specialty) {
 
     console.log("User Input: ",specialty);
 
     store
-    .dispatch("createSpecialty", specialty)
+    .dispatch("updateSpecialty", specialty)
     .then(() => {
       loading.value = false;
       router.push({
