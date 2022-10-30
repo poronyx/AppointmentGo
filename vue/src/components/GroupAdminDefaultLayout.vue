@@ -156,7 +156,7 @@ import Notification from "./Notification.vue";
 const navigation = [
   { name: "Home", to: { name: "GroupAdminDashboard" } },
   { name: "Manage Account", to: { name: "GroupAdminManageAccount" } },
-  { name: "Create Institute", to: { name: "GroupAdminCreateInstitute" } },
+  { name: "Manage Institute", to: { name: "GroupAdminManageInstitute" } },
   { name: "Manage Specialty", to: { name: "GroupAdminManageSpecialty" } },
 ];
 

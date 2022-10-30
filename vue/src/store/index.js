@@ -16,7 +16,10 @@ const store = createStore({
     institute: {
       loading: false,
       data: {},
-      instituition_list: []
+      instituition_list: [],
+      dataSlot: {},
+      deleteData: {},
+      editData: {}
     },
     specialty: {
       data: {},
@@ -136,6 +139,27 @@ const store = createStore({
       return axiosClient.post('/institute/create', input)
         .then(({ data }) => {
           commit('addInstitute', data.institute)
+
+
+        })
+    },
+    deleteInstitute({ commit }, input) {
+      console.log("PayLoad: ", input)
+      return axiosClient.post(`/institute/delete`, input)
+        .then((res) => {
+          console.log("Response from API: ", res)
+          commit('setInstituteForDelete', res.data)
+          console.log("After Delete in Store res: ", res.data)
+          return res;
+        })
+
+    },
+    //Generate Slots
+    generateSlots(_,input) {
+      console.log("PayLoad: ", input)
+      return axiosClient.post('/institute/generateSlots', input)
+        .then((res) => {
+          console.log(res);
         })
     },
     getUser({ commit }) {
@@ -238,6 +262,7 @@ const store = createStore({
         })
 
     },
+
 
     getDashboardData({ commit }) {
       commit('dashboardLoading', true)
@@ -356,6 +381,11 @@ const store = createStore({
       console.log("Inside Mutations: ", data)
       state.institute.instituition_list = data
     },
+    setInstituteForDelete: (state, data) => {
+      console.log("Inside Mutations: ", data)
+      state.institute.deleteData = data
+    },
+    
     setUserDeleteData: (state, data) => {
       console.log("Inside Mutations: ", data)
       state.groupAdminManageAccount.deleteData = data;
@@ -379,6 +409,10 @@ const store = createStore({
       console.log("Inside Mutations: ", data)
       state.specialty.editData = data
     },
+    setInstituteForEdit: (state, data) => {
+      console.log("Inside Mutations: ", data)
+      state.institute.editData = data
+    },
     setAllUsersData: (state, data) => {
       console.log("Inside Mutations: ", data)
       state.groupAdminManageAccount.user_list = data
@@ -397,7 +431,7 @@ const store = createStore({
         });
       }
       console.log(timeSlots)
-     
+
       state.groupAdminManageInstitute.time_slot1 = timeSlots
 
     },

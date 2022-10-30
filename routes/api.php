@@ -34,8 +34,12 @@ Route::get('/material/get',[\App\Http\Controllers\MaterialController::class,'get
 //Institutes
 Route::post('/institute/create',[\App\Http\Controllers\InstituitionController::class,'createInstituition']);
 Route::get('/institute/get',[\App\Http\Controllers\InstituitionController::class,'getInstituition']);
+Route::post('/institute/delete',[\App\Http\Controllers\InstituitionController::class,'deleteInstitute']);
+Route::post('/institute/update',[\App\Http\Controllers\InstituitionController::class,'updateInstitute']);
+
+
 //For Slots
-Route::post('/institute/generateSlots',[\App\Http\Controllers\SlotController::class,'createSlotsInstitute']);
+Route::post('/institute/generateSlots',[\App\Http\Controllers\SlotController::class,'createSlots']);
 //Specialty
 Route::post('/specialty/create',[\App\Http\Controllers\SpecialtyController::class,'createSpecialty']);
 Route::get('/specialty/get',[\App\Http\Controllers\SpecialtyController::class,'getSpecialty']);

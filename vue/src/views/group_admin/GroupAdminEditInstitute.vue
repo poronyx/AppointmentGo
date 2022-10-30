@@ -1,5 +1,5 @@
 <template>
-    <PageComponent title="Group Admin Create Institute">
+    <PageComponent title="Group Admin Edit Institute">
         <div v-if="loading" class="flex justify-center">Loading...</div>
         <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-5 text-gray-700">
             <DashboardCard class="order-1 lg:order-1" style="animation-delay: 0.1s">
@@ -15,10 +15,11 @@
 
 
                 <div class="col-span-3 mb-8">
+                    {{editInstitute}}
                     <label for="userType" class="block text-sm font-medium text-gray-700">Choose an Institution Type
                     </label>
-                    <select id="instituition_type" name="instituition_type" v-model="institute.instituition_type"
-                        @change="pickedInstituteType($event.target.value)" class="
+                    <select id="instituition_type" name="instituition_type" v-model="editInstitute.instituition_type"
+                     class="
           mt-1
           block
           w-full
@@ -30,7 +31,7 @@
           shadow-sm
           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
           sm:text-sm
-        ">
+        " disabled>
                         <option v-for="instituteType in instituteTypes" :key="instituteType" :value="instituteType">
                             {{ instituteType }}
                         </option>
@@ -169,7 +170,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const instituteTypes = ["Clinic", "Hospital"]
-
+const editInstitute = computed(() => store.state.institute.editData);
 
 
 //set time slot in store for creation

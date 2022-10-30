@@ -20,6 +20,7 @@ class CreateSlotsTable extends Migration
             $table->date("slot_date");
             $table->string("time_slot");
             $table->boolean("status")->default(0);
+            $table->string("owner_type");
             $table->string('appointment_type')->nullable();
             $table->timestamps();
         });
