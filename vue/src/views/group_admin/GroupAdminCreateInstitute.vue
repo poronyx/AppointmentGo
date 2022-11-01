@@ -224,10 +224,10 @@ function createInstitute(ev) {
             console.log("res after api call: ", storeInstitute.value.opening_time.first)
             console.log("res after api call: ", storeInstitute.value.opening_time.second)
             store.dispatch("generateSlots",param);
-            // loading.value = false;
-            // router.push({
-            //     name: "PatientDashboard",
-            // });
+            loading.value = false;
+            router.push({
+                name: "GroupAdminManageInstitute",
+            });
         })
         .catch((error) => {
             console.log(error);

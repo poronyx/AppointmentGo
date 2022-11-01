@@ -36,7 +36,8 @@ class User extends Authenticatable
         'experience',
         'department',
         'instituition_id',
-        'suspended'
+        'suspended',
+        'organization_id'
 
 
     ];

@@ -38,6 +38,8 @@ class CreateUsersTable extends Migration
             $table->string('department')->nullable();
             // For Doctor, Nurse and Medical Admin
             $table->string('instituition_id')->nullable();
+            //For Group Admin
+            $table->string('organization_id')->nullable();
 
             $table->boolean('suspended')->default(0);
             $table->rememberToken();

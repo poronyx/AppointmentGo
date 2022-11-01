@@ -15,11 +15,11 @@
 
 
                 <div class="col-span-3 mb-8">
-                    {{editInstitute}}
+                    {{ editInstitute }}
                     <label for="userType" class="block text-sm font-medium text-gray-700">Choose an Institution Type
                     </label>
                     <select id="instituition_type" name="instituition_type" v-model="editInstitute.instituition_type"
-                     class="
+                        class="
           mt-1
           block
           w-full
@@ -38,24 +38,30 @@
                     </select>
                 </div>
                 <div class="rounded-md shadow-sm ">
-                    <TInput name="name" v-model="institute.instituition_name" :errors="errors"
+                    <TInput name="name" v-model="editInstitute.instituition_name" :errors="errors"
                         placeholder="Institute Name" inputClass="rounded-t-md" />
-                    <TInput name="addr" v-model="institute.instituition_addr" :errors="errors"
+                    <TInput name="addr" v-model="editInstitute.instituition_addr" :errors="errors"
                         placeholder="Institute Address" />
-                    <TInput name="phone" v-model="institute.instituition_phone" :errors="errors"
+                    <TInput name="phone" v-model="editInstitute.instituition_phone" :errors="errors"
                         placeholder="Institute Contact No." />
-                    <TInput name="desc" v-model="institute.instituition_desc" :errors="errors"
+                    <TInput name="desc" v-model="editInstitute.instituition_desc" :errors="errors"
                         placeholder="Institute Description " />
-                    <TInput name="lat" v-model="institute.location.lat" :errors="errors" placeholder="Institute lat" />
-                    <TInput name="lon" v-model="institute.location.lng" :errors="errors" placeholder="Institute lon" />
-                    <div class="col-span-3 mb-8 mt-5">
-                        <label for="userType" class="block text-sm font-medium text-gray-700 mb-3">Choose First opening
-                            time
-                        </label>
-                        <label for="userType" class="block text-sm font-medium text-gray-700">From :
-                        </label>
-                        <select id="time1" name="time1" v-model="institute.opening_time.first[0]"
-                            @change="pickedTime1($event.target.value)" class="
+                    <TInput name="lat" v-model="editInstitute.location.lat" :errors="errors"
+                        placeholder="Institute lat" />
+                    <TInput class="mb-4" name="lon" v-model="editInstitute.location.lng" :errors="errors"
+                        placeholder="Institute lon" />
+
+                    <input type="checkbox" v-model="institute.changeTime" @change="showTime"> Change Opening Hours?
+                    <div v-if="changeTime">
+                        <div class="col-span-3 mb-8 mt-5">
+                            <label for="userType" class="block text-sm font-medium text-gray-700 mb-3">Choose First
+                                opening
+                                time
+                            </label>
+                            <label for="userType" class="block text-sm font-medium text-gray-700">From :
+                            </label>
+                            <select id="time1" name="time1" v-model="editInstitute.opening_time.first[0]"
+                                @change="pickedTime1($event.target.value)" class="
           mt-1
           mb-2
           block
@@ -69,14 +75,15 @@
           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
           sm:text-sm
         ">
-                            <option v-for="time1 in timeSlots1" :key="time1" :value="time1.key">
-                                <p>{{ time1.time }}</p>
-                            </option>
-                        </select>
-                        <label for="userType" class="block text-sm font-medium text-gray-700">To :
-                        </label>
-                        <select v-if="time1Picked" id="time2" name="time2" v-model="institute.opening_time.first[1]"
-                            @change="pickedTime2($event.target.value)" class="
+                                <option v-for="time1 in timeSlots1" :key="time1" :value="time1.key">
+                                    <p>{{ time1.time }}</p>
+                                </option>
+                            </select>
+                            <label for="userType" class="block text-sm font-medium text-gray-700">To :
+                            </label>
+                            <select v-if="time1Picked" id="time2" name="time2"
+                                v-model="editInstitute.opening_time.first[1]" @change="pickedTime2($event.target.value)"
+                                class="
           mt-1
           mb-2
           block
@@ -90,19 +97,20 @@
           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
           sm:text-sm
         ">
-                            <option v-for="time2 in timeSlots2" :key="time2" :value="time2.key">
-                                {{ time2.time }}
-                            </option>
-                        </select>
-                    </div>
-                    <div v-if="time2Picked" class="col-span-3 mb-8 mt-5">
-                        <label for="userType" class="block text-sm font-medium text-gray-700 mb-3">Choose Second opening
-                            time
-                        </label>
-                        <label for="userType" class="block text-sm font-medium text-gray-700">From :
-                        </label>
-                        <select id="time3" name="time3" v-model="institute.opening_time.second[0]"
-                            @change="pickedTime3($event.target.value)" class="
+                                <option v-for="time2 in timeSlots2" :key="time2" :value="time2.key">
+                                    {{ time2.time }}
+                                </option>
+                            </select>
+                        </div>
+                        <div v-if="time2Picked" class="col-span-3 mb-8 mt-5">
+                            <label for="userType" class="block text-sm font-medium text-gray-700 mb-3">Choose Second
+                                opening
+                                time
+                            </label>
+                            <label for="userType" class="block text-sm font-medium text-gray-700">From :
+                            </label>
+                            <select id="time3" name="time3" v-model="editInstitute.opening_time.second[0]"
+                                @change="pickedTime3($event.target.value)" class="
           mt-1
           mb-2
           block
@@ -116,14 +124,15 @@
           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
           sm:text-sm
         ">
-                            <option v-for="time3 in timeSlots3" :key="time3" :value="time3.key">
-                                {{ time3.time }}
-                            </option>
-                        </select>
-                        <label for="userType" class="block text-sm font-medium text-gray-700">To :
-                        </label>
-                        <select v-if="time3Picked" id="instituition_type" name="instituition_type"
-                            v-model="institute.opening_time.second[1]" @change="pickedTime4($event.target.value)" class="
+                                <option v-for="time3 in timeSlots3" :key="time3" :value="time3.key">
+                                    {{ time3.time }}
+                                </option>
+                            </select>
+                            <label for="userType" class="block text-sm font-medium text-gray-700">To :
+                            </label>
+                            <select v-if="time3Picked" id="instituition_type" name="instituition_type"
+                                v-model="editInstitute.opening_time.second[1]"
+                                @change="pickedTime4($event.target.value)" class="
           mt-1
           mb-2
           block
@@ -137,18 +146,19 @@
           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
           sm:text-sm
         ">
-                            <option v-for="time4 in timeSlots4" :key="time4" :value="time4.key">
-                                {{ time4.time }}
-                            </option>
-                        </select>
+                                <option v-for="time4 in timeSlots4" :key="time4" :value="time4.key">
+                                    {{ time4.time }}
+                                </option>
+                            </select>
+                        </div>
+
                     </div>
                     <div class="inset-0 flex items-center justify-center mt-8">
-                        <TButtonLoading :loading="loading" class=" relative justify-center" @click="createInstitute">
-                            Create an institute
+                        <TButtonLoading :loading="loading" class=" relative justify-center" @click="updateInstitute(editInstitute)">
+                            Update an institute
                         </TButtonLoading>
                     </div>
                 </div>
-
 
             </DashboardCard>
 
@@ -194,53 +204,56 @@ const institute = {
     opening_time: {
         first: [0, 0],
         second: [0, 0]
-    }
+    },
+    changeTime: false
 
 };
 const loading = ref(false);
 const errors = ref({});
+const changeTime = ref(false)
 const time1Picked = ref(false)
 const time2Picked = ref(false)
 const time3Picked = ref(false)
 
 
-function createInstitute(ev) {
-    ev.preventDefault();
+function updateInstitute(ev) {
 
-    console.log("User Input: ", institute);
+    console.log("User Input: ", ev);
 
-    store
-        .dispatch("createInstitute", institute)
-        .then(() => {
+    // store
+    //     .dispatch("createInstitute", institute)
+    //     .then(() => {
 
-            const param = {
-                owner_id: storeInstitute.value.id,
-                opening_time: {
-                    first: [storeInstitute.value.opening_time.first[0], storeInstitute.value.opening_time.first[1]],
-                    second: [storeInstitute.value.opening_time.second[0], storeInstitute.value.opening_time.second[1]]
-                },
-                owner_type: "Institute"
-            }
-            console.log("ID: ", )
-            console.log("res after api call: ", storeInstitute.value.opening_time.first)
-            console.log("res after api call: ", storeInstitute.value.opening_time.second)
-            store.dispatch("generateSlots",param);
-            // loading.value = false;
-            // router.push({
-            //     name: "PatientDashboard",
-            // });
-        })
-        .catch((error) => {
-            console.log(error);
-            loading.value = false;
-            if (error.response.status === 422) {
-                errors.value = error.response.data.errors;
-            }
-        });
+    //         const param = {
+    //             owner_id: storeInstitute.value.id,
+    //             opening_time: {
+    //                 first: [storeInstitute.value.opening_time.first[0], storeInstitute.value.opening_time.first[1]],
+    //                 second: [storeInstitute.value.opening_time.second[0], storeInstitute.value.opening_time.second[1]]
+    //             },
+    //             owner_type: "Institute"
+    //         }
+    //         console.log("ID: ",)
+    //         console.log("res after api call: ", storeInstitute.value.opening_time.first)
+    //         console.log("res after api call: ", storeInstitute.value.opening_time.second)
+    //         store.dispatch("generateSlots", param);
+    //         // loading.value = false;
+    //         // router.push({
+    //         //     name: "PatientDashboard",
+    //         // });
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //         loading.value = false;
+    //         if (error.response.status === 422) {
+    //             errors.value = error.response.data.errors;
+    //         }
+    //     });
 }
 
-function pickedInstituteType(ev) {
-    console.log("Picked Institute: ", ev)
+function showTime() {
+    console.log("Show Time toggled: ")
+
+    changeTime.value = !changeTime.value;
 
 }
 function pickedTime1(time) {

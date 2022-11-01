@@ -364,7 +364,7 @@ const store = createStore({
       sessionStorage.setItem('TOKEN', token);
     },
     addMaterial: (state, material) => {
-      state.user.data = user;
+      state.user.data = material;
     },
     setMaterialData: (state, data) => {
       state.material.data = data
