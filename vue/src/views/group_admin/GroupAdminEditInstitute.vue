@@ -51,8 +51,8 @@
                     <TInput class="mb-4" name="lon" v-model="editInstitute.location.lng" :errors="errors"
                         placeholder="Institute lon" />
 
-                    <input type="checkbox" v-model="institute.changeTime" @change="showTime"> Change Opening Hours?
-                    <div v-if="changeTime">
+                    <input type="checkbox" v-model="institute.changeTime" @change="editInstitute.timeChanged = !editInstitute.timeChanged"> Change Opening Hours?
+                    <div v-if="editInstitute.timeChanged">
                         <div class="col-span-3 mb-8 mt-5">
                             <label for="userType" class="block text-sm font-medium text-gray-700 mb-3">Choose First
                                 opening
@@ -220,42 +220,24 @@ function updateInstitute(ev) {
 
     console.log("User Input: ", ev);
 
-    // store
-    //     .dispatch("createInstitute", institute)
-    //     .then(() => {
+    store
+        .dispatch("updateInstitute", ev)
+        .then(() => {
 
-    //         const param = {
-    //             owner_id: storeInstitute.value.id,
-    //             opening_time: {
-    //                 first: [storeInstitute.value.opening_time.first[0], storeInstitute.value.opening_time.first[1]],
-    //                 second: [storeInstitute.value.opening_time.second[0], storeInstitute.value.opening_time.second[1]]
-    //             },
-    //             owner_type: "Institute"
-    //         }
-    //         console.log("ID: ",)
-    //         console.log("res after api call: ", storeInstitute.value.opening_time.first)
-    //         console.log("res after api call: ", storeInstitute.value.opening_time.second)
-    //         store.dispatch("generateSlots", param);
-    //         // loading.value = false;
-    //         // router.push({
-    //         //     name: "PatientDashboard",
-    //         // });
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //         loading.value = false;
-    //         if (error.response.status === 422) {
-    //             errors.value = error.response.data.errors;
-    //         }
-    //     });
+            loading.value = false;
+            router.push({
+                name: "GroupAdminManageInstitute",
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+            loading.value = false;
+            if (error.response.status === 422) {
+                errors.value = error.response.data.errors;
+            }
+        });
 }
 
-function showTime() {
-    console.log("Show Time toggled: ")
-
-    changeTime.value = !changeTime.value;
-
-}
 function pickedTime1(time) {
     console.log("Time 1 picked: ", time)
 

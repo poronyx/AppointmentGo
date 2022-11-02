@@ -6,7 +6,13 @@ const store = createStore({
     user: {
       data: {},
       token: sessionStorage.getItem("TOKEN"),
-      createData: {}
+      createData: {
+        address: {},
+        qualifications:{},
+        specialty:{},
+        instituition:{}
+
+      }
     },
     material: {
       loading: false,
@@ -139,6 +145,14 @@ const store = createStore({
       return axiosClient.post('/institute/create', input)
         .then(({ data }) => {
           commit('addInstitute', data.institute)
+
+
+        })
+    },
+    updateInstitute(_, input) {
+      console.log("PayLoad: ", input)
+      return axiosClient.post('/institute/update', input)
+        .then(() => {
 
 
         })
@@ -412,6 +426,7 @@ const store = createStore({
     setInstituteForEdit: (state, data) => {
       console.log("Inside Mutations: ", data)
       state.institute.editData = data
+      state.institute.editData.timeChanged = false;
     },
     setAllUsersData: (state, data) => {
       console.log("Inside Mutations: ", data)

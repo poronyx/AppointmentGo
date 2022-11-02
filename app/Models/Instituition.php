@@ -10,7 +10,7 @@ class Instituition extends Model
     use HasFactory;
 
     protected $fillable = ['instituition_type','instituition_name','instituition_addr', 'instituition_phone',
-    'instituition_desc','location','opening_time'];
+    'instituition_desc','location','opening_time','organization_id'];
 
 
     /**

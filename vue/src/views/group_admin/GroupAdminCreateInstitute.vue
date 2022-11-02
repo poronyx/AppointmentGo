@@ -193,7 +193,8 @@ const institute = {
     opening_time: {
         first: [0, 0],
         second: [0, 0]
-    }
+    },
+    organization_id: "1",
 
 };
 const loading = ref(false);

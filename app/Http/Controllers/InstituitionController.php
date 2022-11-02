@@ -23,6 +23,7 @@ class InstituitionController extends Controller
             'location.lng' => 'required|string',
             'opening_time.first' => 'required',
             'opening_time.second' => 'required',
+            'organization_id' => 'required'
         ]);
 
         $institute = Instituition::create([
@@ -33,6 +34,7 @@ class InstituitionController extends Controller
             'instituition_desc' => $data['instituition_desc'],
             'location' => $request->input('location'),
             'opening_time' => $request->input('opening_time'),
+            'organization_id' => $data['organization_id'],
         ]);
 
         //Create Slots data for institute according to opening time
@@ -84,7 +86,7 @@ class InstituitionController extends Controller
     {
 
         $institute_id = $request->input('id');
-        $timeChanged =  $request->input('time_changed');
+        $timeChanged =  $request->input('timeChanged');
 
         $data = $request->validate([
             'instituition_type' => 'required|string',
@@ -96,7 +98,8 @@ class InstituitionController extends Controller
             'location.lng' => 'required|string',
             'opening_time.first' => 'required',
             'opening_time.second' => 'required',
-            'time_changed' => 'required',
+            'timeChanged' => 'required',
+            
         ]);
 
         $institute = Instituition::where('id', $institute_id)
@@ -108,10 +111,11 @@ class InstituitionController extends Controller
                 'instituition_desc' => $data['instituition_desc'],
                 'location' => $request->input('location'),
                 'opening_time' => $request->input('opening_time'),
+                
             ]);
 
         //If the opening time was changed
-        if ($timeChanged == "1") {
+        if ($timeChanged) {
 
             //delete slots that belongs to this institute
             $mytime = Carbon::now()->addDay();

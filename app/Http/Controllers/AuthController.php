@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Testing\Fluent\Concerns\Has;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Rules;
+use App\Models\Instituition;
+use Carbon\Carbon;
+use App\Models\Slot;
 
 /**
  * Class AuthController
@@ -110,6 +113,9 @@ class AuthController extends Controller
                 'experience' => $data['experience'],
                 'instituition_id' => $data['instituition_id'],
             ]);
+
+            //Create Slots for doctor based on clinic's opening time
+
         } elseif ($request->input('user_type') == 'Nurse') {
             $data = $request->validate([
                 'name' => 'required|string',
