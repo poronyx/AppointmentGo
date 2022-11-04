@@ -21,38 +21,24 @@ class SlotController extends Controller
         //Define Slot owner's type
         $ownerType = $request->input('owner_type');
 
-        if ($ownerType == 'Institute') {
-            //Generate slots for the next 90 days
-            for ($i = 1; $i <= 90; $i++) {
 
-                $day = $mytime->addDay()->toDateString();
-                for($x = $firstOpeningTime[0]; $x <= $firstOpeningTime[1]; $x++ ){
-                    $slot = Slot::create([
-                        'owner_id' =>  $request->input('owner_id'),
-                        'slot_date' => $day,
-                        'time_slot' => $x,
-                        'owner_type' => $request->input('owner_type')
-                    ]);
-                }
-                for($y = $secondOpeningTime[0]; $y <= $secondOpeningTime[1]; $y++ ){
-                    $slot = Slot::create([
-                        'owner_id' =>  $request->input('owner_id'),
-                        'slot_date' => $day,
-                        'time_slot' => $y,
-                        'owner_type' => $request->input('owner_type')
-                    ]);
-                }
+        //Generate slots for the next 90 days
+        for ($i = 1; $i <= 90; $i++) {
 
-
-                
-            }
-        } else if ($ownerType == 'Doctor') {
-            //Generate slots for the next 90 days
-            for ($i = 1; $i <= 90; $i++) {
+            $day = $mytime->addDay()->toDateString();
+            for ($x = $firstOpeningTime[0]; $x <= $firstOpeningTime[1]; $x++) {
                 $slot = Slot::create([
                     'owner_id' =>  $request->input('owner_id'),
-                    'slot_date' => $mytime->addDay()->toDateString(),
-                    'time_slot' => $request->input('time_slot'),
+                    'slot_date' => $day,
+                    'time_slot' => $x,
+                    'owner_type' => $request->input('owner_type')
+                ]);
+            }
+            for ($y = $secondOpeningTime[0]; $y <= $secondOpeningTime[1]; $y++) {
+                $slot = Slot::create([
+                    'owner_id' =>  $request->input('owner_id'),
+                    'slot_date' => $day,
+                    'time_slot' => $y,
                     'owner_type' => $request->input('owner_type')
                 ]);
             }

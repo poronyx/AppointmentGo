@@ -92,7 +92,7 @@ class AuthController extends Controller
                 'specialty.main_specialty' => 'required',
                 'specialty.sub_specialty' => 'required',
                 'experience' => 'required|string',
-                'instituition_id' => 'required|string',
+                'instituition.id' => 'required',
             ]);
 
             $user = User::create([
@@ -111,10 +111,11 @@ class AuthController extends Controller
                 'summary' => $data['summary'],
                 'specialty' =>  $request->input('specialty'),
                 'experience' => $data['experience'],
-                'instituition_id' => $data['instituition_id'],
+                'instituition_id' => $request->input('instituition.id'),
             ]);
 
-            //Create Slots for doctor based on clinic's opening time
+
+
 
         } elseif ($request->input('user_type') == 'Nurse') {
             $data = $request->validate([
@@ -134,7 +135,7 @@ class AuthController extends Controller
                     Password::min(8)->mixedCase()->numbers()->symbols()
                 ],
                 'department' => 'required|string',
-                'instituition_id' => 'required|string',
+                'instituition.id' => 'required',
             ]);
 
             $user = User::create([
@@ -149,7 +150,7 @@ class AuthController extends Controller
                 'password' => bcrypt($data['password']),
                 'address' =>  $request->input('address'),
                 'department' => $data['department'],
-                'instituition_id' => $data['instituition_id'],
+                'instituition_id' => $request->input('instituition.id'),
             ]);
         } elseif ($request->input('user_type') == 'Medical Admin') {
             $data = $request->validate([
@@ -168,7 +169,7 @@ class AuthController extends Controller
                     'confirmed',
                     Password::min(8)->mixedCase()->numbers()->symbols()
                 ],
-                'instituition_id' => 'required|string',
+                'instituition.id' => 'required',
             ]);
 
             $user = User::create([
@@ -182,7 +183,7 @@ class AuthController extends Controller
                 'date_of_birth' => $data['date_of_birth'],
                 'password' => bcrypt($data['password']),
                 'address' =>  $request->input('address'),
-                'instituition_id' => $data['instituition_id'],
+                'instituition_id' => $request->input('instituition.id'),
             ]);
         } elseif ($request->input('user_type') == 'Platform Admin' || 'Group Admin') {
             $data = $request->validate([
@@ -327,17 +328,17 @@ class AuthController extends Controller
 
         $user_id = $request->input('id');
 
-        
+
 
         if ($request->input('user_type') == 'Patient') {
 
             // Clear user's unique field 
             $clear = User::where('id', $user_id)
-            ->update([
-                'email' => '',
-                'phone_number' => '',
-                'nric' => ''
-            ]);
+                ->update([
+                    'email' => '',
+                    'phone_number' => '',
+                    'nric' => ''
+                ]);
 
             $data = $request->validate([
                 'name' => 'required|string',
@@ -353,32 +354,31 @@ class AuthController extends Controller
             ]);
 
             $user = User::where('id', $user_id)
-            ->update([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'race' => $data['race'],
-                'phone_number' => $data['phone_number'],
-                'nric' => $data['nric'],
-                'gender' => $data['gender'],
-                'user_type' => $data['user_type'],
-                'date_of_birth' => $data['date_of_birth'],
-                'address' =>  $request->input('address')
-            
-            ]);
+                ->update([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'race' => $data['race'],
+                    'phone_number' => $data['phone_number'],
+                    'nric' => $data['nric'],
+                    'gender' => $data['gender'],
+                    'user_type' => $data['user_type'],
+                    'date_of_birth' => $data['date_of_birth'],
+                    'address' =>  $request->input('address')
+
+                ]);
 
             return response([
                 'user' => $user
             ]);
-
         } elseif ($request->input('user_type') == 'Doctor') {
 
             // Clear user's unique field 
             $clear = User::where('id', $user_id)
-            ->update([
-                'email' => '',
-                'phone_number' => '',
-                'nric' => ''
-            ]);
+                ->update([
+                    'email' => '',
+                    'phone_number' => '',
+                    'nric' => ''
+                ]);
 
             $data = $request->validate([
                 'name' => 'required|string',
@@ -402,34 +402,32 @@ class AuthController extends Controller
             ]);
 
             $user = User::where('id', $user_id)
-            ->update([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'race' => $data['race'],
-                'phone_number' => $data['phone_number'],
-                'nric' => $data['nric'],
-                'gender' => $data['gender'],
-                'user_type' => $data['user_type'],
-                'date_of_birth' => $data['date_of_birth'],
-                'address' =>  $request->input('address'),
-                'academic_title' => $data['academic_title'],
-                'qualifications' =>  $request->input('qualifications'),
-                'summary' => $data['summary'],
-                'specialty' =>  $request->input('specialty'),
-                'experience' => $data['experience'],
-                'instituition_id' => $data['instituition_id'],
-            ]);
-
-
+                ->update([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'race' => $data['race'],
+                    'phone_number' => $data['phone_number'],
+                    'nric' => $data['nric'],
+                    'gender' => $data['gender'],
+                    'user_type' => $data['user_type'],
+                    'date_of_birth' => $data['date_of_birth'],
+                    'address' =>  $request->input('address'),
+                    'academic_title' => $data['academic_title'],
+                    'qualifications' =>  $request->input('qualifications'),
+                    'summary' => $data['summary'],
+                    'specialty' =>  $request->input('specialty'),
+                    'experience' => $data['experience'],
+                    'instituition_id' => $data['instituition_id'],
+                ]);
         } elseif ($request->input('user_type') == 'Nurse') {
 
             // Clear user's unique field 
             $clear = User::where('id', $user_id)
-            ->update([
-                'email' => '',
-                'phone_number' => '',
-                'nric' => ''
-            ]);
+                ->update([
+                    'email' => '',
+                    'phone_number' => '',
+                    'nric' => ''
+                ]);
 
             $data = $request->validate([
                 'name' => 'required|string',
@@ -447,28 +445,28 @@ class AuthController extends Controller
             ]);
 
             $user = User::where('id', $user_id)
-            ->update([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'race' => $data['race'],
-                'phone_number' => $data['phone_number'],
-                'nric' => $data['nric'],
-                'gender' => $data['gender'],
-                'user_type' => $data['user_type'],
-                'date_of_birth' => $data['date_of_birth'],
-                'address' =>  $request->input('address'),
-                'department' => $data['department'],
-                'instituition_id' => $data['instituition_id'],
-            ]);
+                ->update([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'race' => $data['race'],
+                    'phone_number' => $data['phone_number'],
+                    'nric' => $data['nric'],
+                    'gender' => $data['gender'],
+                    'user_type' => $data['user_type'],
+                    'date_of_birth' => $data['date_of_birth'],
+                    'address' =>  $request->input('address'),
+                    'department' => $data['department'],
+                    'instituition_id' => $data['instituition_id'],
+                ]);
         } elseif ($request->input('user_type') == 'Medical Admin') {
 
             // Clear user's unique field 
             $clear = User::where('id', $user_id)
-            ->update([
-                'email' => '',
-                'phone_number' => '',
-                'nric' => ''
-            ]);
+                ->update([
+                    'email' => '',
+                    'phone_number' => '',
+                    'nric' => ''
+                ]);
 
             $data = $request->validate([
                 'name' => 'required|string',
@@ -485,27 +483,27 @@ class AuthController extends Controller
             ]);
 
             $user = User::where('id', $user_id)
-            ->update([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'race' => $data['race'],
-                'phone_number' => $data['phone_number'],
-                'nric' => $data['nric'],
-                'gender' => $data['gender'],
-                'user_type' => $data['user_type'],
-                'date_of_birth' => $data['date_of_birth'],
-                'address' =>  $request->input('address'),
-                'instituition_id' => $data['instituition_id'],
-            ]);
+                ->update([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'race' => $data['race'],
+                    'phone_number' => $data['phone_number'],
+                    'nric' => $data['nric'],
+                    'gender' => $data['gender'],
+                    'user_type' => $data['user_type'],
+                    'date_of_birth' => $data['date_of_birth'],
+                    'address' =>  $request->input('address'),
+                    'instituition_id' => $data['instituition_id'],
+                ]);
         } elseif ($request->input('user_type') == 'Platform Admin' || 'Group Admin') {
 
             // Clear user's unique field 
             $clear = User::where('id', $user_id)
-            ->update([
-                'email' => '',
-                'phone_number' => '',
-                'nric' => ''
-            ]);
+                ->update([
+                    'email' => '',
+                    'phone_number' => '',
+                    'nric' => ''
+                ]);
 
             $data = $request->validate([
                 'name' => 'required|string',
@@ -521,22 +519,46 @@ class AuthController extends Controller
             ]);
 
             $user = User::where('id', $user_id)
-            ->update([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'race' => $data['race'],
-                'phone_number' => $data['phone_number'],
-                'nric' => $data['nric'],
-                'gender' => $data['gender'],
-                'user_type' => $data['user_type'],
-                'date_of_birth' => $data['date_of_birth'],
-                'address' =>  $request->input('address')
-            ]);
+                ->update([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'race' => $data['race'],
+                    'phone_number' => $data['phone_number'],
+                    'nric' => $data['nric'],
+                    'gender' => $data['gender'],
+                    'user_type' => $data['user_type'],
+                    'date_of_birth' => $data['date_of_birth'],
+                    'address' =>  $request->input('address')
+                ]);
         }
 
 
         return response([
             'user' => $user
+        ]);
+    }
+
+    public function getAllDoctors()
+    {
+        
+        $doctors = User::where('user_type', 'Doctor')->get();
+
+        return response([
+            'success' => true,
+            'doctors' => $doctors
+        ]);
+    }
+
+    public function getDoctorsFromInstitute(Request $request)
+    {
+        
+        $doctors = User::where('user_type', 'Doctor')
+        ->where('instituition_id', $request->input('instituition_id'))
+        ->get();
+
+        return response([
+            'success' => true,
+            'doctors' => $doctors
         ]);
     }
 }

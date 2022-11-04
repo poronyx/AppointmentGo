@@ -14,7 +14,7 @@
 
                 {{ institutes[0].opening_time.first }}
                 {{ institutes[0].opening_time.second }}
-                {{userData}}
+                {{ userData }}
                 <div class="rounded-md shadow-sm ">
                     <TInput name="name" v-model="userData.name" :errors="errors" placeholder="Full Name"
                         inputClass="rounded-t-md" />
@@ -85,8 +85,8 @@
                 <div v-if="doctorPicked" class="rounded-md shadow-sm ">
                     <TInput name="academic_title" v-model="userData.academic_title" :errors="errors"
                         placeholder="Academic Title" inputClass="rounded-t-md" />
-                    <TInput name="main_qualification" v-model="userData.qualifications.main_qualification" :errors="errors"
-                        placeholder="Main Qualification" inputClass="rounded-t-md" />
+                    <TInput name="main_qualification" v-model="userData.qualifications.main_qualification"
+                        :errors="errors" placeholder="Main Qualification" inputClass="rounded-t-md" />
                     <TInput name="other_qualification" v-model="userData.qualifications.other_qualification"
                         :errors="errors" placeholder="Other Qualification" inputClass="rounded-t-md" />
 
@@ -304,28 +304,49 @@ const medicalAdminPicked = ref(false)
 const platformAdminPicked = ref(false)
 const groupAdminPicked = ref(false)
 
+const opening_time = [];
 
 function register(input) {
-    loading.value = true;
+    // loading.value = true;
     console.log(input)
+    console.log("Opening Time", userData.value.instituition.opening_time)
 
-    // store
-    //     .dispatch("registerForAll", input)
-    //     .then((res) => {
 
-    //         console.log(res)
-    //         // loading.value = false;
-    //         // router.push({
-    //         //     name: "GroupAdminManageAccount",
-    //         // });
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //         loading.value = false;
-    //         if (error.response.status === 422) {
-    //             errors.value = error.response.data.errors;
-    //         }
-    //     });
+    store
+        .dispatch("registerForAll", input)
+        .then((res) => {
+
+            console.log("Res From Register", res)
+            const param = {
+                owner_id: res.id,
+                opening_time: {
+                    first: [userData.value.instituition.opening_time.first[0], userData.value.instituition.opening_time.first[1]],
+                    second: [userData.value.instituition.opening_time.second[0], userData.value.instituition.opening_time.second[1]]
+                },
+                owner_type: "Doctor"
+            }
+
+            console.log("Param", param)
+            // console.log("ID: ", userData.value.id)
+            console.log("First Open: ", userData.value.instituition.opening_time.first)
+            console.log("Second Open: ", userData.value.instituition.opening_time.second)
+            store.dispatch("generateSlots", param).then((res) => {
+
+                console.log(res)
+                loading.value = false;
+
+                router.push({
+                    name: "GroupAdminManageAccount",
+                });
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+            loading.value = false;
+            if (error.response.status === 422) {
+                errors.value = error.response.data.errors;
+            }
+        });
 }
 
 function pickedUserType(ev) {

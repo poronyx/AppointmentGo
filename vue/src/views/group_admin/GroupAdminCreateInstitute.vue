@@ -221,7 +221,6 @@ function createInstitute(ev) {
                 },
                 owner_type: "Institute"
             }
-            console.log("ID: ", )
             console.log("res after api call: ", storeInstitute.value.opening_time.first)
             console.log("res after api call: ", storeInstitute.value.opening_time.second)
             store.dispatch("generateSlots",param);

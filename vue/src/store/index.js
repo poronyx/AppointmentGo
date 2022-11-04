@@ -8,10 +8,22 @@ const store = createStore({
       token: sessionStorage.getItem("TOKEN"),
       createData: {
         address: {},
-        qualifications:{},
-        specialty:{},
-        instituition:{}
+        qualifications: {},
+        specialty: {},
+        instituition: {}
 
+      }
+    },
+    patientMakeAppointment: {
+      doctorsFromInstitute: [],
+      makeAppointmentData: {
+        "patient_id": 1,
+        "time_slot": {
+          "date": "",
+          "time": "00:00"
+        },
+        "appointment_type": "OFF-DAYS",
+        "symptoms": "Bell is sick"
       }
     },
     material: {
@@ -47,6 +59,9 @@ const store = createStore({
       time_slot3: [],
       time_slot4: [],
     },
+    doctorDashBoard: {
+      events: []
+    },
     dashboard: {
       loading: false,
       data: {}
@@ -81,12 +96,11 @@ const store = createStore({
           return data;
         })
     },
-    registerForAll({ commit }, user) {
+    registerForAll(_, user) {
       return axiosClient.post('/register', user)
-        .then(({ data }) => {
-          commit('setUserCreate', data.user);
-          console.log(data)
-          return data;
+        .then((res) => {
+          console.log("After Admin Create Account", res.data.user)
+          return res.data.user;
         })
     },
     login({ commit }, user) {
@@ -169,7 +183,7 @@ const store = createStore({
 
     },
     //Generate Slots
-    generateSlots(_,input) {
+    generateSlots(_, input) {
       console.log("PayLoad: ", input)
       return axiosClient.post('/institute/generateSlots', input)
         .then((res) => {
@@ -235,7 +249,41 @@ const store = createStore({
         })
 
     },
+    //For User's appointment page 
+    getDoctorsFromInstitute({ commit }, input) {
+      return axiosClient.post(`/patient/getDoctorsFromInstitute`, input)
+        .then((res) => {
+          commit('setDoctorsFromInstitute', res.data)
+          console.log("Res Doctor from inst", res.data)
+          return res.data;
+        })
 
+    },
+    getAllDoctors() {
+      return axiosClient.get(`/patient/getDoctors`)
+        .then((res) => {
+          console.log("All Doctors: ", res)
+          return res;
+        })
+        .catch(error => {
+          return error;
+        })
+
+    },
+    //For Doctor's page
+    getEventData(_, input) {
+      return axiosClient.post(`/appointment/getDoctor`, input)
+        .then((res) => {
+          console.log(res)
+
+
+          return res;
+        })
+        .catch(error => {
+          return error;
+        })
+
+    },
     //Group Admin Manage Specialty
     getSpecialtyData({ commit }) {
       return axiosClient.get(`/specialty/get`)
@@ -276,8 +324,18 @@ const store = createStore({
         })
 
     },
+    makeAppointment(_, input) {
+      return axiosClient.post(`/appointment/create`, input)
+        .then((res) => {
+          console.log(res)
 
+          return res;
+        })
+        .catch(error => {
+          return error;
+        })
 
+    },
     getDashboardData({ commit }) {
       commit('dashboardLoading', true)
       return axiosClient.get(`/dashboard`)
@@ -388,18 +446,26 @@ const store = createStore({
       }
       state.material.slides = imageList
     },
+    setDoctorsFromInstitute: (state, data) => {
+      console.log("Setting Data into doctr after institute is set : ", data.doctors)
+      state.patientMakeAppointment.doctorsFromInstitute = data.doctors
+      state.patientMakeAppointment.doctorsFromInstitute.push({
+        name: "--Not Specified--",
+        id: "NA"
+      })
+    },
     addInstitute: (state, institute) => {
       state.institute.data = institute;
     },
     setInstituteData: (state, data) => {
-      console.log("Inside Mutations: ", data)
+      console.log("All Institutes : ", data)
       state.institute.instituition_list = data
     },
     setInstituteForDelete: (state, data) => {
       console.log("Inside Mutations: ", data)
       state.institute.deleteData = data
     },
-    
+
     setUserDeleteData: (state, data) => {
       console.log("Inside Mutations: ", data)
       state.groupAdminManageAccount.deleteData = data;
@@ -407,6 +473,25 @@ const store = createStore({
     setUserSuspendData: (state, data) => {
       console.log("Inside Mutations: ", data)
       state.groupAdminManageAccount.suspendData = data;
+    },
+    setDoctorDashBoardData: (state, data) => {
+      console.log("Inside Mutations: ", data.appointments)
+      const dataList = []
+      let i = 0
+      for (let x in data.appointments) {
+        console.log("X = ", x)
+        console.log("Inside Loop", data.appointments[x])
+        dataList.push({
+          start: data.appointments[x].time_slot.start.date + " " + data.appointments[x].time_slot.start.time,
+          end: data.appointments[x].time_slot.end.date + " " + data.appointments[x].time_slot.end.time,
+          title: data.appointments[x].appointment_type
+        })
+
+
+      }
+
+      console.log("Data LIST", dataList)
+      state.doctorDashBoard.events = dataList
     },
     addSpecialty: (state, specialty) => {
       state.specialty.data = specialty;

@@ -53,7 +53,15 @@ Route::post('/users/suspendUser',[\App\Http\Controllers\AuthController::class,'s
 Route::post('/users/unSuspendUser',[\App\Http\Controllers\AuthController::class,'unSuspendUser']);
 Route::post('/users/updateUser',[\App\Http\Controllers\AuthController::class,'updateUser']);
 
+//For appointmet Table 
+Route::post('/appointment/create',[\App\Http\Controllers\AppointmentController::class,'createAppointment']);
+Route::post('/appointment/getDoctor',[\App\Http\Controllers\AppointmentController::class,'getApointmentsForDoctor']);
 
+
+
+//For Patient making appointment page 
+Route::post('/patient/getDoctorsFromInstitute', [AuthController::class, 'getDoctorsFromInstitute']);
+Route::get('/patient/getDoctors', [AuthController::class, 'getAllDoctors']);
 
 Route::get('/survey-by-slug/{survey:slug}', [\App\Http\Controllers\SurveyController::class, 'showForGuest']);
 Route::post('/survey/{survey}/answer', [\App\Http\Controllers\SurveyController::class, 'storeAnswer']);

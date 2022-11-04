@@ -34,6 +34,7 @@ import GroupAdminManageSpecialty from "../views/group_admin/GroupAdminManageSpec
 import GroupAdminEditSpecialty from "../views/group_admin/GroupAdminEditSpecialty.vue"
 import GroupAdminManageInstitute from "../views/group_admin/GroupAdminManageInstitute.vue"
 import GroupAdminEditInstitute from "../views/group_admin/GroupAdminEditInstitute.vue"
+import DoctorDefaultLayout from "../components/DoctorDefaultLayout.vue";
 
 let routes = [{
   path: "/",
@@ -52,10 +53,18 @@ let routes = [{
     { path: "/patient-make-appointment", name: "PatientMakeAppointment", component: PatientMakeAppointment },
     { path: "/patient-edit-profile", name: "PatientEditProfile", component: PatientEditProfile },
     { path: "/patient-view-article", name: "ViewArticle", component: ViewArticle },
-    { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
     { path: "/surveys", name: "Surveys", component: Surveys },
     { path: "/surveys/create", name: "SurveyCreate", component: SurveyView },
     { path: "/surveys/:id", name: "SurveyView", component: SurveyView },
+  ],
+},
+{
+  path: "/d",
+  redirect: "/doctor-dashboard",
+  component: DoctorDefaultLayout,
+  meta: { requiresAuth: true },
+  children: [
+    { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
   ],
 },
 {
