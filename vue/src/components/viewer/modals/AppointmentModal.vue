@@ -9,7 +9,7 @@
 
   <TransitionRoot appear :show="isOpen" as="template">
 
-    <Dialog v-if="type == 'on-site'" as="div" @close="closeModal" class="relative z-10" :key="on                                                                                                                -                                                                                                                site">
+    <Dialog v-if="type == 'on-site'" as="div" @close="closeModal" class="relative z-10" :key="on - site">
       <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100"
         leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
         <div class="fixed inset-0 bg-black bg-opacity-25" />
@@ -26,7 +26,7 @@
                 <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 mb-9">
                   <div class="order-1 lg:order-1">
                     On-Site Appointment
-                    {{makeAppointmentData}}
+                    {{ makeAppointmentData }}
                   </div>
                   <div class="order-2 lg:order-2 ">
                     <button type="button" class="float-right" @click="closeModal()"> X
@@ -55,7 +55,7 @@
           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
           sm:text-sm
         ">
-                    <option v-for="institute in allInstitutes" :key="institute" :value="institute.id">
+                    <option v-for="institute in institutes" :key="institute" :value="institute.id">
                       {{ institute.instituition_name }}
                     </option>
                   </select>
@@ -65,8 +65,8 @@
 
                   <label for="doctorChoose" class="block text-sm font-medium text-gray-700">Choose a Doctor
                   </label>
-                  <select id="doctorChoose" name="doctorChoose" v-model="makeAppointmentData.owner_id" @change="pickedDoctor($event.target.value)"
-                    class="
+                  <select id="doctorChoose" name="doctorChoose" v-model="makeAppointmentData.owner_id"
+                    @change="pickedDoctor($event.target.value)" class="
           mt-1
           block
           w-full
@@ -88,14 +88,15 @@
               <div v-if="showDates" class="col-span-3">
                 <label for="dates" class="block text-sm font-medium text-gray-700">Pick a Date
                 </label>
-                <TInput type="date" name="date_of_birth" v-model="makeAppointmentData.time_slot.date" :errors="errors"
-                  placeholder="dd/mm/yyyy" @change="pickedDate($event.target.value)" />
+                <TInput type="date" name="date_of_birth" v-model="makeAppointmentData.date" :errors="errors"
+                  placeholder="dd/mm/yyyy" @change="pickedDate(makeAppointmentData)" />
               </div>
               <div v-if="showSlots" class="col-span-3">
 
                 <label for="timeSlots" class="block text-sm font-medium text-gray-700">Pick a time
                 </label>
-                <select id="timeSlots" name="timeSlots" v-model="timePicked" @change="pickedTimeSlot(time)" class="
+                <select id="timeSlots" name="timeSlots" v-model="makeAppointmentData.time"
+                  @change="pickedTimeSlot(time)" class="
 mt-1
 block
 w-full
@@ -108,8 +109,8 @@ shadow-sm
 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
 sm:text-sm
 ">
-                  <option v-for="time in timeSlots" :key="time" :value="time">
-                    {{ time }}
+                  <option v-for="time in slotAvailablityData" :key="time" :value="time.key">
+                    {{ time.time }}
                   </option>
                 </select>
               </div>
@@ -122,7 +123,7 @@ sm:text-sm
                 </button>
               </div>
               <TransitionRoot appear :show="isOpenAlert" as="template">
-                <Dialog as="div" class="relative z-10" :key="on                                                                                                                -                                                                                                                site">
+                <Dialog as="div" class="relative z-10" :key="on - site">
                   <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0"
                     enter-to="opacity-100" leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
                     <div class="fixed inset-0 bg-black bg-opacity-25" />
@@ -291,7 +292,7 @@ sm:text-sm
                 </button>
               </div>
               <TransitionRoot appear :show="isOpenAlert" as="template">
-                <Dialog as="div" class="relative z-10" :key="on                                                                                                                -                                                                                                                site">
+                <Dialog as="div" class="relative z-10" :key="on - site">
                   <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0"
                     enter-to="opacity-100" leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
                     <div class="fixed inset-0 bg-black bg-opacity-25" />
@@ -354,7 +355,6 @@ sm:text-sm
 </template>
   
 <script setup>
-import { ref } from 'vue'
 import {
   TransitionRoot,
   TransitionChild,
@@ -363,28 +363,23 @@ import {
 } from '@headlessui/vue'
 import { useRouter } from "vue-router";
 import TInput from "../../core/TInput.vue";
-import { computed } from "vue";
+import { computed, ref } from "@vue/reactivity";
 import { useStore } from "vuex";
 
 
 const store = useStore();
 
 const user = computed(() => store.state.user.data);
-// const institutes = computed(() => store.state.institutes.instituition_list);
-const doctorsFromInst = computed(() => store.state.patientMakeAppointment.doctorsFromInstitute );
-const makeAppointmentData = computed(() => store.state.patientMakeAppointment.makeAppointmentData );
+const institutes = computed(() => store.state.institute.instituition_list);
+const doctorsFromInst = computed(() => store.state.patientMakeAppointment.doctorsFromInstitute);
+const makeAppointmentData = computed(() => store.state.patientMakeAppointment.makeAppointmentData);
+const slotAvailablityData = computed(() => store.state.patientMakeAppointment.slotAvailability);
 
+store.dispatch("getUser");
+store.dispatch("getInstituteData");
+const patientID = user.value.id
+console.log(patientID)
 
-const allInstitutes = []
-store.dispatch("getInstituteData").then((res) => {
-  console.log("After Get Institute",res.data.institutes)
-  for(let x in res.data.institutes){
-    console.log("X = ", x)
-    allInstitutes.push(res.data.institutes[x])
-  }
-  
-  console.log("All Institutes", allInstitutes)
-})
 
 
 
@@ -428,7 +423,7 @@ let specPicked = "";
 let timeSlots = ["8:00-8:30", "8:30-9:00", "9:00-9:30", "9:30-10:00", "10:00-10:30", "10:30-11:00",
   "11:00-11:30", "11:30-12:00", "3:00-3:30", "3:30-4:00", "4:00-4:30", "4:30-5:00", "5:00-5:30", "5:30-6:00"]
 
-  const props = defineProps({
+const props = defineProps({
   type: String
 });
 
@@ -443,20 +438,21 @@ const errors = ref({});
 
 function pickedInstitute(picked) {
   instituitionPicked = picked
-  console.log("Inst picked id: ",instituitionPicked)
-  
+
+  console.log("Inst picked id: ", picked)
+
   showDoc.value = true;
 
   const param = {
-    instituition_id : picked
+    instituition_id: picked
   }
   //Get Doctor From picked institute
-  store.dispatch("getDoctorsFromInstitute",param).then((res) => {
+  store.dispatch("getDoctorsFromInstitute", param).then((res) => {
 
-    console.log("Doctors After picking institute: ",res.doctors)
+    console.log("Doctors After picking institute: ", res.doctors)
     for (let doctor in res.doctors) {
-    doctorData.push(res.doctors[doctor])
-  }
+      doctorData.push(res.doctors[doctor])
+    }
 
   })
 }
@@ -467,14 +463,30 @@ function pickedDoctor(picked) {
   showDates.value = true;
 }
 function pickedDate(event) {
-  console.log(event)
-  date_appointment = event
   showSlots.value = true
+
+  const param = {
+    "institute_id": event.instituition_id,
+    "owner_id": event.owner_id,
+    "date": event.date
+  }
+  //Get Available slots from selected date doctor
+  console.log("Appointment Data", event.instituition_id)
+  console.log("Appointment Data", event.owner_id)
+  console.log("Appointment Data", event.date)
+  store
+    .dispatch("getAvailabilityData", param).then((res) => {
+      console.log(res.data.final_slots)
+      store.commit("setAvailableSlots", res.data.final_slots)
+    })
 }
 function pickedTimeSlot(picked) {
   console.log(picked)
   showButton.value = true;
   timePicked = picked;
+
+
+
 
 }
 
@@ -488,8 +500,24 @@ function openModal() {
   isOpen.value = true
 }
 function makeOnSiteAppointment() {
-  console.log("successfully submitted")
+
   isOpenAlert.value = true
+
+  const param = { 
+    "appointment_type": "on-site", 
+    "patient_id": makeAppointmentData.value.patient_id, 
+    "instituition_id": makeAppointmentData.value.instituition_id, 
+    "owner_id": makeAppointmentData.value.owner_id, 
+    "appointment_date": makeAppointmentData.value.date, 
+    "time": makeAppointmentData.value.time 
+  }
+
+  console.log("successfully submitted", param)
+
+  store
+    .dispatch("makeAppointment", param).then((res) => {
+      console.log("making appointment res", res)
+    })
 }
 function makeHomeVisitAppointment() {
   console.log("successfully submitted")

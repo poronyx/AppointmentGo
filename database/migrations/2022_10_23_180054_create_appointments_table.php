@@ -19,7 +19,8 @@ class CreateAppointmentsTable extends Migration
             $table->string("patient_id")->nullable();
             $table->string("owner_type");
             $table->string("prescription_id")->nullable();
-            $table->json("time_slot");
+            $table->string("appointment_date");
+            $table->string("time");
             $table->string("satisfaction_id")->nullable();
             $table->string("instituition_id");
             $table->string("appointment_type");

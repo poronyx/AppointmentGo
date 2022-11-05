@@ -9,17 +9,9 @@ class Appointment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['prescription_id','time_slot','satisfaction_id', 'instituition_id',
+    protected $fillable = ['prescription_id','appointment_date','time','satisfaction_id', 'instituition_id',
     'appointment_type','symptoms','status','owner_id','owner_type','patient_id'];
 
     
  
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'time_slot' => 'array',
-    ];
 }

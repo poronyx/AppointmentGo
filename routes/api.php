@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -62,6 +63,7 @@ Route::post('/appointment/getDoctor',[\App\Http\Controllers\AppointmentControlle
 //For Patient making appointment page 
 Route::post('/patient/getDoctorsFromInstitute', [AuthController::class, 'getDoctorsFromInstitute']);
 Route::get('/patient/getDoctors', [AuthController::class, 'getAllDoctors']);
+Route::post('/patient/getDoctorAvailability', [AppointmentController::class, 'patientGetDoctorAvailability']);
 
 Route::get('/survey-by-slug/{survey:slug}', [\App\Http\Controllers\SurveyController::class, 'showForGuest']);
 Route::post('/survey/{survey}/answer', [\App\Http\Controllers\SurveyController::class, 'storeAnswer']);

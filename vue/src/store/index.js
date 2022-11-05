@@ -17,14 +17,9 @@ const store = createStore({
     patientMakeAppointment: {
       doctorsFromInstitute: [],
       makeAppointmentData: {
-        "patient_id": 1,
-        "time_slot": {
-          "date": "",
-          "time": "00:00"
-        },
-        "appointment_type": "OFF-DAYS",
-        "symptoms": "Bell is sick"
-      }
+        "appointment_type": "on-site",
+      },
+      slotAvailability:[]
     },
     material: {
       loading: false,
@@ -83,7 +78,9 @@ const store = createStore({
     }
   },
   getters: {
-
+    getInstituteById: (state) => (id) => {
+      return state.institute.instituition_list.find(institute => institute.id === id)
+    }
   },
   actions: {
 
@@ -270,6 +267,20 @@ const store = createStore({
         })
 
     },
+    //Get availability
+    getAvailabilityData(_, input) {
+      console.log("After Picked Date data",input)
+      return axiosClient.post(`/patient/getDoctorAvailability`, input)
+        .then((res) => {
+          console.log(res)
+
+          return res;
+        })
+        .catch(error => {
+          return error;
+        })
+
+    },
     //For Doctor's page
     getEventData(_, input) {
       return axiosClient.post(`/appointment/getDoctor`, input)
@@ -325,9 +336,10 @@ const store = createStore({
 
     },
     makeAppointment(_, input) {
+      console.log("appointment data before API",input)
       return axiosClient.post(`/appointment/create`, input)
         .then((res) => {
-          console.log(res)
+          console.log("Res from making Appointment", res)
 
           return res;
         })
@@ -427,6 +439,7 @@ const store = createStore({
 
     setUser: (state, user) => {
       state.user.data = user;
+      state.patientMakeAppointment.makeAppointmentData.patient_id = user.id
     },
     setUserCreate: (state, user) => {
       state.user.createData = user;
@@ -512,6 +525,18 @@ const store = createStore({
       console.log("Inside Mutations: ", data)
       state.institute.editData = data
       state.institute.editData.timeChanged = false;
+    },
+    setAvailableSlots: (state, data) => {
+      console.log("Inside Mutations: ", data)
+      const timeSlots = []
+      for (let x in data) {
+        let minutes = data[x] * 15
+        timeSlots.push({
+          key: data[x],
+          time: toHoursAndMinutes(minutes),
+        });
+      }
+      state.patientMakeAppointment.slotAvailability = timeSlots
     },
     setAllUsersData: (state, data) => {
       console.log("Inside Mutations: ", data)
