@@ -16,11 +16,22 @@ const store = createStore({
     },
     patientMakeAppointment: {
       doctorsFromInstitute: [],
+      doctorsFromSpecialty: [],
       makeAppointmentData: {
         "appointment_type": "on-site",
       },
-      slotAvailability:[]
+      slotAvailability: []
     },
+    patientFindDoctor: {
+      allDoctors: [],
+      viewDoctorData:{}
+    },
+    patientProfile: {
+      userID:{},
+      appointments: [],
+      medicalHistories:[],
+    }
+    ,
     material: {
       loading: false,
       data: {},
@@ -256,11 +267,21 @@ const store = createStore({
         })
 
     },
-    getAllDoctors() {
+    getDoctorsFromSpecialty({ commit }, input) {
+      return axiosClient.post(`/patient/getDoctorsFromSpecialty`, input)
+        .then((res) => {
+          commit('setDoctorsFromSpecialty', res.data)
+          console.log("Res Doctor from Specialty", res.data)
+          return res.data;
+        })
+
+    },
+    getAllDoctors({commit}) {
       return axiosClient.get(`/patient/getDoctors`)
         .then((res) => {
+          commit('setAllDoctorsData', res.data)
           console.log("All Doctors: ", res)
-          return res;
+
         })
         .catch(error => {
           return error;
@@ -269,7 +290,7 @@ const store = createStore({
     },
     //Get availability
     getAvailabilityData(_, input) {
-      console.log("After Picked Date data",input)
+      console.log("After Picked Date data", input)
       return axiosClient.post(`/patient/getDoctorAvailability`, input)
         .then((res) => {
           console.log(res)
@@ -281,19 +302,27 @@ const store = createStore({
         })
 
     },
-    //For Doctor's page
-    getEventData(_, input) {
-      return axiosClient.post(`/appointment/getDoctor`, input)
+    //Patient Profile Page
+    getAppointmentData({commit}, input) {
+      return axiosClient.post(`/appointment/patientGetAppointments`, input)
         .then((res) => {
-          console.log(res)
-
-
+          commit('setAppointmentData', res.data.appointments)
           return res;
         })
         .catch(error => {
           return error;
         })
-
+    },
+    //For Doctor's page
+    getEventData(_, input) {
+      return axiosClient.post(`/appointment/getDoctor`, input)
+        .then((res) => {
+          console.log(res)
+          return res;
+        })
+        .catch(error => {
+          return error;
+        })
     },
     //Group Admin Manage Specialty
     getSpecialtyData({ commit }) {
@@ -336,7 +365,7 @@ const store = createStore({
 
     },
     makeAppointment(_, input) {
-      console.log("appointment data before API",input)
+      console.log("appointment data before API", input)
       return axiosClient.post(`/appointment/create`, input)
         .then((res) => {
           console.log("Res from making Appointment", res)
@@ -440,6 +469,7 @@ const store = createStore({
     setUser: (state, user) => {
       state.user.data = user;
       state.patientMakeAppointment.makeAppointmentData.patient_id = user.id
+      state.patientMakeAppointment.patientProfile = user.id
     },
     setUserCreate: (state, user) => {
       state.user.createData = user;
@@ -467,12 +497,20 @@ const store = createStore({
         id: "NA"
       })
     },
+    setDoctorsFromSpecialty: (state, data) => {
+      console.log("Setting Data into doctr after specialty is set : ", data.doctors)
+      state.patientMakeAppointment.doctorsFromSpecialty = data.doctors
+    },
     addInstitute: (state, institute) => {
       state.institute.data = institute;
     },
     setInstituteData: (state, data) => {
       console.log("All Institutes : ", data)
       state.institute.instituition_list = data
+    },
+    setAppointmentData: (state, data) => {
+      console.log("All Institutes : ", data)
+      state.patientProfile.appointments = data
     },
     setInstituteForDelete: (state, data) => {
       console.log("Inside Mutations: ", data)
@@ -494,16 +532,18 @@ const store = createStore({
       for (let x in data.appointments) {
         console.log("X = ", x)
         console.log("Inside Loop", data.appointments[x])
+        let startTime = data.appointments[x].time
+        let endTime = parseInt(data.appointments[x].time) + 1
         dataList.push({
-          start: data.appointments[x].time_slot.start.date + " " + data.appointments[x].time_slot.start.time,
-          end: data.appointments[x].time_slot.end.date + " " + data.appointments[x].time_slot.end.time,
-          title: data.appointments[x].appointment_type
+          start: data.appointments[x].appointment_date + " " + toHoursAndMinutes(startTime * 15),
+          end: data.appointments[x].appointment_date + " " + toHoursAndMinutes(endTime * 15),
+          title: data.appointments[x].appointment_type+ "<br> \u00A0",
+          class:  data.appointments[x].appointment_type
         })
-
-
       }
 
       console.log("Data LIST", dataList)
+
       state.doctorDashBoard.events = dataList
     },
     addSpecialty: (state, specialty) => {
@@ -541,6 +581,14 @@ const store = createStore({
     setAllUsersData: (state, data) => {
       console.log("Inside Mutations: ", data)
       state.groupAdminManageAccount.user_list = data
+    },
+    setAllDoctorsData: (state, data) => {
+      console.log("Inside Mutations: ", data)
+      state.patientFindDoctor.allDoctors = data.doctors
+    },
+    setDoctorForView: (state, data) => {
+      console.log("Inside Mutations: ", data)
+      state.patientFindDoctor.viewDoctorData = data
     },
     setUserForEdit: (state, data) => {
       console.log("Inside Mutations: ", data)

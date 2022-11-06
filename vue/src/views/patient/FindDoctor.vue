@@ -38,8 +38,8 @@
           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
           sm:text-sm
         ">
-                        <option v-for="sType in specialty" :key="sType" :value="sType">
-                            {{ upperCaseFirst(sType) }}
+                        <option v-for="sType in specialties" :key="sType" :value="sType.id">
+                            {{ upperCaseFirst(sType.name) }}
                         </option>
                     </select>
                 </div>
@@ -59,8 +59,8 @@
           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
           sm:text-sm
         ">
-                        <option v-for="iType in instituition" :key="iType" :value="iType">
-                            {{ upperCaseFirst(iType) }}
+                        <option v-for="iType in institutes" :key="iType" :value="iType.instituition_id">
+                            {{ upperCaseFirst(iType.instituition_name) }}
                         </option>
                     </select>
                 </div>
@@ -78,7 +78,7 @@
                                 Specialty
                             </th>
                             <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
-                                Summary
+                                Institute
                             </th>
                             <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
                                 Qualification(s)
@@ -89,23 +89,30 @@
                         </tr>
                     </thead>
 
-                    <tbody v-for="doctor in doctors" class="divide-y divide-gray-200">
+                    <tbody v-for="doctor in allDoctors" class="divide-y divide-gray-200">
 
                         <tr>
                             <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
-                                <a href="#">{{doctor.name}}</a>
+                                <a href="#" @click="goToDoctorProfile(doctor)">{{ doctor.name }}</a>
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                <p v-for="field in doctor.specialty"> {{field}}</p>
+                                <div v-for="specialtyName in specialties" >
+                                    <p
+                                        v-if="specialtyName.id == doctor.specialty.main_specialty || specialtyName.id == doctor.specialty.sub_specialty">
+                                        {{ specialtyName.name }}</p>
+                                </div>
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                {{doctor.summary}}
+                                <div v-for="instituteName in institutes" href="#">
+                                    <p v-if="instituteName.id == doctor.instituition_id">
+                                        {{ instituteName.instituition_name }}</p>
+                                </div>
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                <p v-for="qualification in doctor.qualifications"> {{qualification}}</p>
+                                <p v-for="qualification in doctor.qualifications"> {{ qualification }}</p>
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                {{doctor.working_experience}}
+                                {{ doctor.experience }}
                             </td>
                         </tr>
                     </tbody>
@@ -123,43 +130,34 @@ import DashboardCard from "../../components/core/DashboardCard.vue";
 import PageComponent from "../../components/PageComponent.vue";
 import { computed, ref } from "@vue/reactivity";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 const store = useStore();
+const router = useRouter();
 
 const loading = computed(() => store.state.dashboard.loading);
-const data = computed(() => store.state.dashboard.data);
+const allDoctors = computed(() => store.state.patientFindDoctor.allDoctors);
+const institutes = computed(() => store.state.institute.instituition_list);
+const specialties = computed(() => store.state.specialty.specialty_list);
 const user = computed(() => store.state.user.data);
+
+store.dispatch("getAllDoctors");
+store.dispatch("getInstituteData");
+store.dispatch("getSpecialtyData");
 
 const props = defineProps({
     question: Object,
     index: Number,
 });
 
-const specialty = ["Cardiology", "Physiology", "Allergy and immunology", "Anesthesiology", "Dermatology"]
-
-const instituition = ["Bukit Panjang Clinic", "Newton Clinic"]
-
-const doctors = [{
-    name: "Doct. Tan Seng Heng",
-    specialty: ["Cardiology", "Allergy and immunology"],
-    summary: "Doctor Tan graduated top of his batch from the best university of Taipei",
-    qualifications: ["University of Taipei"],
-    working_experience: "12 Years",
-},
-{
-    name: "Doct. Lim Wong Kee",
-    specialty: ["Cardiology", "Physiology"],
-    summary: "Doctor Lim was a top researcher in stem-cell technology before joining this clinic",
-    qualifications: ["National University of Singapore", "National University of China"],
-    working_experience: "15 Years",
-},
-{
-    name: "Doct. Kim Song Min",
-    specialty: ["Anesthesiology", "Allergy and immunology", "Dermatology"],
-    summary: "Doctor Lim was a top researcher in stem-cell technology before joining this clinic",
-    qualifications: ["National University of Singapore", "University of Wollongong"],
-    working_experience: "29 Years",
-}]
+function goToDoctorProfile(doct){
+    console.log("clicked profile")
+    console.log("view Doctor", doct)
+    store.commit("setDoctorForView", doct)
+    router.push({
+        name: "ViewDoctorProfile",
+    });
+}
 
 function upperCaseFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);

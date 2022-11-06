@@ -57,13 +57,14 @@ Route::post('/users/updateUser',[\App\Http\Controllers\AuthController::class,'up
 //For appointmet Table 
 Route::post('/appointment/create',[\App\Http\Controllers\AppointmentController::class,'createAppointment']);
 Route::post('/appointment/getDoctor',[\App\Http\Controllers\AppointmentController::class,'getApointmentsForDoctor']);
-
+Route::post('/appointment/patientGetAppointments',[\App\Http\Controllers\AppointmentController::class,'patientGetAppointments']);
 
 
 //For Patient making appointment page 
 Route::post('/patient/getDoctorsFromInstitute', [AuthController::class, 'getDoctorsFromInstitute']);
 Route::get('/patient/getDoctors', [AuthController::class, 'getAllDoctors']);
 Route::post('/patient/getDoctorAvailability', [AppointmentController::class, 'patientGetDoctorAvailability']);
+Route::post('/patient/getDoctorsFromSpecialty', [AuthController::class, 'getDoctorsFromSpecialty']);
 
 Route::get('/survey-by-slug/{survey:slug}', [\App\Http\Controllers\SurveyController::class, 'showForGuest']);
 Route::post('/survey/{survey}/answer', [\App\Http\Controllers\SurveyController::class, 'storeAnswer']);

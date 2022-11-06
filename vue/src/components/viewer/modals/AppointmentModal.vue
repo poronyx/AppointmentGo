@@ -26,7 +26,6 @@
                 <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 mb-9">
                   <div class="order-1 lg:order-1">
                     On-Site Appointment
-                    {{ makeAppointmentData }}
                   </div>
                   <div class="order-2 lg:order-2 ">
                     <button type="button" class="float-right" @click="closeModal()"> X
@@ -89,7 +88,7 @@
                 <label for="dates" class="block text-sm font-medium text-gray-700">Pick a Date
                 </label>
                 <TInput type="date" name="date_of_birth" v-model="makeAppointmentData.date" :errors="errors"
-                  placeholder="dd/mm/yyyy" @change="pickedDate(makeAppointmentData)" />
+                  placeholder="dd/mm/yyyy" @change="pickedDate(makeAppointmentData, 'on-site')" />
               </div>
               <div v-if="showSlots" class="col-span-3">
 
@@ -198,6 +197,7 @@ sm:text-sm
                 <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 mb-9">
                   <div class="order-1 lg:order-1">
                     Home-visit Appointment
+                    {{ makeAppointmentData }}
                   </div>
                   <div class="order-2 lg:order-2 ">
                     <button type="button" class="float-right" @click="closeModal()"> X
@@ -212,7 +212,8 @@ sm:text-sm
                 <div class="col-span-3">
                   <label for="specialty" class="block text-sm font-medium text-gray-700">Select Specialty
                   </label>
-                  <select id="specialty" name="specialty" v-model="specPicked" @change="pickedSpec(spec)" class="
+                  <select id="specialty" name="specialty" v-model="specialtyChosen"
+                    @change="pickedSpec($event.target.value)" class="
 mt-1
 block
 w-full
@@ -225,8 +226,8 @@ shadow-sm
 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
 sm:text-sm
 ">
-                    <option v-for="spec in specialty" :key="spec" :value="spec">
-                      {{ spec }}
+                    <option v-for="spec in specialties" :key="spec" :value="spec.id">
+                      {{ spec.name }}
                     </option>
                   </select>
                 </div>
@@ -235,8 +236,8 @@ sm:text-sm
 
                   <label for="doctorChoose" class="block text-sm font-medium text-gray-700">Choose a Doctor
                   </label>
-                  <select id="doctorChoose" name="doctorChoose" v-model="doctorPicked" @change="pickedDoctor(doc)"
-                    class="
+                  <select id="doctorChoose" name="doctorChoose" v-model="makeAppointmentData.owner_id"
+                    @change="pickedDoctor($event.target.value)" class="
 mt-1
 block
 w-full
@@ -249,7 +250,7 @@ shadow-sm
 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
 sm:text-sm
 ">
-                    <option v-for="doc in doctorData" :key="doc" :value="doc">
+                    <option v-for="doc in doctorsFromSpecialty" :key="doc" :value="doc.id">
                       {{ doc }}
                     </option>
                   </select>
@@ -258,14 +259,15 @@ sm:text-sm
               <div v-if="showDates" class="col-span-3">
                 <label for="dates" class="block text-sm font-medium text-gray-700">Pick a Date
                 </label>
-                <TInput type="date" name="date_of_birth" v-model="date_appointment" :errors="errors"
-                  placeholder="dd/mm/yyyy" @change="pickedDate($event.target.value)" />
+                <TInput type="date" name="date_of_birth" v-model="makeAppointmentData.date" :errors="errors"
+                  placeholder="dd/mm/yyyy" @change="pickedDate(makeAppointmentData, 'home-visit')" />
               </div>
               <div v-if="showSlots" class="col-span-3">
 
                 <label for="timeSlots" class="block text-sm font-medium text-gray-700">Pick a time
                 </label>
-                <select id="timeSlots" name="timeSlots" v-model="timePicked" @change="pickedTimeSlot(time)" class="
+                <select id="timeSlots" name="timeSlots" v-model="makeAppointmentData.time"
+                  @change="pickedTimeSlot(time)" class="
 mt-1
 block
 w-full
@@ -278,8 +280,8 @@ shadow-sm
 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
 sm:text-sm
 ">
-                  <option v-for="time in timeSlots" :key="time" :value="time">
-                    {{ time }}
+                  <option v-for="time in slotAvailablityData" :key="time" :value="time.key">
+                    {{ time.time }}
                   </option>
                 </select>
               </div>
@@ -372,11 +374,15 @@ const store = useStore();
 const user = computed(() => store.state.user.data);
 const institutes = computed(() => store.state.institute.instituition_list);
 const doctorsFromInst = computed(() => store.state.patientMakeAppointment.doctorsFromInstitute);
+const doctorsFromSpecialty = computed(() => store.state.patientMakeAppointment.doctorsFromSpecialty);
 const makeAppointmentData = computed(() => store.state.patientMakeAppointment.makeAppointmentData);
 const slotAvailablityData = computed(() => store.state.patientMakeAppointment.slotAvailability);
+const specialties = computed(() => store.state.specialty.specialty_list);
 
 store.dispatch("getUser");
 store.dispatch("getInstituteData");
+store.dispatch("getSpecialtyData");
+
 const patientID = user.value.id
 console.log(patientID)
 
@@ -400,7 +406,7 @@ const doctorData = []
 //   console.log("doctors Data", doctorData)
 // })
 
-
+let specialtyChosen = ""
 let instituitionPicked = ""
 
 
@@ -462,14 +468,25 @@ function pickedDoctor(picked) {
   doctorPicked = picked
   showDates.value = true;
 }
-function pickedDate(event) {
+function pickedDate(event, appointmentType) {
   showSlots.value = true
 
-  const param = {
-    "institute_id": event.instituition_id,
-    "owner_id": event.owner_id,
-    "date": event.date
+  let param = {}
+  if (appointmentType == "on-site") {
+    param = {
+      "institute_id": event.instituition_id,
+      "owner_id": event.owner_id,
+      "date": event.date,
+      "appointment_type": "on-site"
+    }
+  } else if (appointmentType == "home-visit") {
+    param = {
+      "owner_id": event.owner_id,
+      "date": event.date,
+      "appointment_type": "home-visit"
+    }
   }
+
   //Get Available slots from selected date doctor
   console.log("Appointment Data", event.instituition_id)
   console.log("Appointment Data", event.owner_id)
@@ -494,22 +511,23 @@ function pickedTimeSlot(picked) {
 function closeModal() {
   isOpen.value = false
   isOpenAlert.value = false
-  instituitionPicked = {}
+  resetFields()
 }
 function openModal() {
   isOpen.value = true
 }
 function makeOnSiteAppointment() {
 
-  isOpenAlert.value = true
 
-  const param = { 
-    "appointment_type": "on-site", 
-    "patient_id": makeAppointmentData.value.patient_id, 
-    "instituition_id": makeAppointmentData.value.instituition_id, 
-    "owner_id": makeAppointmentData.value.owner_id, 
-    "appointment_date": makeAppointmentData.value.date, 
-    "time": makeAppointmentData.value.time 
+
+  const param = {
+    "appointment_type": "on-site",
+    "patient_id": makeAppointmentData.value.patient_id,
+    "instituition_id": makeAppointmentData.value.instituition_id,
+    "owner_id": makeAppointmentData.value.owner_id,
+    "appointment_date": makeAppointmentData.value.date,
+    "time": makeAppointmentData.value.time,
+    "symptoms" : "To be determined"
   }
 
   console.log("successfully submitted", param)
@@ -517,11 +535,45 @@ function makeOnSiteAppointment() {
   store
     .dispatch("makeAppointment", param).then((res) => {
       console.log("making appointment res", res)
+
+      resetFields()
+      isOpenAlert.value = true
+
     })
+
+}
+
+function resetFields() {
+  makeAppointmentData.value.instituition_id = ""
+  makeAppointmentData.value.owner_id = ""
+  makeAppointmentData.value.date = ""
+  makeAppointmentData.value.time = ""
+  showDoc.value = false;
+  showDates.value = false;
+  showSlots.value = false
+  showButton.value = false;
 }
 function makeHomeVisitAppointment() {
   console.log("successfully submitted")
-  isOpenAlert.value = true
+  const param = {
+    "appointment_type": "home-visit",
+    "patient_id": makeAppointmentData.value.patient_id,
+    "owner_id": makeAppointmentData.value.owner_id,
+    "appointment_date": makeAppointmentData.value.date,
+    "time": makeAppointmentData.value.time,
+    "symptoms" : "To be determined"
+  }
+
+  console.log("successfully submitted", param)
+
+  store
+    .dispatch("makeAppointment", param).then((res) => {
+      console.log("making appointment res", res)
+
+      resetFields()
+      isOpenAlert.value = true
+
+    })
 }
 
 function pickedSpec(picked) {
@@ -530,10 +582,23 @@ function pickedSpec(picked) {
   specPicked = picked;
   showDoc.value = true;
 
-  console.log(doctorList)
+  const param = {
+    specialty_id: picked
+  }
+
+  //Get Doctor From picked institute
+  store.dispatch("getDoctorsFromSpecialty", param).then((res) => {
+
+    console.log("Doctors After picking Specialty: ", res.doctors)
+    for (let doctor in res.doctors) {
+      doctorData.push(res.doctors[doctor])
+    }
+
+  })
 }
 
 function routeToHome() {
+
   router.push({
     name: "PatientDashboard",
   });

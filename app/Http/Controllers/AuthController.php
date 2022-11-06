@@ -561,4 +561,18 @@ class AuthController extends Controller
             'doctors' => $doctors
         ]);
     }
+
+    public function getDoctorsFromSpecialty(Request $request)
+    {
+        $specialty_id = $request->input('specialty_id');
+        $doctors = User::where('user_type', 'Doctor')
+        ->where(['specialty->main_specialty' => $specialty_id ])
+        ->orWhere(['specialty->sub_specialty' => $specialty_id ])
+        ->get();
+
+        return response([
+            'success' => true,
+            'doctors' => $doctors
+        ]);
+    }
 }

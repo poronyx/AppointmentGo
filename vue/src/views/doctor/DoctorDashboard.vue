@@ -2,12 +2,13 @@
   <PageComponent title="Doctor Dashboard">
     <div v-if="loading" class="flex justify-center">Loading...</div>
     <div v-else class=" gap-5 text-gray-700">
-      {{events}}
       <VueCal class="vuecal--blue-theme" 
+      
       :timeStep=15 
       :disable-views="['years', 'year']" 
-      :events="events">
-      </VueCal>
+      :events="events"
+      
+      ></VueCal>
 
 
 
@@ -32,7 +33,7 @@ const events = computed(() => store.state.doctorDashBoard.events);
 const doctorId = user.value.id
 console.log(doctorId)
 const param = {
-  id : doctorId
+  id : 2
 }
 
 console.log("Param",param)
@@ -58,4 +59,7 @@ store
 .vuecal {
   height: 90vh;
 }
+
+.on-site {background-color: #ddfbdf;color: #1ab82d;}
+.home-visit {background-color: #bde2f6;color: #2276cb;}
 </style>
