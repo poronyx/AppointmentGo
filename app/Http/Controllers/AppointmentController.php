@@ -59,7 +59,23 @@ class AppointmentController extends Controller
                 'appointment_type' => $request->input('appointment_type'),
                 'symptoms' => $request->input('symptoms'),
             ]);
-        } else if ($request->input('appointment_type') == "off-days") {
+        } else if ($request->input('appointment_type') == "off-day") {
+
+            $doctorId = $request->input('owner_id');
+            $doctor = User::select('instituition_id')
+                ->where('id', $doctorId)
+                ->get();
+
+            $appointment = Appointment::create([
+                'owner_id' => $request->input('owner_id'),
+                'owner_type' => 'Doctor',
+                'appointment_date' => $request->input('appointment_date'),
+                'time' => $request->input('time'),
+                'satisfaction_id' => $request->input('satisfaction_id'),
+                'instituition_id' => $doctor[0]->instituition_id,
+                'appointment_type' => $request->input('appointment_type'),
+                'symptoms' => $request->input('symptoms'),
+            ]);
         }
 
 
@@ -78,6 +94,7 @@ class AppointmentController extends Controller
 
         $appointments = Appointment::where('owner_id', $doctorId)
             ->where('owner_type', 'Doctor')
+            ->where('status', 0)
             ->get();
 
         return response([

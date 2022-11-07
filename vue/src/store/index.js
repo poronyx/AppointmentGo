@@ -91,6 +91,9 @@ const store = createStore({
   getters: {
     getInstituteById: (state) => (id) => {
       return state.institute.instituition_list.find(institute => institute.id === id)
+    },
+    getUserID :(state) =>{
+      return state.user.data.id
     }
   },
   actions: {
@@ -538,7 +541,8 @@ const store = createStore({
           start: data.appointments[x].appointment_date + " " + toHoursAndMinutes(startTime * 15),
           end: data.appointments[x].appointment_date + " " + toHoursAndMinutes(endTime * 15),
           title: data.appointments[x].appointment_type+ "<br> \u00A0",
-          class:  data.appointments[x].appointment_type
+          class:  data.appointments[x].appointment_type,
+          appointment_id : data.appointments[x].id
         })
       }
 

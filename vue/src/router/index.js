@@ -36,6 +36,7 @@ import GroupAdminManageInstitute from "../views/group_admin/GroupAdminManageInst
 import GroupAdminEditInstitute from "../views/group_admin/GroupAdminEditInstitute.vue"
 import DoctorDefaultLayout from "../components/DoctorDefaultLayout.vue";
 import ViewDoctorProfile from "../views/patient/ViewDoctorProfile.vue";
+import DoctorManageSchedule from "../views/doctor/DoctorManageSchedule.vue";
 
 let routes = [{
   path: "/",
@@ -67,6 +68,7 @@ let routes = [{
   meta: { requiresAuth: true },
   children: [
     { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
+    { path: "/doctor-manage-schedule", name: "DoctorManageSchedule", component: DoctorManageSchedule },
   ],
 },
 {

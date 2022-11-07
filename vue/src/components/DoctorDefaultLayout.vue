@@ -155,6 +155,7 @@
   
   const navigation = [
     { name: "Home", to: { name: "DoctorDashboard" } },
+    { name: "Manage My Schedule", to: { name: "DoctorManageSchedule" } },
   ];
   
   

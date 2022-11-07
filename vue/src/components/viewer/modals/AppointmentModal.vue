@@ -197,7 +197,6 @@ sm:text-sm
                 <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 mb-9">
                   <div class="order-1 lg:order-1">
                     Home-visit Appointment
-                    {{ makeAppointmentData }}
                   </div>
                   <div class="order-2 lg:order-2 ">
                     <button type="button" class="float-right" @click="closeModal()"> X

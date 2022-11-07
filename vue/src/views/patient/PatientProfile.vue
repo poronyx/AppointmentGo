@@ -166,20 +166,6 @@ const param = {
 store.dispatch("getAppointmentData", param)
 
 
-const appointments = [{
-    id: "PD2051245124124",
-    appointment_type: "On-site",
-    date: "2022-11-23",
-    status: "Pending",
-},
-{
-    id: "HV2022235235235",
-    appointment_type: "Home-visit",
-    date: "2021-10-14",
-    status: "Completed",
-
-}]
-
 const medicalHistories = [{
     id: "OS2022125124124",
     summary: "Common flu",
