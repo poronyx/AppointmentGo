@@ -250,7 +250,7 @@ focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
 sm:text-sm
 ">
                     <option v-for="doc in doctorsFromSpecialty" :key="doc" :value="doc.id">
-                      {{ doc }}
+                      {{ doc.name }}
                     </option>
                   </select>
                 </div>

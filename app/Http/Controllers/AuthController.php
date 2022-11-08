@@ -548,6 +548,16 @@ class AuthController extends Controller
             'doctors' => $doctors
         ]);
     }
+    public function getAllPatients()
+    {
+        
+        $patients = User::where('user_type', 'Patient')->get();
+
+        return response([
+            'success' => true,
+            'patients' => $patients
+        ]);
+    }
 
     public function getDoctorsFromInstitute(Request $request)
     {

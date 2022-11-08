@@ -202,7 +202,7 @@ class AppointmentController extends Controller
                     }
                 }
             } else {
-                $appointmentSlot = Appointment::select('time')
+                $appointmentSlot = Appointment::select('time', 'appointment_type')
                     ->where('owner_type', 'Doctor')
                     ->where('owner_id', $doctorId)
                     ->where('instituition_id', $instituteId)
@@ -212,6 +212,95 @@ class AppointmentController extends Controller
                 $slots = [];
                 $slotsStart = [];
                 $slotsEnd = [];
+
+                $hasOff = false;
+                foreach ($appointmentSlot as $off) {
+                    if ($off->appointment_type == "off-day") {
+                        $hasOff = true;
+                    }
+                }
+
+                if ($hasOff) {
+                    $finalSlots = [];
+                } else {
+
+                    $x = 0;
+                    foreach ($appointmentSlot as $slot) {
+                        $slots[$x] = intval($slot->time);
+                        $x++;
+                    }
+
+                    $y = 0;
+                    foreach ($slots as $slot) {
+                        $slotsStart[$y] = $slot;
+                        $y++;
+                    }
+
+                    $dailySlots = [];
+
+                    $finalSlots = [];
+
+
+                    $arrayDiff = array_diff($dailySlots, $slots);
+                    //combine slots for entire day
+                    for ($i = $firstOpening[0]; $i <= $firstOpening[1]; $i++) {
+                        array_push($dailySlots, $i);
+                    }
+                    for ($i = $secondOpening[0]; $i <= $secondOpening[1]; $i++) {
+                        array_push($dailySlots, $i);
+                    }
+
+
+                    foreach ($dailySlots as $item) {    // Loop the daily slots
+                        if (!in_array($item, $slots)) {   // If slots are made, remove slot from the daily slots
+                            array_push($finalSlots, $item);
+                        }
+                    }
+                }
+            }
+        } else if ($appointmentType == "home-visit") {
+            //For Home-visit
+
+
+            $doctor = User::select('instituition_id')
+                ->where('id', $doctorId)
+                ->get();
+
+            $instituteTime =  Instituition::select('opening_time')
+                ->where('id', $doctor[0]->instituition_id)
+                ->get();
+
+            $test = [];
+
+            $i = 0;
+            foreach ($instituteTime[0]->opening_time as $time) {
+                $test[$i] = $time;
+                $i++;
+            }
+            $firstOpening = $test[0];
+            $secondOpening = $test[1];
+
+            $appointmentSlot = Appointment::select('time', 'appointment_type')
+                ->where('owner_type', 'Doctor')
+                ->where('owner_id', $doctorId)
+                ->where('instituition_id', $doctor[0]->instituition_id)
+                ->where('appointment_date', $date)
+                ->get();
+
+            $slots = [];
+            $slotsStart = [];
+            $slotsEnd = [];
+
+            $hasOff = false;
+            foreach ($appointmentSlot as $off) {
+                if ($off->appointment_type == "off-day") {
+                    $hasOff = true;
+                }
+            }
+
+            if ($hasOff) {
+                $finalSlots = [];
+            } else {
 
                 $x = 0;
                 foreach ($appointmentSlot as $slot) {
@@ -246,80 +335,11 @@ class AppointmentController extends Controller
                     }
                 }
             }
-        } else if ($appointmentType == "home-visit") {
-            //For Home-visit
-
-
-            $doctor = User::select('instituition_id')
-                ->where('id', $doctorId)
-                ->get();
-
-            $instituteTime =  Instituition::select('opening_time')
-                ->where('id', $doctor[0]->instituition_id)
-                ->get();
-
-            $test = [];
-
-            $i = 0;
-            foreach ($instituteTime[0]->opening_time as $time) {
-                $test[$i] = $time;
-                $i++;
-            }
-            $firstOpening = $test[0];
-            $secondOpening = $test[1];
-
-            $appointmentSlot = Appointment::select('time')
-                ->where('owner_type', 'Doctor')
-                ->where('owner_id', $doctorId)
-                ->where('instituition_id', $doctor[0]->instituition_id)
-                ->where('appointment_date', $date)
-                ->get();
-
-            $slots = [];
-            $slotsStart = [];
-            $slotsEnd = [];
-
-            $x = 0;
-            foreach ($appointmentSlot as $slot) {
-                $slots[$x] = intval($slot->time);
-                $x++;
-            }
-
-            $y = 0;
-            foreach ($slots as $slot) {
-                $slotsStart[$y] = $slot;
-                $y++;
-            }
-
-            $dailySlots = [];
-
-            $finalSlots = [];
-
-
-            $arrayDiff = array_diff($dailySlots, $slots);
-            //combine slots for entire day
-            for ($i = $firstOpening[0]; $i <= $firstOpening[1]; $i++) {
-                array_push($dailySlots, $i);
-            }
-            for ($i = $secondOpening[0]; $i <= $secondOpening[1]; $i++) {
-                array_push($dailySlots, $i);
-            }
-
-
-            foreach ($dailySlots as $item) {    // Loop the daily slots
-                if (!in_array($item, $slots)) {   // If slots are made, remove slot from the daily slots
-                    array_push($finalSlots, $item);
-                }
-            }
         }
 
 
         return response([
-            'first_opening' => $firstOpening,
-            'second_opening' => $secondOpening,
-            'unavailable slot' => $slots,
-            'dailySlots' => $dailySlots,
-            'final_slots' => $finalSlots,
+            'final_slots' => $finalSlots
 
         ]);
     }
@@ -347,6 +367,41 @@ class AppointmentController extends Controller
 
         return response([
             'appointments' => $apponintments,
+
+        ]);
+    }
+
+    public function doctorGetAppointments(Request $request)
+    {
+
+        $doctorID = $request->input('doctor_id');
+
+        $apponintments = Appointment::where('owner_id', $doctorID)
+            ->where('owner_type', 'Doctor')
+            ->where('appointment_type', '!=', 'off-day')
+            ->orderBy('appointment_date', 'ASC')
+            ->orderBy('time', 'ASC')
+            ->get();
+
+
+
+        return response([
+            'appointments' => $apponintments,
+
+        ]);
+    }
+
+    public function getAppointmentById(Request $request)
+    {
+        //Check if data is for profile page or all appointment page
+        $appointmentId = $request->input('appointment_id');
+
+        $apponintment = Appointment::where('id', $appointmentId)
+            ->get();
+
+
+        return response([
+            'appointment' => $apponintment,
 
         ]);
     }

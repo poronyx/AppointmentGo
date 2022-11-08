@@ -37,6 +37,9 @@ import GroupAdminEditInstitute from "../views/group_admin/GroupAdminEditInstitut
 import DoctorDefaultLayout from "../components/DoctorDefaultLayout.vue";
 import ViewDoctorProfile from "../views/patient/ViewDoctorProfile.vue";
 import DoctorManageSchedule from "../views/doctor/DoctorManageSchedule.vue";
+import DoctorManageAppointments from "../views/doctor/DoctorManageAppointments.vue"
+import DoctorViewPatient from "../views/doctor/DoctorViewPatient.vue"
+import DoctorViewAppointment from "../views/doctor/DoctorViewAppointment.vue"
 
 let routes = [{
   path: "/",
@@ -69,6 +72,9 @@ let routes = [{
   children: [
     { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
     { path: "/doctor-manage-schedule", name: "DoctorManageSchedule", component: DoctorManageSchedule },
+    { path: "/doctor-manage-appointments", name: "DoctorManageAppointments", component: DoctorManageAppointments },
+    { path: "/doctor-view-patient", name: "DoctorViewPatient", component: DoctorViewPatient },
+    { path: "/doctor-view-appointment", name: "DoctorViewAppointment", component: DoctorViewAppointment},
   ],
 },
 {

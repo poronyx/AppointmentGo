@@ -9,8 +9,8 @@
                     </div>
                 </template>
                 <div class="relative w-full">
-                    <DoctorAddOffDayModal></DoctorAddOffDayModal>
-            </div>
+                    <DoctorAddOffDayModal @addEvent="addEvent"></DoctorAddOffDayModal>
+                </div>
                 <!--  
                     
                     <button class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded  mb-9"
@@ -34,7 +34,8 @@
                     </div>
                 </template>
                 <div class="relative w-full">
-                    <button class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded  mb-9">
+                    <button class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded  mb-9"
+                    @click="toManageAppointments" >
                         Manage</button>
 
                 </div>
@@ -44,17 +45,16 @@
 
             <DashboardCard class="order-3 lg:order-3 row-span-2 col-span-2" style="animation-delay: 0.1s">
                 <div class="flex justify-between text-m mb-8">
-                <vue-cal small :time="false" hide-view-selector active-view="week"
-                    :disable-views="['years', 'year', 'month']" :selected-date="selectedDate" class="vuecal--blue-theme"
-                    style="max-width: 660px;height: 260px"
-                    :events="events">
-                </vue-cal>
-                <VueCal xsmall :time="false" hide-view-selector active-view="month"
-                    :disable-views="['years', 'year', 'week', 'day']" @cell-focus="selectedDate = $event"
-                    class="vuecal--blue-theme vuecal--rounded-theme" style="max-width: 270px;height: 290px"
-                    :events="events">
-                </VueCal>
-            </div>
+                    <vue-cal small :time="false" hide-view-selector active-view="week"
+                        :disable-views="['years', 'year', 'month']" :selected-date="selectedDate"
+                        class="vuecal--blue-theme" style="max-width: 660px;height: 260px" :events="events">
+                    </vue-cal>
+                    <VueCal xsmall :time="false" hide-view-selector active-view="month"
+                        :disable-views="['years', 'year', 'week', 'day']" @cell-focus="selectedDate = $event"
+                        class="vuecal--blue-theme vuecal--rounded-theme" style="max-width: 270px;height: 290px"
+                        :events="events">
+                    </VueCal>
+                </div>
             </DashboardCard>
 
         </div>
@@ -74,7 +74,11 @@ import { CheckIcon } from '@heroicons/vue/solid'
 import VueCal from 'vue-cal'
 import 'vue-cal/dist/vuecal.css'
 import DoctorAddOffDayModal from "../../components/viewer/modals/DoctorAddOffDayModal.vue";
+import { useRouter } from "vue-router";
+
+
 const store = useStore();
+const router = useRouter();
 
 const loading = computed(() => store.state.dashboard.loading);
 const user = computed(() => store.state.user.data);
@@ -88,22 +92,29 @@ console.log("Inside user", user)
 const doctorId = store.getters.getUserID
 
 const param = {
-  id: doctorId
+    id: doctorId
 }
 console.log("Param", param)
 store
-  .dispatch("getEventData", param)
-  .then((res) => {
-    console.log(res)
-    store.commit("setDoctorDashBoardData", res.data)
-  })
+    .dispatch("getEventData", param)
+    .then((res) => {
+        console.log(res)
+        store.commit("setDoctorDashBoardData", res.data)
+    })
 
 
 
 
-let startDate;
-let endDate;
+function toManageAppointments() {
+    router.push({
+        name: "DoctorManageAppointments",
+    });
+}
 
+function addEvent(ev){
+    console.log("emitting example",ev)
+    events.value.push(ev)
+}
 </script>
     
 <style scoped>

@@ -92,7 +92,7 @@ function eventDelete(ev) {
 }
 
 .new-event {
-  background-color: #bde2f6;
-  color: #2276cb;
+  background-color: #f5d399;
+  color: #dc6d18;
 }
 </style>
