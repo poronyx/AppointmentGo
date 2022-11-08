@@ -15,7 +15,6 @@
 
 
                 <div class="col-span-3 mb-8">
-                    {{ editInstitute }}
                     <label for="userType" class="block text-sm font-medium text-gray-700">Choose an Institution Type
                     </label>
                     <select id="instituition_type" name="instituition_type" v-model="editInstitute.instituition_type"

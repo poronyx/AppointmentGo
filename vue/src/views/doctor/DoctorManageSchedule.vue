@@ -30,12 +30,12 @@
             <DashboardCard class="order-2 lg:order-2 " style="animation-delay: 0.2s">
                 <template v-slot:title>
                     <div class="flex justify-between items-center mb-7 px-2">
-                        <h3 class="text-xl font-semibold">-</h3>
+                        <h3 class="text-xl font-semibold">Manage Patients & Appointments</h3>
                     </div>
                 </template>
                 <div class="relative w-full">
                     <button class="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded  mb-9">
-                        Manage appointment</button>
+                        Manage</button>
 
                 </div>
 
