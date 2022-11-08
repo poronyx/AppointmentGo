@@ -34,7 +34,6 @@
             </DashboardCard>
 
             <DashboardCard class="order-2 lg:order-2" style="animation-delay: 0.1s">
-
                 <table class=" divide-y divide-gray-200 table-auto">
                     <thead class="bg-gray-50">
                         <tr>
@@ -59,26 +58,30 @@
                         </tr>
                     </thead>
 
-                    <tbody v-for="appointment in appointments" class="divide-y divide-gray-200">
+                    <tbody v-for="appointment in appointmentsData" class="divide-y divide-gray-200">
 
                         <tr>
                             <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
                                 <a href="#">{{appointment.id}}</a>
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                {{appointment.institute}}
+                                <div v-for="instituteName in institutes" href="#">
+                                    <p v-if="instituteName.id == appointment.instituition_id">
+                                        {{ instituteName.instituition_name }}</p>
+                                </div>
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                {{appointment.summary}}
+                                {{appointment.symptoms}}
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
                                 {{appointment.appointment_type}}
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                {{appointment.date}}
+                                {{appointment.appointment_date}}
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                {{appointment.status}}
+                                <p v-if="appointment.status == 0">Pending</p>
+                                <p v-else>Completed</p>
                             </td>
                         </tr>
                     </tbody>
@@ -104,8 +107,18 @@ import { CheckIcon } from '@heroicons/vue/solid'
 const store = useStore();
 
 const loading = computed(() => store.state.dashboard.loading);
-const data = computed(() => store.state.dashboard.data);
-const user = computed(() => store.state.user.data);
+const institutes = computed(() => store.state.institute.instituition_list);
+const userID = computed(() => store.state.patientMakeAppointment.patientProfile);
+const appointmentsData = computed(() => store.state.patientProfile.appointments);
+
+store.dispatch("getUser");
+console.log("User ID",userID.value)
+const param = {
+    "patient_id": userID.value,
+    "profile_page": false
+}
+store.dispatch("getAppointmentData", param)
+store.dispatch("getInstituteData");
 
 const appointments = [{
     id: "PD2051245124124",

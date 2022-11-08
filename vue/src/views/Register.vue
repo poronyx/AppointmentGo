@@ -69,19 +69,48 @@
           :errors="errors"
           placeholder="NRIC/FIN"
         />
-        <TInput
-          type="selected"
-          name="gender"
-          v-model="user.gender"
-          :errors="errors"
-          placeholder="Gender"
-        />
+        <div class="col-span-3 mt-5 mb-5">
+                        <label for="genderType" class="block text-sm font-medium text-gray-700">Choose a Gender
+                        </label>
+                        <select id="genderType" name="genderType" v-model="user.gender" class="
+          mt-1
+          block
+          w-full
+          py-2
+          px-3
+          border border-gray-300
+          bg-white
+          rounded-md
+          shadow-sm
+          focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
+          sm:text-sm
+        ">
+                            <option v-for="gender in genderTypes" :key="gender" :value="gender">
+                                {{ gender }}
+                            </option>
+                        </select>
+                    </div>
         <TInput
           type="date"
           name="date_of_birth"
           v-model="user.date_of_birth"
           :errors="errors"
           placeholder="dd/mm/yyyy"
+        />
+        <TInput
+          name="address"
+          v-model="addr.address"
+          :errors="errors"
+          placeholder="Please Enter your address"
+        />
+        <input
+          type="text"
+          name="postcode"
+          v-model="addr.postcode"
+          minlength="6"
+          maxlength="6"
+          class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+          placeholder="Postal Code"
         />
         <TInput
           type="password"
@@ -121,6 +150,13 @@ import TInput from "../components/core/TInput.vue";
 import Alert from "../components/Alert.vue";
 
 const router = useRouter();
+const genderTypes = ["Male", "Female", "Others"]
+
+const addr = {
+  "postcode" : "",
+  "address" : ""
+}
+
 const user = {
   name: "",
   email: "",
@@ -128,10 +164,12 @@ const user = {
   phone_number: "",
   nric: "",
   gender: "",
-  user_type: "patient", //register is only for patient 
+  user_type: "Patient", //register is only for patient 
   date_of_birth: "",
   password: "",
+  address: addr,
 };
+
 const loading = ref(false);
 const errors = ref({});
 

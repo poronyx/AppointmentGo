@@ -27,6 +27,19 @@ class User extends Authenticatable
         'user_type',
         'date_of_birth',
         'password',
+        'address',
+        'subscribe_article',
+        'academic_title',
+        'qualifications',
+        'summary',
+        'specialty',
+        'experience',
+        'department',
+        'instituition_id',
+        'suspended',
+        'organization_id'
+
+
     ];
 
     /**
@@ -46,5 +59,9 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'address' => 'array',
+        'qualifications' => 'array',
+        'specialty' => 'array',
+
     ];
 }

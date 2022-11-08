@@ -122,6 +122,8 @@ const loading = computed(() => store.state.dashboard.loading);
 const data = computed(() => store.state.dashboard.data);
 
 store.dispatch("getDashboardData");
+
+console.log("Dashboard Data: " , data)
 </script>
 
 <style scoped></style>

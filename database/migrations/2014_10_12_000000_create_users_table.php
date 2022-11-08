@@ -25,6 +25,23 @@ class CreateUsersTable extends Migration
             $table->date('date_of_birth');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->json('address')->nullable();
+            //For Patient
+            $table->boolean('subscribe_article')->default(0);
+            //For Doctor
+            $table->string('academic_title')->nullable();
+            $table->json('qualifications')->nullable();
+            $table->text('summary')->nullable();
+            $table->json('specialty')->nullable();
+            $table->string('experience')->nullable();
+            //For Nurse 
+            $table->string('department')->nullable();
+            // For Doctor, Nurse and Medical Admin
+            $table->string('instituition_id')->nullable();
+            //For Group Admin
+            $table->string('organization_id')->nullable();
+
+            $table->boolean('suspended')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

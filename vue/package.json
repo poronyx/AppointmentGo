@@ -13,7 +13,9 @@
     "axios": "^0.24.0",
     "uuid": "^8.3.2",
     "vue": "^3.2.25",
+    "vue-cal": "^4.8.1",
     "vue-router": "^4.0.12",
+    "vue-time-slot": "^0.0.1",
     "vue3-google-map": "^0.15.0",
     "vuex": "^4.0.2"
   },

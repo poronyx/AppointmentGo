@@ -4,37 +4,38 @@
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-gray-700">
             <DashboardCard class="order-1 lg:order-1 row-span-2" style="animation-delay: 0.1s">
                 <template v-slot:title>
-                    <h2 class="text-3xl font-semibold">Hello {{user.name}},</h2>
+                    <h2 class="text-3xl font-semibold">Hello {{ user.name }},</h2>
 
                 </template>
 
                 <div class="mb-5"></div>
                 <div class="flex justify-between text-m mb-2">
                     <div>Email:</div>
-                    <div>{{user.email}}</div>
+                    <div>{{ user.email }}</div>
                 </div>
                 <div class="flex justify-between text-m mb-2">
                     <div>Race:</div>
-                    <div>{{user.race}}</div>
+                    <div>{{ user.race }}</div>
                 </div>
                 <div class="flex justify-between text-m mb-2">
                     <div>Contact No.:</div>
-                    <div>{{user.phone_number}}</div>
+                    <div>{{ user.phone_number }}</div>
                 </div>
                 <div class="flex justify-between text-m mb-2">
                     <div>NRIC:</div>
-                    <div>{{user.nric}}</div>
+                    <div>{{ user.nric }}</div>
                 </div>
                 <div class="flex justify-between text-m mb-2">
                     <div>Gender:</div>
-                    <div>{{user.gender}}</div>
+                    <div>{{ user.gender }}</div>
                 </div>
                 <div class="flex justify-between text-m mb-8">
                     <div>DOB:</div>
-                    <div>{{user.date_of_birth}}</div>
+                    <div>{{ user.date_of_birth }}</div>
                 </div>
                 <div class="justify-between text-m ">
-                    <button @click="toEditProfile" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <button @click="toEditProfile"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Edit Profile
                     </button>
                 </div>
@@ -43,10 +44,9 @@
                 <template v-slot:title>
                     <div class="flex justify-between items-center mb-6 px-2">
                         <h3 class="text-2xl font-semibold">Latest appointment</h3>
-
-                        <a href="/my-appointment" class="text-sm text-blue-500 hover:decoration-blue-500">
+                        <TButton  :to="{ name: 'MyAppointment' }" link>
                             View all
-                        </a>
+                        </TButton>
                     </div>
                 </template>
                 <table class=" divide-y divide-gray-200 table-auto">
@@ -63,17 +63,18 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody v-for="appointment in appointments" class="divide-y divide-gray-200">
+                    <tbody v-for="appointment in appointmentsData" class="divide-y divide-gray-200">
 
                         <tr>
                             <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
-                                <a href="#">{{appointment.id}}</a>
+                                <a href="#">{{ appointment.id }}</a>
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                {{appointment.date}}
+                                {{ appointment.appointment_date }}
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                {{appointment.status}}
+                                <p v-if="appointment.status == 0">Pending</p>
+                                <p v-else>Completed</p>
                             </td>
                         </tr>
                     </tbody>
@@ -108,13 +109,13 @@
 
                         <tr>
                             <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
-                                <a href="#">{{history.id}}</a>
+                                <a href="#">{{ history.id }}</a>
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                {{history.summary}}
+                                {{ history.summary }}
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
-                                {{history.date}}
+                                {{ history.date }}
                             </td>
                         </tr>
                     </tbody>
@@ -155,20 +156,15 @@ const router = useRouter();
 const loading = computed(() => store.state.dashboard.loading);
 const data = computed(() => store.state.dashboard.data);
 const user = computed(() => store.state.user.data);
+const appointmentsData = computed(() => store.state.patientProfile.appointments);
+store.dispatch("getUser")
+console.log(user.value.id)
+const param = {
+    "patient_id": user.value.id,
+    "profile_page": true
+}
+store.dispatch("getAppointmentData", param)
 
-const appointments = [{
-    id: "PD2051245124124",
-    appointment_type: "On-site",
-    date: "2022-11-23",
-    status: "Pending",
-},
-{
-    id: "HV2022235235235",
-    appointment_type: "Home-visit",
-    date: "2021-10-14",
-    status: "Completed",
-
-}]
 
 const medicalHistories = [{
     id: "OS2022125124124",
@@ -184,10 +180,10 @@ const medicalHistories = [{
 }]
 
 function toEditProfile() {
-        router.push({
-          name: "PatientEditProfile",
-      });
-    }
+    router.push({
+        name: "PatientEditProfile",
+    });
+}
 </script>
     
 <style scoped>

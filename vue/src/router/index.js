@@ -21,9 +21,23 @@ import GroupAdminDefaultLayout from "../components/GroupAdminDefaultLayout.vue"
 import GroupAdminCreateAccount from "../views/group_admin/GroupAdminCreateAccount.vue"
 import PatientMakeAppointment from "../views/patient/PatientMakeAppointment.vue"
 import MyAppointment from "../views/patient/MyAppointment.vue"
-import GroupAdminCreateNewsArticle from "../views/group_admin/GroupAdminCreateNewsArticle.vue"
 import PatientEditProfile from"../views/patient/PatientEditProfile.vue"
 import ViewArticle from "../views/patient/ViewArticle.vue"
+import MedicalAdminDefaultLayout from "../components/MedicalAdminDefaultLayout.vue"
+import MedicalAdminCreateNewsArticle from "../views/medical_admin/MedicalAdminCreateNewsArticle.vue"
+import MedicalAdminDashboard from "../views/medical_admin/MedicalAdminDashboard.vue"
+import GroupAdminCreateInstitute from "../views/group_admin/GroupAdminCreateInstitute.vue"
+import GroupAdminCreateSpecialty from "../views/group_admin/GroupAdminCreateSpecialty.vue"
+import GroupAdminManageAccount from "../views/group_admin/GroupAdminManageAccount.vue"
+import GroupAdminEditAccount from "../views/group_admin/GroupAdminEditAccount.vue"
+import GroupAdminManageSpecialty from "../views/group_admin/GroupAdminManageSpecialty.vue"
+import GroupAdminEditSpecialty from "../views/group_admin/GroupAdminEditSpecialty.vue"
+import GroupAdminManageInstitute from "../views/group_admin/GroupAdminManageInstitute.vue"
+import GroupAdminEditInstitute from "../views/group_admin/GroupAdminEditInstitute.vue"
+import DoctorDefaultLayout from "../components/DoctorDefaultLayout.vue";
+import ViewDoctorProfile from "../views/patient/ViewDoctorProfile.vue";
+import DoctorManageSchedule from "../views/doctor/DoctorManageSchedule.vue";
+
 let routes = [{
   path: "/",
   redirect: "/patient-dashboard",
@@ -41,21 +55,49 @@ let routes = [{
     { path: "/patient-make-appointment", name: "PatientMakeAppointment", component: PatientMakeAppointment },
     { path: "/patient-edit-profile", name: "PatientEditProfile", component: PatientEditProfile },
     { path: "/patient-view-article", name: "ViewArticle", component: ViewArticle },
-    { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
+    { path: "/patient-view-doctor-profile", name: "ViewDoctorProfile", component: ViewDoctorProfile },
     { path: "/surveys", name: "Surveys", component: Surveys },
     { path: "/surveys/create", name: "SurveyCreate", component: SurveyView },
     { path: "/surveys/:id", name: "SurveyView", component: SurveyView },
   ],
 },
 {
+  path: "/d",
+  redirect: "/doctor-dashboard",
+  component: DoctorDefaultLayout,
+  meta: { requiresAuth: true },
+  children: [
+    { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
+    { path: "/doctor-manage-schedule", name: "DoctorManageSchedule", component: DoctorManageSchedule },
+  ],
+},
+{
+  path: "/m",
+  redirect: "/medical-admin-dashboard",
+  component: MedicalAdminDefaultLayout,
+  meta: { requiresAuth: true },
+  children: [
+    { path: "/medical-admin-dashboard", name: "MedicalAdminDashboard", component: MedicalAdminDashboard },
+    { path: "/medical-admin-create-news-article", name: "MedicalAdminCreateNewsArticle", component: MedicalAdminCreateNewsArticle },
+  ],
+},
+{
   path: "/g",
-  redirect: "/group-admin-dashboard",
+  redirect: "/group-admin/dashboard",
   component: GroupAdminDefaultLayout,
   meta: { requiresAuth: true },
   children: [
-    { path: "/group-admin-dashboard", name: "GroupAdminDashboard", component: GroupAdminDashboard },
-    { path: "/group-admin-create-account", name: "GroupAdminCreateAccount", component: GroupAdminCreateAccount },
-    { path: "/group-admin-create-news-article", name: "GroupAdminCreateNewsArticle", component: GroupAdminCreateNewsArticle },
+    { path: "/group-admin/dashboard", name: "GroupAdminDashboard", component: GroupAdminDashboard },
+    { path: "/group-admin/create-account", name: "GroupAdminCreateAccount", component: GroupAdminCreateAccount },
+    { path: "/group-admin/create-institute", name: "GroupAdminCreateInstitute", component: GroupAdminCreateInstitute },
+    { path: "/group-admin/create-specialty", name: "GroupAdminCreateSpecialty", component: GroupAdminCreateSpecialty },
+    { path: "/group-admin/manage-account", name: "GroupAdminManageAccount", component: GroupAdminManageAccount },
+    { path: "/group-admin/edit-account", name: "GroupAdminEditAccount", component: GroupAdminEditAccount },
+    { path: "/group-admin/manage-specialty", name: "GroupAdminManageSpecialty", component: GroupAdminManageSpecialty },
+    { path: "/group-admin/edit-specialty", name: "GroupAdminEditSpecialty", component: GroupAdminEditSpecialty },
+    { path: "/group-admin/manage-institute", name: "GroupAdminManageInstitute", component: GroupAdminManageInstitute },
+    { path: "/group-admin/edit-institute", name: "GroupAdminEditInstitute", component: GroupAdminEditInstitute },
+    
   ],
 },
 {

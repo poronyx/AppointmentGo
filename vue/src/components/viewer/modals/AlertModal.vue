@@ -51,7 +51,6 @@ const isOpen = ref(false)
 
 function closeModal() {
     isOpen.value = false
-    instituitionPicked = {}
 }
 function openModal() {
     isOpen.value = true

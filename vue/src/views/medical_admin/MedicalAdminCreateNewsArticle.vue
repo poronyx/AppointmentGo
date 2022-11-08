@@ -101,7 +101,7 @@ let model = ref({
 
 function onImageChoose(ev) {
     const file = ev.target.files[0];
-
+    console.log(file)
     const reader = new FileReader();
     reader.onload = () => {
         // The field to send on backend and apply validations
@@ -110,9 +110,14 @@ function onImageChoose(ev) {
         // The field to display here
         model.value.image_url = reader.result;
         ev.target.value = "";
+
+        console.log("Image URL", reader)
     };
     reader.readAsDataURL(file);
+    
 }
+const testImg = "https://srv622.hstgr.io:7443/files/images/fluBanner.jpg"
+console.log("Image URL",model.value.image_url)
 </script>
     
 <style scoped>

@@ -8,7 +8,7 @@
         <div v-else class="grid grid-cols-1 gap-5 text-gray-700">
 
           <div class="px-4 sm:px-0 animate-fade-in-down  ">
-            <carousel :slides="slides" :interval="3000" controls indicators></carousel>
+            <carousel :slides="slidesImage" :interval="3000" controls indicators></carousel>
 
           </div>
 
@@ -79,39 +79,16 @@
                         </th>
                       </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200">
+                    <tbody v-for="data in material" class="divide-y divide-gray-200">
                       <tr>
                         <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          <a href="/patient-view-article">Fight Against Covid</a>
+                          <a href="/patient-view-article">{{data.title}}</a>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          Guidelines to help keep our nation safe from Covid-19
+                          {{data.description}}
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          2022/09/12
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          <a href="/patient-view-article">Summer Flu</a>
-                        </td>
-                        <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          <a>Its the season that most of us will get sick and everybody should be safe</a>
-                        </td>
-                        <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          2022/09/09
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          <a href="/patient-view-article">Get your covid jabs with us</a>
-                        </td>
-                        <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          With the constant spread of covid-19, our clinic now provide different vaccines to help
-                          against the virus
-                        </td>
-                        <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          2022/07/23
+                          {{data.created_at}}
                         </td>
                       </tr>
                     </tbody>
@@ -137,16 +114,22 @@ import Carousel from "../../components/core/carousel/Carousel.vue";
 
 const store = useStore();
 
-const loading = computed(() => store.state.dashboard.loading);
-const data = computed(() => store.state.dashboard.data);
-const user = computed(() => store.state.user.data);
+const loading = computed(() => store.state.material.loading);
+const material = computed(() => store.state.material.data);
+const slidesImage = computed(() => store.state.material.slides);
+store.dispatch("getMaterialData");
 
-const slides = [
-  "/src/assets/covidBanner.jpg",
-  "/src/assets/fluBanner.jpg",
-  "/src/assets/vaccineBanner.jpg",
-]
+console.log("Loading Materials: ",material.value.length);
 
+const slides = ["https://srv622.hstgr.io:7443/files/images/fluBanner.jpg",
+"https://srv622.hstgr.io:7443/files/images/fluBanner.jpg",
+"https://srv622.hstgr.io:7443/files/images/fluBanner.jpg"]
+//storing material images into slide
+for (let x = 0 ;  x < material.value.length; x++){
+  console.log("Inside STORE: ",material.value[x].image_url)
+  slides.push(material.value[x].image_url)
+}
+console.log("slides from store: ",slidesImage.value[0])
 </script>
   
 <style scoped>
