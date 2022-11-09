@@ -390,6 +390,24 @@ class AppointmentController extends Controller
 
         ]);
     }
+    public function nurseGetAppointments(Request $request)
+    {
+
+        $instituteID = $request->input('instituition_id');
+
+        $apponintments = Appointment::where('instituition_id', $instituteID)
+            ->where('appointment_type', '!=', 'off-day')
+            ->orderBy('appointment_date', 'ASC')
+            ->orderBy('time', 'ASC')
+            ->get();
+
+
+
+        return response([
+            'appointments' => $apponintments,
+
+        ]);
+    }
 
     public function getAppointmentById(Request $request)
     {

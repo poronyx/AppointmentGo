@@ -60,6 +60,7 @@ Route::post('/appointment/getDoctor',[\App\Http\Controllers\AppointmentControlle
 Route::post('/appointment/patientGetAppointments',[\App\Http\Controllers\AppointmentController::class,'patientGetAppointments']);
 Route::post('/appointment/doctorGetAppointments',[\App\Http\Controllers\AppointmentController::class,'doctorGetAppointments']);
 Route::post('/appointment/getAppointmentById',[\App\Http\Controllers\AppointmentController::class,'getAppointmentById']);
+Route::post('/appointment/nurseGetAppointments',[\App\Http\Controllers\AppointmentController::class,'nurseGetAppointments']);
 
 //For Patient making appointment page 
 Route::post('/patient/getDoctorsFromInstitute', [AuthController::class, 'getDoctorsFromInstitute']);
@@ -72,6 +73,8 @@ Route::get('/doctor/getPatients', [AuthController::class, 'getAllPatients']);
 Route::get('/survey-by-slug/{survey:slug}', [\App\Http\Controllers\SurveyController::class, 'showForGuest']);
 Route::post('/survey/{survey}/answer', [\App\Http\Controllers\SurveyController::class, 'storeAnswer']);
 
+//For Nurse page 
+Route::post('/nurse/getDoctors', [AuthController::class, 'getAllDoctorsFromInstitute']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 

@@ -79,9 +79,15 @@ const emit = defineEmits(['addEvent'])
 const isOpen = ref(false)
 const showButton = ref(false)
 const errors = ref({});
-const props = defineProps({
-    type: String
+
+const { instituition_id, owner_id} = defineProps({
+    instituition_id: String,
+    owner_id: String,
 });
+
+
+
+
 let pickedOffDate = ""
 function closeModal() {
     isOpen.value = false
@@ -95,13 +101,17 @@ function pickedDate(ev) {
     pickedOffDate = ev
     showButton.value = true
 
+    console.log("Instute id: ",instituition_id)
+    console.log("owner id: ",owner_id)  
+
 }
 
 function submitOffday() {
+
     const param = {
         "appointment_type": "off-day",
-        "instituition_id": user.value.instituition_id,
-        "owner_id": user.value.id,
+        "instituition_id": instituition_id,
+        "owner_id": owner_id,
         "appointment_date": pickedOffDate,
         "time": 0,
     }

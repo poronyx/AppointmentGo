@@ -74,6 +74,12 @@ const store = createStore({
       viewPatientData: {},
       viewAppointmentData: {}
     },
+    nurseDashboard:{
+      listDoctors: [],
+      eventData: [],
+      doctorData:{},
+      appointmentsData: []
+    },
     dashboard: {
       loading: false,
       data: {}
@@ -297,6 +303,18 @@ const store = createStore({
         })
 
     },
+    getAllDoctorsFromInstitute({ commit }, input) {
+      return axiosClient.post(`/nurse/getDoctors`,input)
+        .then((res) => {
+          commit('setAllDoctorsFromIntData', res.data)
+          console.log("All Doctors: ", res)
+
+        })
+        .catch(error => {
+          return error;
+        })
+
+    },
     //Get availability
     getAvailabilityData(_, input) {
       console.log("After Picked Date data", input)
@@ -337,6 +355,16 @@ const store = createStore({
       return axiosClient.post(`/appointment/doctorGetAppointments`, input)
         .then((res) => {
           commit('setAppointmentDataDoctor', res.data.appointments)
+          return res;
+        })
+        .catch(error => {
+          return error;
+        })
+    },
+    getAppointmentDataNurse({ commit }, input) {
+      return axiosClient.post(`/appointment/nurseGetAppointments`, input)
+        .then((res) => {
+          commit('setAppointmentDataNurse', res.data.appointments)
           return res;
         })
         .catch(error => {
@@ -546,6 +574,10 @@ const store = createStore({
       console.log("All Institutes : ", data)
       state.doctorManageAppointments.appointmentsData = data
     },
+    setAppointmentDataNurse: (state, data) => {
+      console.log("All Institutes : ", data)
+      state.nurseDashboard.appointmentsData = data
+    },
     setAllPatientData: (state, data) => {
       console.log("All Patients : ", data)
       state.doctorManageAppointments.allPatientData = data
@@ -637,9 +669,17 @@ const store = createStore({
       console.log("Inside Mutations: ", data)
       state.patientFindDoctor.allDoctors = data.doctors
     },
+    setAllDoctorsFromIntData: (state, data) => {
+      console.log("Inside Mutations: ", data)
+      state.nurseDashboard.listDoctors = data.doctors
+    },
     setDoctorForView: (state, data) => {
       console.log("Inside Mutations: ", data)
       state.patientFindDoctor.viewDoctorData = data
+    },
+    setDoctorDataNurse: (state, data) => {
+      console.log("Inside Mutations: ", data)
+      state.nurseDashboard.doctorData = data
     },
     setUserForEdit: (state, data) => {
       console.log("Inside Mutations: ", data)

@@ -40,6 +40,10 @@ import DoctorManageSchedule from "../views/doctor/DoctorManageSchedule.vue";
 import DoctorManageAppointments from "../views/doctor/DoctorManageAppointments.vue"
 import DoctorViewPatient from "../views/doctor/DoctorViewPatient.vue"
 import DoctorViewAppointment from "../views/doctor/DoctorViewAppointment.vue"
+import NurseDefaultLayout from "../components/NurseDefaultLayout.vue"
+import NurseDashboard from "../views/nurse/NurseDashboard.vue"
+import NurseManageDoctor from "../views/nurse/NurseManageDoctor.vue"
+import NurseManagePatientAndAppointments from "../views/nurse/NurseManagePatientAndAppointments.vue"
 
 let routes = [{
   path: "/",
@@ -75,6 +79,18 @@ let routes = [{
     { path: "/doctor-manage-appointments", name: "DoctorManageAppointments", component: DoctorManageAppointments },
     { path: "/doctor-view-patient", name: "DoctorViewPatient", component: DoctorViewPatient },
     { path: "/doctor-view-appointment", name: "DoctorViewAppointment", component: DoctorViewAppointment},
+  ],
+},
+
+{
+  path: "/n",
+  redirect: "/nurse-dashboard",
+  component: NurseDefaultLayout,
+  meta: { requiresAuth: true },
+  children: [
+    { path: "/nurse-dashboard", name: "NurseDashboard", component: NurseDashboard },
+    { path: "/nurse-manage-doctor", name: "NurseManageDoctor", component: NurseManageDoctor },
+    { path: "/nurse-manage-patient-and-appointments", name: "NurseManagePatientAndAppointments", component: NurseManagePatientAndAppointments },
   ],
 },
 {
