@@ -44,6 +44,8 @@ import NurseDefaultLayout from "../components/NurseDefaultLayout.vue"
 import NurseDashboard from "../views/nurse/NurseDashboard.vue"
 import NurseManageDoctor from "../views/nurse/NurseManageDoctor.vue"
 import NurseManagePatientAndAppointments from "../views/nurse/NurseManagePatientAndAppointments.vue"
+import NurseViewAppointment from "../views/nurse/NurseViewAppointment.vue"
+import NurseViewPatient from "../views/nurse/NurseViewPatient.vue"
 
 let routes = [{
   path: "/",
@@ -91,6 +93,8 @@ let routes = [{
     { path: "/nurse-dashboard", name: "NurseDashboard", component: NurseDashboard },
     { path: "/nurse-manage-doctor", name: "NurseManageDoctor", component: NurseManageDoctor },
     { path: "/nurse-manage-patient-and-appointments", name: "NurseManagePatientAndAppointments", component: NurseManagePatientAndAppointments },
+    { path: "/nurse-view-appointment", name: "NurseViewAppointment", component: NurseViewAppointment },
+    { path: "/nurse-view-patient", name: "NurseViewPatient", component: NurseViewPatient },
   ],
 },
 {

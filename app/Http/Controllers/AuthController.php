@@ -327,7 +327,7 @@ class AuthController extends Controller
     {
 
         $user_id = $request->input('id');
-
+        
 
 
         if ($request->input('user_type') == 'Patient') {

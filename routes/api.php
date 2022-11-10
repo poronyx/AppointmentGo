@@ -61,6 +61,7 @@ Route::post('/appointment/patientGetAppointments',[\App\Http\Controllers\Appoint
 Route::post('/appointment/doctorGetAppointments',[\App\Http\Controllers\AppointmentController::class,'doctorGetAppointments']);
 Route::post('/appointment/getAppointmentById',[\App\Http\Controllers\AppointmentController::class,'getAppointmentById']);
 Route::post('/appointment/nurseGetAppointments',[\App\Http\Controllers\AppointmentController::class,'nurseGetAppointments']);
+Route::post('/appointment/update-appointment',[\App\Http\Controllers\AppointmentController::class,'updateAppointment']);
 
 //For Patient making appointment page 
 Route::post('/patient/getDoctorsFromInstitute', [AuthController::class, 'getDoctorsFromInstitute']);

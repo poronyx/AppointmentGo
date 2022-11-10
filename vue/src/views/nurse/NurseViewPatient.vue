@@ -1,5 +1,5 @@
 <template>
-    <PageComponent title="Doctor View Patient">
+    <PageComponent title="Nurse View Patient">
         <div v-if="loading" class="flex justify-center">Loading...</div>
         <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-5 text-gray-700">
             <DashboardCard class="order-1 lg:order-1 row-span-2" style="animation-delay: 0.1s">
@@ -179,7 +179,7 @@ function toAppointment(ev) {
     store.commit("setAppointmentForManage", ev)
 
     router.push({
-        name: "DoctorViewAppointment",
+        name: "NurseViewAppointment",
     });
 }
 </script>

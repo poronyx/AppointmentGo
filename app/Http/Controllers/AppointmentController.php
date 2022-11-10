@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\Instituition;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\App;
 
 class AppointmentController extends Controller
 {
@@ -421,6 +422,24 @@ class AppointmentController extends Controller
         return response([
             'appointment' => $apponintment,
 
+        ]);
+    }
+
+    public function updateAppointment(Request $request)
+    {
+        $appointmentId = $request->input('id');
+        $date = $request->input('appointment_date');
+        $time = $request->input('time');
+
+        $apponintment = Appointment::where('id', $appointmentId)
+            ->update([
+                'appointment_date' => $date,
+                'time' => $time,
+
+            ]);
+
+        return response([
+            'appointment' => $apponintment
         ]);
     }
 }

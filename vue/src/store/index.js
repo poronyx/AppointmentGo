@@ -19,6 +19,7 @@ const store = createStore({
       doctorsFromSpecialty: [],
       makeAppointmentData: {
         "appointment_type": "on-site",
+        "symptoms" : "",
       },
       slotAvailability: []
     },
@@ -425,6 +426,19 @@ const store = createStore({
     makeAppointment(_, input) {
       console.log("appointment data before API", input)
       return axiosClient.post(`/appointment/create`, input)
+        .then((res) => {
+          console.log("Res from making Appointment", res)
+
+          return res;
+        })
+        .catch(error => {
+          return error;
+        })
+
+    },
+    updateAppointment(_, input) {
+      console.log("appointment data before API", input)
+      return axiosClient.post(`/appointment/update-appointment`, input)
         .then((res) => {
           console.log("Res from making Appointment", res)
 
