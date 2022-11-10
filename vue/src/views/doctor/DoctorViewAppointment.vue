@@ -57,10 +57,6 @@
                         @click="cancelAppointment(appointment.id)">
                         Cancel
                     </button>
-                    <button class="bg-slate-900 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full"
-                        @click="changeAppointment(appointment.id)">
-                        Change Appointment
-                    </button>
                     <button class="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                         @click="diagnoseAppointment(appointment.id)">
                         Diagnose
@@ -70,10 +66,6 @@
                     <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
                         @click="cancelAppointment(appointment.id)">
                         Cancel
-                    </button>
-                    <button class="bg-slate-900 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full"
-                        @click="changeAppointment(appointment.id)">
-                        Change Appointment
                     </button>
                     <button class="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                         @click="diagnoseAppointment(appointment.id)">

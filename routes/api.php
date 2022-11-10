@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SurveyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,9 @@ Route::middleware('auth:sanctum')->group(function () {
 //Materials
 Route::post('/material/create',[\App\Http\Controllers\MaterialController::class,'createMaterial']);
 Route::get('/material/get',[\App\Http\Controllers\MaterialController::class,'getMaterial']);
+Route::post('/material/delete',[\App\Http\Controllers\MaterialController::class,'deleteMaterial']);
+Route::post('/material/update',[\App\Http\Controllers\MaterialController::class,'updateMaterial']);
+
 //Institutes
 Route::post('/institute/create',[\App\Http\Controllers\InstituitionController::class,'createInstituition']);
 Route::get('/institute/get',[\App\Http\Controllers\InstituitionController::class,'getInstituition']);
@@ -76,6 +80,9 @@ Route::post('/survey/{survey}/answer', [\App\Http\Controllers\SurveyController::
 
 //For Nurse page 
 Route::post('/nurse/getDoctors', [AuthController::class, 'getAllDoctorsFromInstitute']);
+
+//For Medical Admin
+Route::post('/saveImages', [SurveyController::class, 'saveImage']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 

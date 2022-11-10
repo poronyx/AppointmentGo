@@ -46,6 +46,8 @@ import NurseManageDoctor from "../views/nurse/NurseManageDoctor.vue"
 import NurseManagePatientAndAppointments from "../views/nurse/NurseManagePatientAndAppointments.vue"
 import NurseViewAppointment from "../views/nurse/NurseViewAppointment.vue"
 import NurseViewPatient from "../views/nurse/NurseViewPatient.vue"
+import MedicalAdminManageEducationalMaterial from "../views/medical_admin/MedicalAdminManageEducationalMaterial.vue"
+import MedicalAdminEditMaterial from "../views/medical_admin/MedicalAdminEditMaterial.vue"
 
 let routes = [{
   path: "/",
@@ -105,6 +107,8 @@ let routes = [{
   children: [
     { path: "/medical-admin-dashboard", name: "MedicalAdminDashboard", component: MedicalAdminDashboard },
     { path: "/medical-admin-create-news-article", name: "MedicalAdminCreateNewsArticle", component: MedicalAdminCreateNewsArticle },
+    { path: "/medical-admin-manage-educational", name: "MedicalAdminManageEducationalMaterial", component: MedicalAdminManageEducationalMaterial },
+    { path: "/medical-admin-edit-material", name: "MedicalAdminEditMaterial", component: MedicalAdminEditMaterial },
   ],
 },
 {

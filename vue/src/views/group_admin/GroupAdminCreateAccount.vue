@@ -11,10 +11,6 @@
                         </div>
                     </div>
                 </Alert>
-
-                {{ institutes[0].opening_time.first }}
-                {{ institutes[0].opening_time.second }}
-                {{ userData }}
                 <div class="rounded-md shadow-sm ">
                     <TInput name="name" v-model="userData.name" :errors="errors" placeholder="Full Name"
                         inputClass="rounded-t-md" />

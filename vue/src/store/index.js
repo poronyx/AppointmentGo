@@ -36,7 +36,8 @@ const store = createStore({
     material: {
       loading: false,
       data: {},
-      slides: []
+      slides: [],
+      editData: {}
     },
     institute: {
       loading: false,
@@ -423,6 +424,35 @@ const store = createStore({
         })
 
     },
+    createArticle(_, input) {
+      console.log("appointment data before API", input)
+      return axiosClient.post(`/material/create`, input)
+        .then((res) => {
+          console.log("Res from making Appointment", res)
+
+          return res;
+        })
+        .catch(error => {
+          return error;
+        })
+
+    },
+    deleteMaterial(_, input) {
+      return axiosClient.post(`/material/delete`, input)
+        .then((res) => {
+          console.log("After Delete in Store res: ", res.data)
+          return res;
+        })
+
+    },
+    updateMaterial(_, input) {
+      return axiosClient.post(`/material/update`, input)
+        .then((res) => {
+          console.log("After Delete in Store res: ", res.data)
+          return res;
+        })
+
+    },
     makeAppointment(_, input) {
       console.log("appointment data before API", input)
       return axiosClient.post(`/appointment/create`, input)
@@ -557,7 +587,7 @@ const store = createStore({
       state.material.data = data
       const imageList = []
       for (let x in data) {
-        imageList.push(data[x].image_url)
+        imageList.push("http://localhost:8000/"+data[x].image_url)
       }
       state.material.slides = imageList
     },
@@ -662,6 +692,10 @@ const store = createStore({
       console.log("Inside Mutations: ", data)
       state.institute.editData = data
       state.institute.editData.timeChanged = false;
+    },
+    setMaterialForEdit: (state, data) => {
+      console.log("Inside Mutations: ", data)
+      state.material.editData = data
     },
     setAvailableSlots: (state, data) => {
       console.log("Inside Mutations: ", data)

@@ -155,7 +155,7 @@
   
   const navigation = [
     { name: "Home", to: { name: "MedicalAdminDashboard" } },
-    { name: "Create News Article", to: { name: "MedicalAdminCreateNewsArticle" } },
+    { name: "Manage Educational Material", to: { name: "MedicalAdminManageEducationalMaterial" } },
   ];
   
   
