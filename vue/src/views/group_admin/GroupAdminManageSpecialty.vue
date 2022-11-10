@@ -151,15 +151,6 @@ function editSpecialty(specialty) {
 </script>
     
 <style scoped>
-.bg-white{
- background-color:rgb(237, 231, 225);
-}
-.bg-gray-50{
-    background-color:rgb(237, 231, 225);
-    color: black;
-}
-.text-gray-500{
-    color: black;
-}
+
 </style>
     

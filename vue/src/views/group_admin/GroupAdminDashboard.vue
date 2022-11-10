@@ -52,10 +52,6 @@ const user = computed(() => store.state.user.data);
 </script>
     
 <style scoped>
-.bg-white{
- background-color:aquamarine;
-}
-
 
 </style>
     
