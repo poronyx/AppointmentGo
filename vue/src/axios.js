@@ -6,7 +6,8 @@ import store from "./store";
 import router from "./router";
 
 const axiosClient = axios.create({
-  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`
+  // test baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`
+  baseURL: `https://www.appointmentgo.net/api` //production
 })
 
 axiosClient.interceptors.request.use(config => {
