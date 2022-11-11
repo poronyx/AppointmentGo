@@ -13,7 +13,7 @@
                 </Alert>
 
 
-                <div class="rounded-md shadow-sm ">
+                <div v-if="editUser.user_type != 'Group Admin'" class="rounded-md shadow-sm ">
                     <TInput name="name" v-model="editUser.name" :errors="errors" placeholder="Full Name"
                         inputClass="rounded-t-md" />
                     <TInput type="email" name="email" v-model="editUser.email" :errors="errors"
@@ -54,6 +54,12 @@
                     <TInput type="date" name="date_of_birth" v-model="editUser.date_of_birth" :errors="errors"
                         placeholder="dd/mm/yyyy" disabled />
                 </div>
+                <div v-else class="rounded-md shadow-sm ">
+                    <TInput name="name" v-model="editUser.name" :errors="errors" placeholder="Full Name"
+                        inputClass="rounded-t-md" />
+                    <TInput type="email" name="email" v-model="editUser.email" :errors="errors"
+                        placeholder="Email Address" />
+                </div>
                 <div class="col-span-3 mt-5 mb-5">
                     <label for="userType" class="block text-sm font-medium text-gray-700">Choose a user Type
                     </label>
@@ -71,7 +77,7 @@
           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
           sm:text-sm
         " disabled>
-                        <option :key="userType" :value="editUser.user_type" >
+                        <option :key="userType" :value="editUser.user_type">
                             {{ editUser.user_type }}
                         </option>
                     </select>
@@ -79,8 +85,8 @@
                 <div v-if="editUser.user_type == 'Doctor'" class="rounded-md shadow-sm ">
                     <TInput name="academic_title" v-model="editUser.academic_title" :errors="errors"
                         placeholder="Academic Title" inputClass="rounded-t-md" />
-                    <TInput name="main_qualification" v-model="editUser.qualifications.main_qualification" :errors="errors"
-                        placeholder="Main Qualification" inputClass="rounded-t-md" />
+                    <TInput name="main_qualification" v-model="editUser.qualifications.main_qualification"
+                        :errors="errors" placeholder="Main Qualification" inputClass="rounded-t-md" />
                     <TInput name="other_qualification" v-model="editUser.qualifications.other_qualification"
                         :errors="errors" placeholder="Other Qualification" inputClass="rounded-t-md" />
 

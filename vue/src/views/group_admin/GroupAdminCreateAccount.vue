@@ -244,15 +244,19 @@ import TButtonLoading from "../../components/core/TButtonLoading.vue";
 import TInput from "../../components/core/TInput.vue";
 import Alert from "../../components/Alert.vue";
 import { ref } from "vue";
-import store from "../../store";
+import { useStore } from "vuex";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
+
+const store = useStore();
 
 const router = useRouter();
 const institutes = computed(() => store.state.institute.instituition_list);
 const specialties = computed(() => store.state.specialty.specialty_list);
 const userData = computed(() => store.state.user.createData);
+const user1 = computed(() => store.state.user.data);
 
+userData.value.organization_id = user1.value.organization_id
 store.dispatch("getInstituteData");
 store.dispatch("getSpecialtyData");
 
@@ -289,6 +293,7 @@ const user = {
     department: "",
     //all except user, group and platform admin
     instituition_id: "",
+
 
 };
 const loading = ref(false);

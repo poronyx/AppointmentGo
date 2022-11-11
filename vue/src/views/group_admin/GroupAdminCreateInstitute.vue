@@ -164,8 +164,10 @@ import TButtonLoading from "../../components/core/TButtonLoading.vue";
 import TInput from "../../components/core/TInput.vue";
 import Alert from "../../components/Alert.vue";
 import { ref, computed } from "vue";
-import store from "../../store";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+
+const store = useStore();
 const router = useRouter();
 
 const instituteTypes = ["Clinic", "Hospital"]
@@ -179,6 +181,9 @@ const timeSlots2 = computed(() => store.state.groupAdminManageInstitute.time_slo
 const timeSlots3 = computed(() => store.state.groupAdminManageInstitute.time_slot3);
 const timeSlots4 = computed(() => store.state.groupAdminManageInstitute.time_slot4);
 const storeInstitute = computed(() => store.state.institute.data);
+const user = computed(() => store.state.user.data);
+
+console.log(user.value.organization_id)
 
 const institute = {
     instituition_type: "",
@@ -194,7 +199,7 @@ const institute = {
         first: [0, 0],
         second: [0, 0]
     },
-    organization_id: "1",
+    organization_id: user.value.organization_id,
 
 };
 const loading = ref(false);

@@ -103,7 +103,13 @@ const store = useStore();
 
 const loading = computed(() => store.state.groupAdminManageAccount.loading);
 const institutes = computed(() => store.state.institute.instituition_list);
-store.dispatch("getInstituteData");
+const user = computed(() => store.state.user.data);
+
+store.dispatch("adminGetInstituteData",
+{
+    organization_id: user.value.organization_id
+}
+);
 
 
 

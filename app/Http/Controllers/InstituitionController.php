@@ -53,6 +53,17 @@ class InstituitionController extends Controller
             'institutes' => $institutes
         ]);
     }
+    public function adminGetInstituition(Request $request)
+    {
+
+        $org_id = $request->input('organization_id');
+        $institutes = Instituition::where('organization_id', $org_id)
+        ->get();
+
+        return response([
+            'institutes' => $institutes
+        ]);
+    }
     public function deleteInstitute(Request $request)
     {
 

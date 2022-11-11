@@ -16,6 +16,7 @@ use Illuminate\Testing\Fluent\Concerns\Has;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\Rules;
 use App\Models\Instituition;
+use App\Models\Organization;
 use Carbon\Carbon;
 use App\Models\Slot;
 
@@ -112,6 +113,7 @@ class AuthController extends Controller
                 'specialty' =>  $request->input('specialty'),
                 'experience' => $data['experience'],
                 'instituition_id' => $request->input('instituition.id'),
+                'organization_id' => $request->input('organization_id'),
             ]);
 
 
@@ -151,6 +153,7 @@ class AuthController extends Controller
                 'address' =>  $request->input('address'),
                 'department' => $data['department'],
                 'instituition_id' => $request->input('instituition.id'),
+                'organization_id' => $request->input('organization_id'),
             ]);
         } elseif ($request->input('user_type') == 'Medical Admin') {
             $data = $request->validate([
@@ -170,6 +173,7 @@ class AuthController extends Controller
                     Password::min(8)->mixedCase()->numbers()->symbols()
                 ],
                 'instituition.id' => 'required',
+                'organization_id' => $request->input('organization_id'),
             ]);
 
             $user = User::create([
@@ -224,6 +228,59 @@ class AuthController extends Controller
         ]);
     }
 
+    public function registerGroupAdmin(Request $request)
+    {   
+        $subType = $request->input('sub_type');
+
+        $cc_name = $request->input('cardName');
+        $cc_no = $request->input('cardNumber');
+        $cc_month = $request->input('cardMonth');
+        $cc_year = $request->input('cardYear');
+        $cc_cvv = $request->input('cardCvv');
+
+
+        $data = $request->validate([
+            'name' => 'required|string',
+            'company_name' => 'required|string',
+            'email' => 'required|email|string|unique:users,email',
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8)->mixedCase()->numbers()->symbols()
+            ]
+        ]);
+
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'user_type' => 'Group Admin',
+            'password' => bcrypt($data['password']),
+        ]);
+
+        $organization = Organization::create([
+            'owner_id' => $user->id,
+            'name' => $request->input('company_name'),
+            'sub_status' => 1,
+            'sub_type' => $subType,
+            'sub_date' => Carbon::now()->toDateString(),
+            'cc_no' => $cc_no,
+            'cc_name' => $cc_name,
+            'expiry' => $cc_month."/".$cc_year,
+            'cvv' => $cc_cvv,
+        ]);
+
+        $assignID = User::where('id', $user->id)
+        ->update(['organization_id' => $organization->id]);
+
+        $token = $user->createToken('main')->plainTextToken;
+
+        return response([
+            'user' => $user,
+            'organization' => $organization,
+            'token' => $token
+        ]);
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -249,6 +306,7 @@ class AuthController extends Controller
             'token' => $token
 
         ]);
+
     }
 
     public function logout()
@@ -263,9 +321,12 @@ class AuthController extends Controller
         ]);
     }
 
-    public function getUsers()
+    public function getUsers(Request $request)
     {
-        $users = User::all();
+        $org_id = $request->input('organization_id');
+
+        $users = User::where('organization_id', $org_id)
+        ->get();
 
         return response([
             'users' => $users

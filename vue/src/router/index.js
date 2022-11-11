@@ -6,6 +6,7 @@ import Surveys from "../views/Surveys.vue";
 import SurveyView from "../views/SurveyView.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
+import GroupAdminRegister from "../views/GroupAdminRegister.vue"
 import NotFound from "../views/NotFound.vue";
 import SurveyPublicView from "../views/SurveyPublicView.vue";
 import DefaultLayout from "../components/DefaultLayout.vue";
@@ -48,6 +49,8 @@ import NurseViewAppointment from "../views/nurse/NurseViewAppointment.vue"
 import NurseViewPatient from "../views/nurse/NurseViewPatient.vue"
 import MedicalAdminManageEducationalMaterial from "../views/medical_admin/MedicalAdminManageEducationalMaterial.vue"
 import MedicalAdminEditMaterial from "../views/medical_admin/MedicalAdminEditMaterial.vue"
+
+
 
 let routes = [{
   path: "/",
@@ -152,6 +155,12 @@ let routes = [{
       name: "Register",
       component: Register,
     },
+    {
+      path: "/registerAdmin/:subType",
+      name: "GroupAdminRegister",
+      component: GroupAdminRegister,
+    },
+    
   ],
 },
 {

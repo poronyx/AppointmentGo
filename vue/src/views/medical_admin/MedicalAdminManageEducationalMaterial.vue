@@ -115,7 +115,10 @@ function deleteMaterial(ev) {
     }
     store.dispatch("deleteMaterial", param).then((res) => {
         console.log(res)
+        window.location.reload();
     })
+
+    
 }
 
 function editMaterial(ev) {

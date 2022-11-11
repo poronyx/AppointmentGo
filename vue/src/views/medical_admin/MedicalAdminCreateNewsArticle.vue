@@ -132,7 +132,7 @@ function createArticle(){
 
     store.dispatch("createArticle", articleData).then((res) =>{
         router.push({
-        name: "NurseManagePatientAndAppointments",
+        name: "MedicalAdminManageEducationalMaterial",
     });
     })
 

@@ -41,7 +41,7 @@ Route::post('/institute/create',[\App\Http\Controllers\InstituitionController::c
 Route::get('/institute/get',[\App\Http\Controllers\InstituitionController::class,'getInstituition']);
 Route::post('/institute/delete',[\App\Http\Controllers\InstituitionController::class,'deleteInstitute']);
 Route::post('/institute/update',[\App\Http\Controllers\InstituitionController::class,'updateInstitute']);
-
+Route::post('/institute/getAdmin',[\App\Http\Controllers\InstituitionController::class,'adminGetInstituition']);
 
 //For Slots
 Route::post('/institute/generateSlots',[\App\Http\Controllers\SlotController::class,'createSlots']);
@@ -52,11 +52,14 @@ Route::post('/specialty/delete',[\App\Http\Controllers\SpecialtyController::clas
 Route::post('/specialty/update',[\App\Http\Controllers\SpecialtyController::class,'updateSpecialty']);
 
 //For Group Admin Manage Account
-Route::get('/users/getAll',[\App\Http\Controllers\AuthController::class,'getUsers']);
+Route::post('/users/getAll',[\App\Http\Controllers\AuthController::class,'getUsers']);
 Route::post('/users/deleteUser',[\App\Http\Controllers\AuthController::class,'deleteUser']);
 Route::post('/users/suspendUser',[\App\Http\Controllers\AuthController::class,'suspendUser']);
 Route::post('/users/unSuspendUser',[\App\Http\Controllers\AuthController::class,'unSuspendUser']);
 Route::post('/users/updateUser',[\App\Http\Controllers\AuthController::class,'updateUser']);
+
+//For organization Table
+Route::post('/org/get',[\App\Http\Controllers\OrganizationController::class,'getOrg']);
 
 //For appointmet Table 
 Route::post('/appointment/create',[\App\Http\Controllers\AppointmentController::class,'createAppointment']);
@@ -84,5 +87,6 @@ Route::post('/nurse/getDoctors', [AuthController::class, 'getAllDoctorsFromInsti
 //For Medical Admin
 Route::post('/saveImages', [SurveyController::class, 'saveImage']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/registerGroupAdmin', [AuthController::class, 'registerGroupAdmin']);
 Route::post('/login', [AuthController::class, 'login']);
 

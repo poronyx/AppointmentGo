@@ -14,6 +14,8 @@
     "uuid": "^8.3.2",
     "vue": "^3.2.25",
     "vue-cal": "^4.8.1",
+    "vue-credit-card-validation": "^1.0.5",
+    "vue-paycard": "^0.7.0",
     "vue-router": "^4.0.12",
     "vue-time-slot": "^0.0.1",
     "vue3-google-map": "^0.15.0",

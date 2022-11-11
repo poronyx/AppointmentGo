@@ -170,9 +170,10 @@ const store = useStore();
 const institutes = computed(() => store.state.institute.instituition_list);
 const allUsers = computed(() => store.state.groupAdminManageAccount.user_list);
 const loading = computed(() => store.state.groupAdminManageAccount.loading);
+const user = computed(() => store.state.user.data);
 
 store.dispatch("getInstituteData");
-store.dispatch("getAllUsersData");
+store.dispatch("getAllUsersData",{organization_id: user.value.organization_id});
 
 
 const userTypes = ["Patient", "Doctor", "Nurse", "Medical Admin", "Platform Admin", "Group Admin"]
@@ -235,17 +236,17 @@ function editUser(user) {
 
 
 
-    // const param = {
-    //     id: user_id
-    // }
-    // store.dispatch("getUserForEdit", param).then((res) => {
-    //     console.log(res)
-    //     if (res.data.success == true) {
-    //         router.push({
-    //             name: "GroupAdminEditAccount",
-    //         });
-    //     }
-    // });
+    const param = {
+        id: user_id
+    }
+    store.dispatch("getUserForEdit", param).then((res) => {
+        console.log(res)
+        if (res.data.success == true) {
+            router.push({
+                name: "GroupAdminEditAccount",
+            });
+        }
+    });
 
 }
 </script>

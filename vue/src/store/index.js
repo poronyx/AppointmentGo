@@ -58,7 +58,8 @@ const store = createStore({
       user_list: [],
       deleteData: {},
       suspendData: {},
-      editData: {}
+      editData: {},
+      orgData: {}
     },
     groupAdminManageInstitute: {
       loading: false,
@@ -121,6 +122,15 @@ const store = createStore({
           return data;
         })
     },
+    registerGroupAdmin({commit}, user) {
+      return axiosClient.post('/registerGroupAdmin', user)
+        .then(({ data }) => {
+          commit('setUser', data.user);
+          commit('setToken', data.token)
+          console.log("After Admin Create Account", data)
+          return data;
+        })
+    },
     registerForAll(_, user) {
       return axiosClient.post('/register', user)
         .then((res) => {
@@ -179,6 +189,22 @@ const store = createStore({
         })
 
     },
+    adminGetInstituteData({ commit },input) {
+      commit('instituteLoading', true)
+      return axiosClient.post(`/institute/getAdmin`, input)
+        .then((res) => {
+          commit('instituteLoading', false)
+          commit('setInstituteData', res.data.institutes)
+
+          return res;
+        })
+        .catch(error => {
+          commit('materialLoading', false)
+          return error;
+        })
+
+    },
+    
     createInstitute({ commit }, input) {
       console.log("PayLoad: ", input)
       return axiosClient.post('/institute/create', input)
@@ -222,10 +248,17 @@ const store = createStore({
           commit('setUser', res.data)
         })
     },
+    getOrg({ commit },input) {
+      return axiosClient.post('/org/get',input)
+        .then(res => {
+          console.log("res from server",res.data.organization);
+          commit('setOrg', res.data.organization)
+        })
+    },
     //Group Admin Manage Account 
-    getAllUsersData({ commit }) {
+    getAllUsersData({ commit },input) {
       commit('manageAccountLoading', true)
-      return axiosClient.get(`/users/getAll`)
+      return axiosClient.post(`/users/getAll`,input)
         .then((res) => {
           commit('manageAccountLoading', false)
           commit('setAllUsersData', res.data.users)
@@ -567,11 +600,13 @@ const store = createStore({
       state.user.data = {};
       sessionStorage.removeItem("TOKEN");
     },
-
     setUser: (state, user) => {
       state.user.data = user;
       state.patientMakeAppointment.makeAppointmentData.patient_id = user.id
       state.patientMakeAppointment.patientProfile = user.id
+    },
+    setOrg: (state, org) => {
+      state.groupAdminManageAccount.orgData = org
     },
     setUserCreate: (state, user) => {
       state.user.createData = user;
