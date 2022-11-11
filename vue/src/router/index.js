@@ -37,6 +37,17 @@ import GroupAdminEditInstitute from "../views/group_admin/GroupAdminEditInstitut
 import DoctorDefaultLayout from "../components/DoctorDefaultLayout.vue";
 import ViewDoctorProfile from "../views/patient/ViewDoctorProfile.vue";
 import DoctorManageSchedule from "../views/doctor/DoctorManageSchedule.vue";
+import DoctorManageAppointments from "../views/doctor/DoctorManageAppointments.vue"
+import DoctorViewPatient from "../views/doctor/DoctorViewPatient.vue"
+import DoctorViewAppointment from "../views/doctor/DoctorViewAppointment.vue"
+import NurseDefaultLayout from "../components/NurseDefaultLayout.vue"
+import NurseDashboard from "../views/nurse/NurseDashboard.vue"
+import NurseManageDoctor from "../views/nurse/NurseManageDoctor.vue"
+import NurseManagePatientAndAppointments from "../views/nurse/NurseManagePatientAndAppointments.vue"
+import NurseViewAppointment from "../views/nurse/NurseViewAppointment.vue"
+import NurseViewPatient from "../views/nurse/NurseViewPatient.vue"
+import MedicalAdminManageEducationalMaterial from "../views/medical_admin/MedicalAdminManageEducationalMaterial.vue"
+import MedicalAdminEditMaterial from "../views/medical_admin/MedicalAdminEditMaterial.vue"
 
 let routes = [{
   path: "/",
@@ -69,6 +80,23 @@ let routes = [{
   children: [
     { path: "/doctor-dashboard", name: "DoctorDashboard", component: DoctorDashboard },
     { path: "/doctor-manage-schedule", name: "DoctorManageSchedule", component: DoctorManageSchedule },
+    { path: "/doctor-manage-appointments", name: "DoctorManageAppointments", component: DoctorManageAppointments },
+    { path: "/doctor-view-patient", name: "DoctorViewPatient", component: DoctorViewPatient },
+    { path: "/doctor-view-appointment", name: "DoctorViewAppointment", component: DoctorViewAppointment},
+  ],
+},
+
+{
+  path: "/n",
+  redirect: "/nurse-dashboard",
+  component: NurseDefaultLayout,
+  meta: { requiresAuth: true },
+  children: [
+    { path: "/nurse-dashboard", name: "NurseDashboard", component: NurseDashboard },
+    { path: "/nurse-manage-doctor", name: "NurseManageDoctor", component: NurseManageDoctor },
+    { path: "/nurse-manage-patient-and-appointments", name: "NurseManagePatientAndAppointments", component: NurseManagePatientAndAppointments },
+    { path: "/nurse-view-appointment", name: "NurseViewAppointment", component: NurseViewAppointment },
+    { path: "/nurse-view-patient", name: "NurseViewPatient", component: NurseViewPatient },
   ],
 },
 {
@@ -79,6 +107,8 @@ let routes = [{
   children: [
     { path: "/medical-admin-dashboard", name: "MedicalAdminDashboard", component: MedicalAdminDashboard },
     { path: "/medical-admin-create-news-article", name: "MedicalAdminCreateNewsArticle", component: MedicalAdminCreateNewsArticle },
+    { path: "/medical-admin-manage-educational", name: "MedicalAdminManageEducationalMaterial", component: MedicalAdminManageEducationalMaterial },
+    { path: "/medical-admin-edit-material", name: "MedicalAdminEditMaterial", component: MedicalAdminEditMaterial },
   ],
 },
 {

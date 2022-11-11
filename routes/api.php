@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SurveyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,9 @@ Route::middleware('auth:sanctum')->group(function () {
 //Materials
 Route::post('/material/create',[\App\Http\Controllers\MaterialController::class,'createMaterial']);
 Route::get('/material/get',[\App\Http\Controllers\MaterialController::class,'getMaterial']);
+Route::post('/material/delete',[\App\Http\Controllers\MaterialController::class,'deleteMaterial']);
+Route::post('/material/update',[\App\Http\Controllers\MaterialController::class,'updateMaterial']);
+
 //Institutes
 Route::post('/institute/create',[\App\Http\Controllers\InstituitionController::class,'createInstituition']);
 Route::get('/institute/get',[\App\Http\Controllers\InstituitionController::class,'getInstituition']);
@@ -58,7 +62,10 @@ Route::post('/users/updateUser',[\App\Http\Controllers\AuthController::class,'up
 Route::post('/appointment/create',[\App\Http\Controllers\AppointmentController::class,'createAppointment']);
 Route::post('/appointment/getDoctor',[\App\Http\Controllers\AppointmentController::class,'getApointmentsForDoctor']);
 Route::post('/appointment/patientGetAppointments',[\App\Http\Controllers\AppointmentController::class,'patientGetAppointments']);
-
+Route::post('/appointment/doctorGetAppointments',[\App\Http\Controllers\AppointmentController::class,'doctorGetAppointments']);
+Route::post('/appointment/getAppointmentById',[\App\Http\Controllers\AppointmentController::class,'getAppointmentById']);
+Route::post('/appointment/nurseGetAppointments',[\App\Http\Controllers\AppointmentController::class,'nurseGetAppointments']);
+Route::post('/appointment/update-appointment',[\App\Http\Controllers\AppointmentController::class,'updateAppointment']);
 
 //For Patient making appointment page 
 Route::post('/patient/getDoctorsFromInstitute', [AuthController::class, 'getDoctorsFromInstitute']);
@@ -66,9 +73,16 @@ Route::get('/patient/getDoctors', [AuthController::class, 'getAllDoctors']);
 Route::post('/patient/getDoctorAvailability', [AppointmentController::class, 'patientGetDoctorAvailability']);
 Route::post('/patient/getDoctorsFromSpecialty', [AuthController::class, 'getDoctorsFromSpecialty']);
 
+//For Doctor page
+Route::get('/doctor/getPatients', [AuthController::class, 'getAllPatients']);
 Route::get('/survey-by-slug/{survey:slug}', [\App\Http\Controllers\SurveyController::class, 'showForGuest']);
 Route::post('/survey/{survey}/answer', [\App\Http\Controllers\SurveyController::class, 'storeAnswer']);
 
+//For Nurse page 
+Route::post('/nurse/getDoctors', [AuthController::class, 'getAllDoctorsFromInstitute']);
+
+//For Medical Admin
+Route::post('/saveImages', [SurveyController::class, 'saveImage']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 

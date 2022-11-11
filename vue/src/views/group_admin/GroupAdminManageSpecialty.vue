@@ -60,10 +60,10 @@
                                 <a href="#">{{ specialty.description }}</a>
                             </td>
                             <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
-                                <a href="#">{{ specialty.created_at }}</a>
+                                <a href="#">{{ specialty.created_at.split('T')[0] }}</a>
                             </td>
                             <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
-                                <a href="#">{{ specialty.updated_at }}</a>
+                                <a href="#">{{ specialty.updated_at.split('T')[0] }}</a>
                             </td>
                             <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
                                 

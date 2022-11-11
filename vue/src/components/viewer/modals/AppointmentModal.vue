@@ -115,6 +115,11 @@ sm:text-sm
               </div>
 
               <div v-if="showButton" class="mt-4">
+                <label for="timeSlots" class="block text-sm font-medium text-gray-700">Symptoms
+                </label>
+                <input id="email-address" name="email" type="email" autocomplete="email" required="" v-model="makeAppointmentData.symptoms"
+                class="relative w-full h-9 px-3 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm mb-6"
+                placeholder="Symptoms" />
                 <button type="button"
                   class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                   @click="makeOnSiteAppointment">
@@ -250,7 +255,7 @@ focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
 sm:text-sm
 ">
                     <option v-for="doc in doctorsFromSpecialty" :key="doc" :value="doc.id">
-                      {{ doc }}
+                      {{ doc.name }}
                     </option>
                   </select>
                 </div>
@@ -284,8 +289,14 @@ sm:text-sm
                   </option>
                 </select>
               </div>
+              
 
               <div v-if="showButton" class="mt-4">
+                <label for="timeSlots" class="block text-sm font-medium text-gray-700">Symptoms
+                </label>
+                <input id="email-address" name="email" type="email" autocomplete="email" required="" v-model="makeAppointmentData.symptoms"
+                class="relative w-full h-9 px-3 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm mb-6"
+                placeholder="Symptoms" />
                 <button type="button"
                   class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                   @click="makeHomeVisitAppointment">
@@ -526,7 +537,7 @@ function makeOnSiteAppointment() {
     "owner_id": makeAppointmentData.value.owner_id,
     "appointment_date": makeAppointmentData.value.date,
     "time": makeAppointmentData.value.time,
-    "symptoms" : "To be determined"
+    "symptoms": makeAppointmentData.value.symptoms
   }
 
   console.log("successfully submitted", param)
@@ -560,7 +571,7 @@ function makeHomeVisitAppointment() {
     "owner_id": makeAppointmentData.value.owner_id,
     "appointment_date": makeAppointmentData.value.date,
     "time": makeAppointmentData.value.time,
-    "symptoms" : "To be determined"
+    "symptoms": "To be determined"
   }
 
   console.log("successfully submitted", param)

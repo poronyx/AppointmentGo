@@ -1,5 +1,5 @@
 <template>
-    <PageComponent title="Create News Article">
+    <PageComponent title="Edit Material">
         <div v-if="loading" class="flex justify-center">Loading...</div>
         <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-5 text-gray-700">
             <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
@@ -33,7 +33,8 @@
                 <!-- Title -->
                 <div>
                     <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-                    <input type="text" name="title" id="title" v-model="articleData.title" autocomplete="survey_title"
+                    <input type="text" name="title" id="title" v-model="editMaterialData.title"
+                        autocomplete="survey_title"
                         class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                 </div>
                 <!--/ Title -->
@@ -44,7 +45,7 @@
                         Description
                     </label>
                     <div class="mt-1">
-                        <textarea id="description" name="description" rows="3" v-model="articleData.description"
+                        <textarea id="description" name="description" rows="3" v-model="editMaterialData.description"
                             autocomplete="survey_description"
                             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                             placeholder="Describe your article" />
@@ -57,7 +58,7 @@
                         Content
                     </label>
                     <div class="mt-1">
-                        <textarea id="description" name="description" rows="3" v-model="articleData.content"
+                        <textarea id="description" name="description" rows="3" v-model="editMaterialData.content"
                             autocomplete="survey_description"
                             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                             placeholder="Content of your article" />
@@ -66,9 +67,9 @@
                 <!-- Description -->
 
                 <div class="inset-0 flex items-center justify-center">
-                    <button type="button" @click="createArticle()"
+                    <button type="button" @click="editMaterial()"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2">
-                        Create Article 
+                        Edit Material
                     </button>
                 </div>
             </div>
@@ -90,23 +91,27 @@ const router = useRouter();
 
 const route = useRoute();
 const loading = computed(() => store.state.dashboard.loading);
+const editMaterialData = computed(() => store.state.material.editData);
 
 
 let model = ref({
     title: "",
     description: null,
     image: null,
-    image_url: null,
+    image_url: "http://localhost:8000/" + editMaterialData.value.image_url,
 });
+
+let fileChanged = false;
 
 let articleData = {
     title: "",
     description: "",
     content: "",
-    image:""
+    image: ""
 }
 
 function onImageChoose(ev) {
+    fileChanged = true
     const file = ev.target.files[0];
     console.log(file)
     const reader = new FileReader();
@@ -122,18 +127,41 @@ function onImageChoose(ev) {
         articleData.image = reader.result
     };
     reader.readAsDataURL(file);
-    
+
 
 }
-console.log("Image URL",model.value.image_url)
+console.log("Image URL", model.value.image_url)
 
-function createArticle(){
-    console.log(articleData)
+function editMaterial() {
+    console.log(editMaterialData)
+    let param = {}
 
-    store.dispatch("createArticle", articleData).then((res) =>{
+    if (fileChanged) {
+        param = {
+            id: editMaterialData.value.id,
+            file_changed: fileChanged,
+            title: editMaterialData.value.title,
+            description: editMaterialData.value.description,
+            content: editMaterialData.value.content,
+            image: articleData.image
+
+        }
+    } else {
+        param = {
+            id: editMaterialData.value.id,
+            file_changed: fileChanged,
+            title: editMaterialData.value.title,
+            description: editMaterialData.value.description,
+            content: editMaterialData.value.content,
+
+        }
+    }
+
+    console.log(param)
+    store.dispatch("updateMaterial", param).then((res) => {
         router.push({
-        name: "NurseManagePatientAndAppointments",
-    });
+            name: "MedicalAdminManageEducationalMaterial",
+        });
     })
 
 

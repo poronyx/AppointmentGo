@@ -5,11 +5,11 @@
             <DashboardCard class="order-1 lg:order-1 " style="animation-delay: 0.2s">
                 <template v-slot:title>
                     <div class="flex justify-between items-center mb-7 px-2">
-                        <h3 class="text-xl font-semibold">Dr. {{ user.name }}</h3>
+                        <h3 class="text-xl font-semibold">Dr. {{ doctor.name }}</h3>
                     </div>
                 </template>
                 <div class="relative w-full">
-                    <DoctorAddOffDayModal @addEvent="addEvent" :instituition_id="user.instituition_id" :owner_id="user.id" ></DoctorAddOffDayModal>
+                    <DoctorAddOffDayModal @addEvent="addEvent" :instituition_id="doctor.instituition_id" :owner_id="doctor.id"></DoctorAddOffDayModal>
                 </div>
                 <!--  
                     
@@ -30,7 +30,7 @@
             <DashboardCard class="order-2 lg:order-2 " style="animation-delay: 0.2s">
                 <template v-slot:title>
                     <div class="flex justify-between items-center mb-7 px-2">
-                        <h3 class="text-xl font-semibold">Manage Patients & Appointments</h3>
+                        <h3 class="text-xl font-semibold">Manage Patients & Doctor's Appointments</h3>
                     </div>
                 </template>
                 <div class="relative w-full">
@@ -83,13 +83,13 @@ const router = useRouter();
 const loading = computed(() => store.state.dashboard.loading);
 const user = computed(() => store.state.user.data);
 const institutes = computed(() => store.state.institute.instituition_list);
-const userID = computed(() => store.state.patientMakeAppointment.patientProfile);
+const doctor = computed(() => store.state.nurseDashboard.doctorData);
 const appointmentsData = computed(() => store.state.patientProfile.appointments);
 const events = computed(() => store.state.doctorDashBoard.events);
 
 store.dispatch("getUser");
 console.log("Inside user", user)
-const doctorId = store.getters.getUserID
+const doctorId = doctor.value.id
 
 const param = {
     id: doctorId
@@ -107,7 +107,7 @@ store
 
 function toManageAppointments() {
     router.push({
-        name: "DoctorManageAppointments",
+        name: "NurseManagePatientAndAppointments",
     });
 }
 

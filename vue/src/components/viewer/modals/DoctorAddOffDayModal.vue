@@ -35,15 +35,14 @@
                             <div class="col-span-3">
                                 <label for="dates" class="block text-sm font-medium text-gray-700">Pick a Date
                                 </label>
-                                <TInput type="date" name="date_of_birth"
-                                    :errors="errors" placeholder="dd/mm/yyyy"
+                                <TInput type="date" name="date_of_birth" :errors="errors" placeholder="dd/mm/yyyy"
                                     @change="pickedDate($event.target.value)" />
                             </div>
 
-                            <div class="mt-4">
+                            <div v-if="showButton" class="mt-4">
                                 <button type="button"
                                     class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                    @click="routeToHome">
+                                    @click="submitOffday">
                                     Confirm
                                 </button>
                             </div>
@@ -61,22 +60,35 @@
 </template>
 <script setup>
 import {
-  TransitionRoot,
-  TransitionChild,
-  Dialog,
-  DialogTitle,
+    TransitionRoot,
+    TransitionChild,
+    Dialog,
+    DialogTitle,
 } from '@headlessui/vue'
 import { useRouter } from "vue-router";
 import TInput from "../../core/TInput.vue";
 import { computed, ref } from "@vue/reactivity";
 import { useStore } from "vuex";
 
+
+const store = useStore();
+
+const user = computed(() => store.state.user.data);
+const emit = defineEmits(['addEvent'])
+
 const isOpen = ref(false)
+const showButton = ref(false)
 const errors = ref({});
-const props = defineProps({
-  type: String
+
+const { instituition_id, owner_id} = defineProps({
+    instituition_id: String,
+    owner_id: String,
 });
 
+
+
+
+let pickedOffDate = ""
 function closeModal() {
     isOpen.value = false
 }
@@ -86,6 +98,42 @@ function openModal() {
 
 function pickedDate(ev) {
     console.log(ev)
+    pickedOffDate = ev
+    showButton.value = true
+
+    console.log("Instute id: ",instituition_id)
+    console.log("owner id: ",owner_id)  
+
+}
+
+function submitOffday() {
+
+    const param = {
+        "appointment_type": "off-day",
+        "instituition_id": instituition_id,
+        "owner_id": owner_id,
+        "appointment_date": pickedOffDate,
+        "time": 0,
+    }
+
+    console.log("successfully submitted", param)
+
+    store
+        .dispatch("makeAppointment", param).then((res) => {
+            console.log("making appointment res", res)
+
+
+            isOpen.value = false
+            const newEvent = {
+                start: pickedOffDate,
+                end: pickedOffDate,
+                title: 'Day off!',
+                content: '<br> \u00A0Take a break, You deserve it!</div>',
+                class: 'new-event',
+                allDay: true
+            }
+            emit("addEvent", newEvent)
+        })
 }
 
 </script>

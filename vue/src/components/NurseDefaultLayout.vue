@@ -154,8 +154,8 @@
   import Notification from "./Notification.vue";
   
   const navigation = [
-    { name: "Home", to: { name: "MedicalAdminDashboard" } },
-    { name: "Manage Educational Material", to: { name: "MedicalAdminManageEducationalMaterial" } },
+    { name: "Home", to: { name: "NurseDashboard" } },
+    { name: "Manage All Schedule", to: { name: "NurseManagePatientAndAppointments" } },
   ];
   
   

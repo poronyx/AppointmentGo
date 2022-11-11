@@ -14,7 +14,7 @@
 
 
           <!--//pagination-->
-          <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+          <!-- <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
             <div class="flex flex-1 justify-between sm:hidden">
               <a href="#"
                 class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
@@ -46,7 +46,7 @@
                     <span class="sr-only">Previous</span>
                     <ChevronLeftIcon class="h-5 w-5" aria-hidden="true" />
                   </a>
-                  <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
+                   Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" 
                   <a href="#" aria-current="page"
                     class="relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20">1</a>
                   
@@ -60,7 +60,7 @@
                 </nav>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="flex flex-col">
             <div class="overflow-x-auto">
               <div class="p-1.5 w-full inline-block align-middle">
@@ -68,13 +68,13 @@
                   <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                       <tr>
-                        <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
+                        <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
                           Title
                         </th>
-                        <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
+                        <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
                           Description
                         </th>
-                        <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
+                        <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
                           Date
                         </th>
                       </tr>
@@ -88,7 +88,7 @@
                           {{data.description}}
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          {{data.created_at}}
+                          {{data.created_at.split('T')[0]}}
                         </td>
                       </tr>
                     </tbody>
@@ -121,9 +121,9 @@ store.dispatch("getMaterialData");
 
 console.log("Loading Materials: ",material.value.length);
 
-const slides = ["https://srv622.hstgr.io:7443/files/images/fluBanner.jpg",
-"https://srv622.hstgr.io:7443/files/images/fluBanner.jpg",
-"https://srv622.hstgr.io:7443/files/images/fluBanner.jpg"]
+const slides = ["http://localhost:8000/images/TG8M6c3coKTmQhbr.jpeg",
+"http://localhost:8000/images/TG8M6c3coKTmQhbr.jpeg",
+"http://localhost:8000/images/TG8M6c3coKTmQhbr.jpeg"]
 //storing material images into slide
 for (let x = 0 ;  x < material.value.length; x++){
   console.log("Inside STORE: ",material.value[x].image_url)

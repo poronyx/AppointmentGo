@@ -100,6 +100,14 @@ function login(ev) {
         router.push({
           name: "GroupAdminDashboard",
         });
+      }else if (res.user.user_type == "MedicalAdmin") {
+        router.push({
+          name: "MedicalAdminDashboard",
+        });
+      }else if (res.user.user_type == "Nurse") {
+        router.push({
+          name: "NurseDashboard",
+        });
       } else {
         router.push({
           name: "Dashboard",

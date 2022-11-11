@@ -327,7 +327,7 @@ class AuthController extends Controller
     {
 
         $user_id = $request->input('id');
-
+        
 
 
         if ($request->input('user_type') == 'Patient') {
@@ -546,6 +546,29 @@ class AuthController extends Controller
         return response([
             'success' => true,
             'doctors' => $doctors
+        ]);
+    }
+    public function getAllDoctorsFromInstitute(Request $request)
+    {
+        $institute_id = $request->input('institute_id');
+
+        $doctors = User::where('user_type', 'Doctor')
+        ->where('instituition_id', $institute_id)
+        ->get();
+
+        return response([
+            'success' => true,
+            'doctors' => $doctors
+        ]);
+    }
+    public function getAllPatients()
+    {
+        
+        $patients = User::where('user_type', 'Patient')->get();
+
+        return response([
+            'success' => true,
+            'patients' => $patients
         ]);
     }
 
