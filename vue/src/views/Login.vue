@@ -96,11 +96,11 @@ function login(ev) {
         router.push({
           name: "DoctorDashboard",
         });
-      } else if (res.user.user_type == "GroupAdmin") {
+      } else if (res.user.user_type == "Group Admin") {
         router.push({
           name: "GroupAdminDashboard",
         });
-      }else if (res.user.user_type == "MedicalAdmin") {
+      }else if (res.user.user_type == "Medical Admin") {
         router.push({
           name: "MedicalAdminDashboard",
         });
