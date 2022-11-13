@@ -318,6 +318,7 @@ function register(input) {
         .then((res) => {
 
             console.log("Res From Register", res)
+            
             const param = {
                 owner_id: res.id,
                 opening_time: {

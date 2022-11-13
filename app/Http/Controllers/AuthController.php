@@ -173,7 +173,6 @@ class AuthController extends Controller
                     Password::min(8)->mixedCase()->numbers()->symbols()
                 ],
                 'instituition.id' => 'required',
-                'organization_id' => $request->input('organization_id'),
             ]);
 
             $user = User::create([
@@ -188,6 +187,7 @@ class AuthController extends Controller
                 'password' => bcrypt($data['password']),
                 'address' =>  $request->input('address'),
                 'instituition_id' => $request->input('instituition.id'),
+                'organization_id' => $request->input('organization_id'),
             ]);
         } elseif ($request->input('user_type') == 'Platform Admin' || 'Group Admin') {
             $data = $request->validate([

@@ -53,6 +53,9 @@
                             <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
                                 Date
                             </th>
+                            <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
+                               
+                            </th>
                         </tr>
                     </thead>
 
@@ -73,6 +76,13 @@
                             </td>
                             <td class="px-6 py-3 text-xs text-gray-800 ">
                                 {{appointment.date}}
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                                <button
+                                    class="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                                    @click="changeApointment(data)">
+                                    View
+                                </button>
                             </td>
                         </tr>
                     </tbody>

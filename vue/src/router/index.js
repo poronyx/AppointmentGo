@@ -49,7 +49,7 @@ import NurseViewAppointment from "../views/nurse/NurseViewAppointment.vue"
 import NurseViewPatient from "../views/nurse/NurseViewPatient.vue"
 import MedicalAdminManageEducationalMaterial from "../views/medical_admin/MedicalAdminManageEducationalMaterial.vue"
 import MedicalAdminEditMaterial from "../views/medical_admin/MedicalAdminEditMaterial.vue"
-
+import MedicalAdminEditProfile from "../views/medical_admin/MedicalAdminEditProfile.vue"
 
 
 let routes = [{
@@ -112,6 +112,7 @@ let routes = [{
     { path: "/medical-admin-create-news-article", name: "MedicalAdminCreateNewsArticle", component: MedicalAdminCreateNewsArticle },
     { path: "/medical-admin-manage-educational", name: "MedicalAdminManageEducationalMaterial", component: MedicalAdminManageEducationalMaterial },
     { path: "/medical-admin-edit-material", name: "MedicalAdminEditMaterial", component: MedicalAdminEditMaterial },
+    { path: "/medical-admin-edit-profile", name: "MedicalAdminEditProfile", component: MedicalAdminEditProfile },
   ],
 },
 {

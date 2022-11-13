@@ -55,6 +55,9 @@
                             <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
                                 Status
                             </th>
+                            <th scope="col" class="px-6 py-3 text-xs font-bold  text-gray-500 uppercase">
+                               
+                            </th>
                         </tr>
                     </thead>
 
@@ -83,6 +86,13 @@
                                 <p v-if="appointment.status == 0">Pending</p>
                                 <p v-else>Completed</p>
                             </td>
+                            <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
+                                    @click="cancelAppointment(data)">
+                                    cancel
+                                </button>
+                                <PatientChangeAppointmentModal  :appointment="appointment" ></PatientChangeAppointmentModal>
+                            </td>
                         </tr>
                     </tbody>
 
@@ -103,6 +113,7 @@ import { useStore } from "vuex";
 import { ref } from 'vue'
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon } from '@heroicons/vue/solid'
+import PatientChangeAppointmentModal from "../../components/viewer/modals/PatientChangeAppointmentModal.vue";
 
 const store = useStore();
 

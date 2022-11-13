@@ -1,5 +1,5 @@
 <template>
-    <PageComponent title="Medical Admin Dashboard">
+    <PageComponent title="Medical Admin Profile">
         <div v-if="loading" class="flex justify-center">Loading...</div>
         <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-5 text-gray-700">
             <DashboardCard class="order-1 lg:order-1" style="animation-delay: 0.1s">
@@ -29,6 +29,13 @@
                     <div>{{user.date_of_birth}}</div>
                 </div>
 
+                <div class="justify-between text-m ">
+                    <button @click="toEditProfile"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Edit Profile
+                    </button>
+                </div>
+
             </DashboardCard>
 
         </div>
@@ -42,13 +49,23 @@ import TButton from "../../components/core/TButton.vue";
 import PageComponent from "../../components/PageComponent.vue";
 import { computed } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 const store = useStore();
 
 const loading = computed(() => store.state.dashboard.loading);
 const data = computed(() => store.state.dashboard.data);
 const user = computed(() => store.state.user.data);
+const router = useRouter();
 
+
+function toEditProfile(){
+    MedicalAdminEditProfile
+
+    router.push({
+        name: "MedicalAdminEditProfile",
+    });
+}
 </script>
     
 <style scoped>

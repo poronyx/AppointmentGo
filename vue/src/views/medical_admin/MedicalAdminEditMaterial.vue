@@ -83,11 +83,12 @@ import { v4 as uuidv4 } from "uuid";
 import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { SaveIcon, TrashIcon, ExternalLinkIcon } from '@heroicons/vue/solid'
-import store from "../../store/index.js";
 import PageComponent from "../../components/PageComponent.vue";
+import { useStore } from "vuex";
 
 
 const router = useRouter();
+const store = useStore();
 
 const route = useRoute();
 const loading = computed(() => store.state.dashboard.loading);
