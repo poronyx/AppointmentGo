@@ -622,7 +622,7 @@ const store = createStore({
       state.material.data = data
       const imageList = []
       for (let x in data) {
-        imageList.push("https://appointmentgo.net/"+data[x].image_url)
+        imageList.push("https://appointmentgo.net/public/"+data[x].image_url)
       }
       state.material.slides = imageList
     },
