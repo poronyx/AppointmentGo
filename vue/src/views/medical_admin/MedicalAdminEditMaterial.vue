@@ -99,7 +99,7 @@ let model = ref({
     title: "",
     description: null,
     image: null,
-    image_url: "http://localhost:8000/" + editMaterialData.value.image_url,
+    image_url: "https://appointmentgo.net/" + editMaterialData.value.image_url,
 });
 
 let fileChanged = false;
