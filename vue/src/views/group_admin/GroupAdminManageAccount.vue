@@ -20,7 +20,7 @@
                     </div>
                     <input type="text"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for users...">
+                        placeholder="Search for users..." v-model="input">
 
 
 
@@ -29,7 +29,7 @@
                 <div class="mt-3 col-span-3">
                     <label for="userType" class="block text-sm font-medium text-gray-700">Search by User Type
                     </label>
-                    <select id="userType" name="userType" v-model="specialty" class="
+                    <select id="userType" name="userType" v-model="specialty"  class="
           mt-1
           block
           w-full
@@ -96,7 +96,7 @@
                         </tr>
                     </thead>
 
-                    <tbody v-for="user in allUsers" class="divide-y divide-gray-200">
+                    <tbody v-for="user in filteredAccounts" class="divide-y divide-gray-200">
 
                         <tr>
                             <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
@@ -164,6 +164,8 @@ import { computed, ref } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import TButtonLoading from "../../components/core/TButtonLoading.vue";
+
+const input = ref("");
 const router = useRouter();
 const store = useStore();
 
@@ -175,15 +177,21 @@ const user = computed(() => store.state.user.data);
 store.dispatch("getInstituteData");
 store.dispatch("getAllUsersData",{organization_id: user.value.organization_id});
 
-
 const userTypes = ["Patient", "Doctor", "Nurse", "Medical Admin", "Platform Admin", "Group Admin"]
 
 const specialty = ["Cardiology", "Physiology", "Allergy and immunology", "Anesthesiology", "Dermatology"]
 
 const instituition = ["Bukit Panjang Clinic", "Newton Clinic"]
 
-
-
+const filteredAccounts = computed(() => {
+    let allUsers = store.state.groupAdminManageAccount.user_list;
+    if (input.value != '') {
+        return allUsers.filter((user) =>
+            user.name.toLowerCase().includes(input.value.toLowerCase())
+    )} 
+    else
+        return allUsers;
+}); 
 
 
 function createUser() {

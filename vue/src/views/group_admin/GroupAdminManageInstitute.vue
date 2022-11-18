@@ -20,7 +20,7 @@
                     </div>
                     <input type="text"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for Institute...">
+                        placeholder="Search for Institute..." v-model="input">
 
 
 
@@ -50,7 +50,7 @@
                         </tr>
                     </thead>
 
-                    <tbody v-for="institute in institutes" class="divide-y divide-gray-200">
+                    <tbody v-for="institute in filteredInstitute" class="divide-y divide-gray-200">
 
                         <tr>
                             <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
@@ -98,6 +98,8 @@ import { computed, ref } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import TButtonLoading from "../../components/core/TButtonLoading.vue";
+
+const input = ref("");
 const router = useRouter();
 const store = useStore();
 
@@ -111,10 +113,12 @@ store.dispatch("adminGetInstituteData",
 }
 );
 
-
-
-
-
+const filteredInstitute = computed(() => {
+    let institutes = store.state.institute.instituition_list;
+    return institutes.filter((institute) =>
+            institute.instituition_name.toLowerCase().includes(input.value.toLowerCase())
+    );
+})
 
 function createInstitute() {
     router.push({

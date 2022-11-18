@@ -20,11 +20,9 @@
                     </div>
                     <input type="text"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for specialty...">
-
-
-
+                        placeholder="Search for specialty..." v-model="input" >
                 </div>
+
             </DashboardCard>
 
             <DashboardCard class="order-2 lg:order-2" style="animation-delay: 0.1s">
@@ -50,7 +48,7 @@
                         </tr>
                     </thead>
 
-                    <tbody v-for="specialty in specialties" class="divide-y divide-gray-200">
+                    <tbody v-for="specialty in filteredSpecialty" class="divide-y divide-gray-200">
 
                         <tr>
                             <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
@@ -95,17 +93,22 @@ import { computed, ref } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import TButtonLoading from "../../components/core/TButtonLoading.vue";
+
+const input = ref("");
 const router = useRouter();
 const store = useStore();
 
 const loading = computed(() => store.state.groupAdminManageAccount.loading);
 const specialties = computed(() => store.state.specialty.specialty_list);
 
-
 store.dispatch("getSpecialtyData");
 
-
-
+const filteredSpecialty = computed(() => {
+    let specialties = store.state.specialty.specialty_list;
+    return specialties.filter((specialty) =>
+            specialty.name.toLowerCase().includes(input.value.toLowerCase())
+    );
+})
 
 function createSpecialty() {
     router.push({

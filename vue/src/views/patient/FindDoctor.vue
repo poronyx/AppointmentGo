@@ -16,7 +16,7 @@
                     </div>
                     <input type="text"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for doctors..." required>
+                        placeholder="Search for doctors..." v-model="input" required>
 
 
 
@@ -89,7 +89,7 @@
                         </tr>
                     </thead>
 
-                    <tbody v-for="doctor in allDoctors" class="divide-y divide-gray-200">
+                    <tbody v-for="doctor in filteredDoctor" class="divide-y divide-gray-200">
 
                         <tr>
                             <td class="px-6 py-3 text-xs font-medium text-gray-800 ">
@@ -132,6 +132,7 @@ import { computed, ref } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
+const input = ref("");
 const store = useStore();
 const router = useRouter();
 
@@ -149,6 +150,13 @@ const props = defineProps({
     question: Object,
     index: Number,
 });
+
+const filteredDoctor = computed(() => {
+    let allDoctors = store.state.patientFindDoctor.allDoctors;
+    return allDoctors.filter((doctor) =>
+            doctor.name.toLowerCase().includes(input.value.toLowerCase())
+    );
+}); 
 
 function goToDoctorProfile(doct){
     console.log("clicked profile")
