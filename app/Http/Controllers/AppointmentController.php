@@ -442,4 +442,17 @@ class AppointmentController extends Controller
             'appointment' => $apponintment
         ]);
     }
+
+    public function deleteAppointment(Request $request)
+    {
+
+        $appointment_id = $request->input('id');
+
+        $appointment = Appointment::destroy($appointment_id);
+
+        return response([
+            'success' => true,
+            'res' => $appointment
+        ]);
+    }
 }

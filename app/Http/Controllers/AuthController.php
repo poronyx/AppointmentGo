@@ -400,6 +400,13 @@ class AuthController extends Controller
                     'phone_number' => '',
                     'nric' => ''
                 ]);
+            
+
+            if($request->input('subscribe_article') == true){
+                $subscribe = 1;
+            }else{
+                $subscribe = 0;
+            }
 
             $data = $request->validate([
                 'name' => 'required|string',
@@ -424,7 +431,8 @@ class AuthController extends Controller
                     'gender' => $data['gender'],
                     'user_type' => $data['user_type'],
                     'date_of_birth' => $data['date_of_birth'],
-                    'address' =>  $request->input('address')
+                    'address' =>  $request->input('address'),
+                    'subscribe_article' =>  $subscribe 
 
                 ]);
 

@@ -31,6 +31,7 @@ const store = createStore({
       userID: {},
       appointments: [],
       medicalHistories: [],
+      materialData:{}
     }
     ,
     material: {
@@ -512,6 +513,15 @@ const store = createStore({
         })
 
     },
+    deleteAppointment(_, input) {
+      console.log('Payload', input)
+      return axiosClient.post(`/appointment/delete`, input)
+        .then((res) => {
+          console.log("After Delete in Store res: ", res.data)
+          return res;
+        })
+
+    },
     getDashboardData({ commit }) {
       commit('dashboardLoading', true)
       return axiosClient.get(`/dashboard`)
@@ -732,6 +742,10 @@ const store = createStore({
       console.log("Inside Mutations: ", data)
       state.material.editData = data
     },
+    setMaterialForView: (state, data) => {
+      console.log("View Material Data: ", data)
+      state.patientProfile.materialData = data
+    }, 
     setAvailableSlots: (state, data) => {
       console.log("Inside Mutations: ", data)
       const timeSlots = []

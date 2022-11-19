@@ -8,7 +8,7 @@
                 <div class="relative h-64 m-8 overflow-hidden bg-indigo-500 rounded-lg">
                     <div class="absolute z-30 flex w-full h-full">
                         <div class="relative z-30 w-5/6 px-6 py-8 text-white md:py-10 md:w-1/2">
-                            <h2 class="text-3xl">{{title}}</h2>
+                            <h2 class="text-3xl">{{materialData.title}}</h2>
                             <span></span>
                         </div>
                         <div class="absolute top-0 right-0 flex w-full h-full">
@@ -27,24 +27,15 @@
                     </div>
                     <div class="absolute top-0 right-0 block w-9/12 h-full">
                         <img alt="Snowy mountain lake" class="object-cover h-full min-w-full"
-                            src="/src/assets/covidBanner.jpg" />
+                            :src="image_url" />
                     </div>
                 </div>
 
-                <div class="w-full flex items-center">
-                    This is a sample article. Covid-19 Sample article.This is a sample article. Covid-19 Sample article.
-                    This is a sample article. Covid-19 Sample article.This is a sample article. Covid-19 Sample article.
-                    This is a sample article. Covid-19 Sample article.This is a sample article. Covid-19 Sample article.
-                    This is a sample article. Covid-19 Sample article.This is a sample article. Covid-19 Sample article.
-                    This is a sample article. Covid-19 Sample article.This is a sample article. Covid-19 Sample article.
-                    This is a sample article. Covid-19 Sample article.This is a sample article. Covid-19 Sample article.
-                    This is a sample article. Covid-19 Sample article.This is a sample article. Covid-19 Sample article.
-                    This is a sample article. Covid-19 Sample article.This is a sample article. Covid-19 Sample article.
-                    This is a sample article. Covid-19 Sample article.This is a sample article. Covid-19 Sample article.
-                    This is a sample article. Covid-19 Sample article.This is a sample article. Covid-19 Sample article.
+                <div class="w-full flex items-center mt-8 mb-8 m-16">
+                    {{materialData.content}}
                 </div>
                 <div class="flex items-left">
-                    2022/09/12
+                    {{materialData.created_at.split('T')[0]}}
                 </div>
 
 
@@ -65,9 +56,10 @@ import { useStore } from "vuex";
 
 const store = useStore();
 const loading = computed(() => store.state.dashboard.loading);
-const data = computed(() => store.state.dashboard.data);
-const user = computed(() => store.state.user.data);
+const materialData = computed(() => store.state.patientProfile.materialData);
 
+const image_url  =  "https://appointmentgo.net/"+materialData.value.image_url
+console.log(image_url)
 const title = "Guidelines to help keep our nation safe from Covid-19"
 </script>
     

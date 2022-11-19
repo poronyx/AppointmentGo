@@ -82,7 +82,7 @@
                     <tbody v-for="data in material" class="divide-y divide-gray-200">
                       <tr>
                         <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          <a href="/patient-view-article">{{data.title}}</a>
+                          <a href="#" @click="viewMaterial(data)">{{data.title}}</a>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                           {{data.description}}
@@ -111,6 +111,7 @@ import DashboardCard from "../../components/core/DashboardCard.vue";
 import PageComponent from "../../components/PageComponent.vue";
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/solid'
 import Carousel from "../../components/core/carousel/Carousel.vue";
+import router from "../../router";
 
 const store = useStore();
 
@@ -130,6 +131,16 @@ for (let x = 0 ;  x < material.value.length; x++){
   slides.push(material.value[x].image_url)
 }
 console.log("slides from store: ",slidesImage.value[0])
+
+
+
+function viewMaterial(ev){
+ console.log(ev)
+ store.commit("setMaterialForView", ev)
+ router.push({
+        name: "ViewArticle",
+    });
+}
 </script>
   
 <style scoped>

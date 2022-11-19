@@ -1,5 +1,5 @@
 <template>
-    <PageComponent title="Patient Edit Profile">
+    <PageComponent title="Doctor Edit Profile">
         <div v-if="loading" class="flex justify-center">Loading...</div>
         <div v-else class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-5 text-gray-700">
             <DashboardCard class="order-1 lg:order-1 row-span-2" style="animation-delay: 0.1s">
@@ -60,15 +60,104 @@
                         class="relative w-full h-9 px-3 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                         placeholder="Postal Code" />
                 </div>
-                <div class="flex items-center mt-4">
-                    <div class="w-20"></div>
-                    <input checked id="article-checkbox" type="checkbox" v-model="user.subscribe_article"
-                        class="w-5 h-5 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="checked-checkbox"
-                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Subscribe to our newsletter
-                        and promotions</label>
-                </div>
+                <div class="rounded-md shadow-sm ">
+                    <div class="flex justify-between text-m mb-2">
+                        <div class="w-36">Gender </div>
+                        <input id="gender" name="gender" type="gender" autocomplete="gender" required=""
+                            v-model="user.gender"
+                            class="relative w-full h-9 px-3 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Gender" disabled />
+                    </div>
+                    <div class="w-36 mb-2 mt-4">Academic title </div>
+                    <TInput name="academic_title" v-model="user.academic_title" :errors="errors"
+                        placeholder="Academic Title" inputClass="rounded-t-md" />
+                    <div class="w-36 mt-4 mb-2">Main Qualification </div>
+                    <TInput name="main_qualification" v-model="user.qualifications.main_qualification" :errors="errors"
+                        placeholder="Main Qualification" inputClass="rounded-t-md" />
+                        <div class="w-36 mt-4 mb-2">Sub Qualification </div>
+                    <TInput name="other_qualification" v-model="user.qualifications.other_qualification"
+                        :errors="errors" placeholder="Other Qualification" inputClass="rounded-t-md" />
+                        <div class="w-36 mt-4 mb-2">Summary </div>
+                    <div class="mt-1 mb-1">
+                        <textarea id="description" name="description" rows="3" v-model="user.summary"
+                            autocomplete="survey_description"
+                            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                            placeholder="Summary of Doctor's career" />
+                    </div>
+                    <div class="w-36 mt-4 mb-2">Experience </div>
+                    <TInput name="experience" v-model="user.experience" :errors="errors"
+                        placeholder="Years of experience" inputClass="rounded-t-md" />
 
+
+                    <div class="col-span-3 mt-5 mb-5">
+                        <label for="userType" class="block text-sm font-medium text-gray-700">Choose a main specialty
+                        </label>
+                        <select id="userType" name="userType" v-model="user.specialty.main_specialty"
+                            @change="pickedSpecialty($event.target.value)" class="
+          mt-1
+          block
+          w-full
+          py-2
+          px-3
+          border border-gray-300
+          bg-white
+          rounded-md
+          shadow-sm
+          focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
+          sm:text-sm
+        ">
+                            <option v-for="specialty in specialties" :key="specialty" :value="specialty.id">
+                                {{ specialty.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-span-3 mt-5 mb-5">
+                        <label for="userType" class="block text-sm font-medium text-gray-700">Choose a sub specialty
+                        </label>
+                        <select id="userType" name="userType" v-model="user.specialty.sub_specialty"
+                            @change="pickedSpecialty($event.target.value)" class="
+          mt-1
+          block
+          w-full
+          py-2
+          px-3
+          border border-gray-300
+          bg-white
+          rounded-md
+          shadow-sm
+          focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
+          sm:text-sm
+        ">
+                            <option v-for="specialty in specialties" :key="specialty" :value="specialty.id">
+                                {{ specialty.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-span-3 mt-5 mb-5">
+                        <label for="userType" class="block text-sm font-medium text-gray-700">Choose an institute
+                        </label>
+                        <select id="userType" name="userType" v-model="user.instituition_id"
+                            @change="pickedInstitute($event.target.value)" class="
+          mt-1
+          block
+          w-full
+          py-2
+          px-3
+          border border-gray-300
+          bg-white
+          rounded-md
+          shadow-sm
+          focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
+          sm:text-sm
+        ">
+                            <option v-for="instituition in institutes" :key="instituition" :value="instituition.id">
+                                {{ instituition.instituition_name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
                 <div class="justify-between text-m mt-6 mb-6">
                     <button @click="updateProfile(user)"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -87,9 +176,11 @@ import { EyeIcon, PencilIcon } from "@heroicons/vue/solid"
 import DashboardCard from "../../components/core/DashboardCard.vue";
 import TButton from "../../components/core/TButton.vue";
 import PageComponent from "../../components/PageComponent.vue";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import TInput from "../../components/core/TInput.vue";
+import Alert from "../../components/Alert.vue";
 
 const store = useStore();
 const router = useRouter();
@@ -97,17 +188,20 @@ const loading = computed(() => store.state.dashboard.loading);
 const data = computed(() => store.state.dashboard.data);
 const user = computed(() => store.state.user.data);
 
-const addr1 = "Bukit Panjang 222341 #4-123 Singapore";
-const addr2 = "Orchard Road 814123 #999-532 Singapore";
+const institutes = computed(() => store.state.institute.instituition_list);
+const specialties = computed(() => store.state.specialty.specialty_list);
 
+const errors = ref({});
 
+store.dispatch("getInstituteData");
+store.dispatch("getSpecialtyData");
 
 function updateProfile(ev) {
     console.log(ev)
     store.dispatch("updateUser", ev).then((res) => {
         console.log("Res after Update profile", res)
         router.push({
-            name: "PatientProfile",
+            name: "DoctorProfile",
         });
 
     })

@@ -186,7 +186,7 @@
       }
       function getProfile() {
         router.push({
-          name: "PatientProfile",
+          name: "DoctorProfile",
         });
       }
   

@@ -88,7 +88,7 @@
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
-                                    @click="cancelAppointment(data)">
+                                    @click="cancelAppointment(appointment.id)">
                                     cancel
                                 </button>
                                 <PatientChangeAppointmentModal  :appointment="appointment" ></PatientChangeAppointmentModal>
@@ -108,56 +108,46 @@ import { EyeIcon, PencilIcon } from "@heroicons/vue/solid"
 import DashboardCard from "../../components/core/DashboardCard.vue";
 import TButton from "../../components/core/TButton.vue";
 import PageComponent from "../../components/PageComponent.vue";
-import { computed } from "vue";
+import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import { ref } from 'vue'
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon } from '@heroicons/vue/solid'
 import PatientChangeAppointmentModal from "../../components/viewer/modals/PatientChangeAppointmentModal.vue";
 
 const store = useStore();
+const router = useRouter();
 
 const loading = computed(() => store.state.dashboard.loading);
 const institutes = computed(() => store.state.institute.instituition_list);
-const userID = computed(() => store.state.patientMakeAppointment.patientProfile);
+const user = computed(() => store.state.user.data);
 const appointmentsData = computed(() => store.state.patientProfile.appointments);
 
+
 store.dispatch("getUser");
-console.log("User ID",userID.value)
+console.log("User ID",user.value.id)
 const param = {
-    "patient_id": userID.value,
+    "patient_id": user.value.id,
     "profile_page": false
 }
 store.dispatch("getAppointmentData", param)
 store.dispatch("getInstituteData");
 
-const appointments = [{
-    id: "PD2051245124124",
-    institute: "Bukit Panjang Clinic",
-    summary: "Monthly check-up",
-    appointment_type: "On-site",
-    date: "2022-11-23",
-    status: "Pending",
-},
-{
-    id: "HV2022235235235",
-    institute: "Not Applicable",
-    summary: "Covid delta-variant positive",
-    appointment_type: "Home-visit",
-    date: "2021-10-14",
-    status: "Completed",
-    
-},
-{
-    id: "OS20227562342342",
-    institute: "Newton Clinic",
-    summary: "High fever and irritated throat",
-    appointment_type: "On-site",
-    date: "2021-06-07",
-    status: "Completed",
-    
-}]
+function cancelAppointment(ev){
+    console.log(ev)
 
+    const param = {
+        id: ev
+    }
+
+    store.dispatch("deleteAppointment", param).then((res) =>{
+        console.log(res)
+        router.push({
+            name: "PatientProfile",
+        });
+    })
+}
 
 
 let startDate;

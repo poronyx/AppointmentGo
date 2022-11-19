@@ -50,7 +50,8 @@ import NurseViewPatient from "../views/nurse/NurseViewPatient.vue"
 import MedicalAdminManageEducationalMaterial from "../views/medical_admin/MedicalAdminManageEducationalMaterial.vue"
 import MedicalAdminEditMaterial from "../views/medical_admin/MedicalAdminEditMaterial.vue"
 import MedicalAdminEditProfile from "../views/medical_admin/MedicalAdminEditProfile.vue"
-
+import DoctorProfile from "../views/doctor/DoctorProfile.vue"
+import DoctorEditProfile from "../views/doctor/DoctorEditProfile.vue"
 
 let routes = [{
   path: "/",
@@ -86,6 +87,8 @@ let routes = [{
     { path: "/doctor-manage-appointments", name: "DoctorManageAppointments", component: DoctorManageAppointments },
     { path: "/doctor-view-patient", name: "DoctorViewPatient", component: DoctorViewPatient },
     { path: "/doctor-view-appointment", name: "DoctorViewAppointment", component: DoctorViewAppointment},
+    { path: "/doctor-view-profile", name: "DoctorProfile", component: DoctorProfile},
+    { path: "/doctor-edit-profile", name: "DoctorEditProfile", component: DoctorEditProfile},
   ],
 },
 

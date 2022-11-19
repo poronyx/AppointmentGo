@@ -571,7 +571,7 @@ function makeHomeVisitAppointment() {
     "owner_id": makeAppointmentData.value.owner_id,
     "appointment_date": makeAppointmentData.value.date,
     "time": makeAppointmentData.value.time,
-    "symptoms": "To be determined"
+    "symptoms": makeAppointmentData.value.symptoms
   }
 
   console.log("successfully submitted", param)
